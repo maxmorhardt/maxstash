@@ -45,10 +45,6 @@
     "vue-tsc": "^3.2.7"
   },
   "lint-staged": {
-    "*.{js,ts,vue}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md,css,html,yml,yaml}": "prettier --write --ignore-unknown"
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
