@@ -27,6 +27,9 @@ export default defineConfig([
       'vue/multi-word-component-names': 'off',
       // TypeScript handles undefined symbols; ESLint's no-undef doesn't know about DOM lib types.
       'no-undef': 'off',
+      // False positive on TS union types like `1 | 2 | 3` inside template expressions.
+      // Vue 3 has no filter syntax anyway, so the rule has no purpose here.
+      'vue/no-deprecated-filter': 'off',
     },
   },
 ]);
