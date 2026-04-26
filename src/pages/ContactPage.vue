@@ -27,9 +27,15 @@ const channels = [
   <section class="contact section">
     <div class="container">
       <!-- Page heading -->
-      <RevealSection as="h1"> Contact </RevealSection>
+      <RevealSection as="h1">
+        Contact
+      </RevealSection>
       <!-- Lede -->
-      <RevealSection :delay="1" as="p" class="lede">
+      <RevealSection
+        :delay="1"
+        as="p"
+        class="lede"
+      >
         The fastest ways to reach me. I usually respond within a day or two.
       </RevealSection>
 
@@ -41,8 +47,16 @@ const channels = [
           :delay="(i + 1) as 1 | 2 | 3"
           class="card"
         >
-          <a :href="c.href" target="_blank" rel="noreferrer" class="card__link">
-            <span class="card__icon" :class="c.icon" />
+          <a
+            :href="c.href"
+            target="_blank"
+            rel="noreferrer"
+            class="card__link"
+          >
+            <span
+              class="card__icon"
+              :class="c.icon"
+            />
             <span class="card__body">
               <strong>{{ c.label }}</strong>
               <span>{{ c.handle }}</span>

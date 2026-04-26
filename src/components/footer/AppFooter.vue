@@ -30,13 +30,20 @@ const links = [
           href="https://github.com/maxmorhardt/maxstash/blob/main/LICENSE"
           target="_blank"
           rel="noreferrer"
-          >Apache 2.0</a
-        >
+        >Apache 2.0</a>
       </span>
       <!-- Social links -->
       <ul class="socials">
-        <li v-for="link in links" :key="link.href">
-          <a :href="link.href" target="_blank" rel="noreferrer" :aria-label="link.label">
+        <li
+          v-for="link in links"
+          :key="link.href"
+        >
+          <a
+            :href="link.href"
+            target="_blank"
+            rel="noreferrer"
+            :aria-label="link.label"
+          >
             <span :class="link.icon" />
             <span>{{ link.label }}</span>
           </a>

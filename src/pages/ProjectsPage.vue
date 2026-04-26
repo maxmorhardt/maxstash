@@ -94,9 +94,15 @@ const projects: Project[] = [
   <section class="projects section">
     <div class="container">
       <!-- Page heading -->
-      <RevealSection as="h1"> Projects </RevealSection>
+      <RevealSection as="h1">
+        Projects
+      </RevealSection>
       <!-- Lede -->
-      <RevealSection :delay="1" as="p" class="lede">
+      <RevealSection
+        :delay="1"
+        as="p"
+        class="lede"
+      >
         A connected ecosystem of frontends, APIs, and infrastructure I build and self-host. All open
         source under Apache 2.0 (or PolyForm Noncommercial for the games).
       </RevealSection>
@@ -114,17 +120,28 @@ const projects: Project[] = [
               <h3>{{ project.name }}</h3>
               <span class="badge">{{ project.category }}</span>
             </div>
-            <a :href="project.href" target="_blank" rel="noreferrer" aria-label="View on GitHub">
+            <a
+              :href="project.href"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="View on GitHub"
+            >
               <span class="pi pi-github" />
             </a>
           </div>
           <p>{{ project.description }}</p>
           <ul class="tags">
-            <li v-for="tag in project.tags" :key="tag">
+            <li
+              v-for="tag in project.tags"
+              :key="tag"
+            >
               {{ tag }}
             </li>
           </ul>
-          <div v-if="project.links" class="extras">
+          <div
+            v-if="project.links"
+            class="extras"
+          >
             <a
               v-for="link in project.links"
               :key="link.href"

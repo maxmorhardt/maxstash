@@ -6,16 +6,25 @@ import RevealSection from '../components/common/RevealSection.vue';
   <section class="about section">
     <div class="container">
       <!-- Page heading -->
-      <RevealSection as="h1"> About </RevealSection>
+      <RevealSection as="h1">
+        About
+      </RevealSection>
       <!-- Lede -->
-      <RevealSection :delay="1" as="p" class="lede">
+      <RevealSection
+        :delay="1"
+        as="p"
+        class="lede"
+      >
         I'm Max, a software engineer at Fidelity Investments. I like building things end-to-end,
         from the APIs and infrastructure to the interfaces people actually click on.
       </RevealSection>
 
       <!-- Detail cards -->
       <div class="grid">
-        <RevealSection :delay="1" class="block">
+        <RevealSection
+          :delay="1"
+          class="block"
+        >
           <h3>Day job</h3>
           <p>
             Software engineer at <strong>Fidelity Investments</strong>, working on full-stack
@@ -26,7 +35,10 @@ import RevealSection from '../components/common/RevealSection.vue';
             of <code>Bash</code> glue ties it all together.
           </p>
         </RevealSection>
-        <RevealSection :delay="2" class="block">
+        <RevealSection
+          :delay="2"
+          class="block"
+        >
           <h3>Homelab platform</h3>
           <p>
             Everything I build runs on a self-hosted Kubernetes cluster:
@@ -36,7 +48,10 @@ import RevealSection from '../components/common/RevealSection.vue';
             together.
           </p>
         </RevealSection>
-        <RevealSection :delay="3" class="block">
+        <RevealSection
+          :delay="3"
+          class="block"
+        >
           <h3>This site</h3>
           <p>
             Vue 3 single-page app built with <code>Vite</code>, <code>Pinia</code>, and
