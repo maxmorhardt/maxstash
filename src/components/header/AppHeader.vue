@@ -16,17 +16,35 @@ const items = [
 
 <template>
   <header class="app-header">
-    <Menubar :model="items" class="app-header__bar">
+    <Menubar
+      :model="items"
+      class="app-header__bar"
+    >
       <!-- Brand / logo -->
       <template #start>
-        <RouterLink to="/" class="brand" aria-label="maxstash home">
-          <img src="/logo.svg" alt="" class="brand__mark" width="28" height="28" />
+        <RouterLink
+          to="/"
+          class="brand"
+          aria-label="maxstash home"
+        >
+          <img
+            src="/logo.svg"
+            alt=""
+            class="brand__mark"
+            width="28"
+            height="28"
+          >
           <span class="brand__text">maxstash</span>
         </RouterLink>
       </template>
       <!-- Nav links (rendered per Menubar item) -->
       <template #item="{ item, props }">
-        <RouterLink v-if="item.route" :to="item.route" v-bind="props.action" class="nav-link">
+        <RouterLink
+          v-if="item.route"
+          :to="item.route"
+          v-bind="props.action"
+          class="nav-link"
+        >
           <span :class="item.icon" />
           <span>{{ item.label }}</span>
         </RouterLink>

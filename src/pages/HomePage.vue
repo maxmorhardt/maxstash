@@ -96,7 +96,10 @@ const featured = [
   <div class="home">
     <!-- Hero -->
     <section class="hero full-bleed">
-      <div class="hero__bg" aria-hidden="true">
+      <div
+        class="hero__bg"
+        aria-hidden="true"
+      >
         <div class="glow glow--1" />
         <div class="glow glow--2" />
         <div class="grid-overlay" />
@@ -105,26 +108,44 @@ const featured = [
         <RevealSection class="hero__eyebrow">
           <span class="dot" /> Open to Conversations
         </RevealSection>
-        <RevealSection :delay="1" as="h1">
-          Hi, I'm <span class="grad">Max</span>.<br />
+        <RevealSection
+          :delay="1"
+          as="h1"
+        >
+          Hi, I'm <span class="grad">Max</span>.<br>
           I design and ship <span class="grad">full-stack</span> software.
         </RevealSection>
-        <RevealSection :delay="2" as="p" class="hero__lede">
+        <RevealSection
+          :delay="2"
+          as="p"
+          class="hero__lede"
+        >
           Software engineer at Fidelity Investments. Day to day I work in Java + Spring Boot,
           Angular, React, and Python on Kubernetes in AWS, shipped through Jenkins and watched with
           Datadog. Outside of work I do the same thing with Go on a self-hosted Kubernetes platform.
         </RevealSection>
-        <RevealSection :delay="3" class="hero__cta">
+        <RevealSection
+          :delay="3"
+          class="hero__cta"
+        >
           <Button
             label="See Projects"
             icon="pi pi-arrow-right"
             icon-pos="right"
             @click="router.push('/projects')"
           />
-          <Button label="About me" severity="secondary" outlined @click="router.push('/about')" />
+          <Button
+            label="About me"
+            severity="secondary"
+            outlined
+            @click="router.push('/about')"
+          />
         </RevealSection>
       </div>
-      <div class="hero__scroll" aria-hidden="true">
+      <div
+        class="hero__scroll"
+        aria-hidden="true"
+      >
         <span class="pi pi-chevron-down" />
       </div>
     </section>
@@ -132,8 +153,17 @@ const featured = [
     <!-- Highlights -->
     <section class="section highlights full-bleed">
       <div class="container">
-        <RevealSection as="h2" class="section__title"> What I do </RevealSection>
-        <RevealSection :delay="1" as="p" class="section__lede">
+        <RevealSection
+          as="h2"
+          class="section__title"
+        >
+          What I do
+        </RevealSection>
+        <RevealSection
+          :delay="1"
+          as="p"
+          class="section__lede"
+        >
           A few areas where I spend most of my engineering time.
         </RevealSection>
         <div class="cards">
@@ -156,33 +186,61 @@ const featured = [
     <!-- Ecosystem -->
     <section class="section ecosystem full-bleed">
       <div class="container">
-        <RevealSection as="h2" class="section__title"> The stack, end to end </RevealSection>
-        <RevealSection :delay="1" as="p" class="section__lede">
+        <RevealSection
+          as="h2"
+          class="section__title"
+        >
+          The stack, end to end
+        </RevealSection>
+        <RevealSection
+          :delay="1"
+          as="p"
+          class="section__lede"
+        >
           One example: the squares game ships across six repos that all share the same homelab
           platform.
         </RevealSection>
 
         <div class="flow">
-          <RevealSection :delay="1" class="flow__node">
+          <RevealSection
+            :delay="1"
+            class="flow__node"
+          >
             <span class="pi pi-desktop" />
             <strong>squares</strong>
             <span class="muted">React + Redux UI</span>
           </RevealSection>
-          <span class="flow__arrow" aria-hidden="true">&rarr;</span>
-          <RevealSection :delay="2" class="flow__node">
+          <span
+            class="flow__arrow"
+            aria-hidden="true"
+          >&rarr;</span>
+          <RevealSection
+            :delay="2"
+            class="flow__node"
+          >
             <span class="pi pi-bolt" />
             <strong>squares-api</strong>
             <span class="muted">Go + Gin + Postgres + NATS</span>
           </RevealSection>
-          <span class="flow__arrow" aria-hidden="true">&rarr;</span>
-          <RevealSection :delay="3" class="flow__node">
+          <span
+            class="flow__arrow"
+            aria-hidden="true"
+          >&rarr;</span>
+          <RevealSection
+            :delay="3"
+            class="flow__node"
+          >
             <span class="pi pi-server" />
             <strong>k8s</strong>
             <span class="muted">Kubernetes + Authentik + observability</span>
           </RevealSection>
         </div>
 
-        <RevealSection :delay="2" as="p" class="flow__caption">
+        <RevealSection
+          :delay="2"
+          as="p"
+          class="flow__caption"
+        >
           Packaged with <strong>charts</strong> (Helm) and shipped via reusable
           <strong>workflows</strong> (GitHub Actions). Authenticated with
           <strong>Authentik</strong>, observed with Prometheus + Grafana + Loki.
@@ -193,8 +251,17 @@ const featured = [
     <!-- Stack chips -->
     <section class="section stack full-bleed">
       <div class="container">
-        <RevealSection as="h2" class="section__title"> Tools of the trade </RevealSection>
-        <RevealSection :delay="1" as="p" class="section__lede">
+        <RevealSection
+          as="h2"
+          class="section__title"
+        >
+          Tools of the trade
+        </RevealSection>
+        <RevealSection
+          :delay="1"
+          as="p"
+          class="section__lede"
+        >
           Day-to-day languages, frameworks, and platforms.
         </RevealSection>
         <div class="chips">
@@ -214,10 +281,21 @@ const featured = [
     <!-- Featured projects -->
     <section class="section featured full-bleed">
       <div class="container">
-        <RevealSection as="h2" class="section__title"> Featured work </RevealSection>
-        <RevealSection :delay="1" as="p" class="section__lede">
+        <RevealSection
+          as="h2"
+          class="section__title"
+        >
+          Featured work
+        </RevealSection>
+        <RevealSection
+          :delay="1"
+          as="p"
+          class="section__lede"
+        >
           A small slice of recent projects. More on the
-          <RouterLink to="/projects"> projects page </RouterLink>.
+          <RouterLink to="/projects">
+            projects page
+          </RouterLink>.
         </RevealSection>
         <div class="featured__grid">
           <RevealSection
@@ -228,13 +306,21 @@ const featured = [
           >
             <div class="project__head">
               <h3>{{ project.name }}</h3>
-              <a :href="project.href" target="_blank" rel="noreferrer" aria-label="View on GitHub">
+              <a
+                :href="project.href"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="View on GitHub"
+              >
                 <span class="pi pi-github" />
               </a>
             </div>
             <p>{{ project.blurb }}</p>
             <ul class="tags">
-              <li v-for="tag in project.tags" :key="tag">
+              <li
+                v-for="tag in project.tags"
+                :key="tag"
+              >
                 {{ tag }}
               </li>
             </ul>
@@ -246,12 +332,21 @@ const featured = [
     <!-- CTA -->
     <section class="section cta full-bleed">
       <div class="container cta__inner">
-        <RevealSection as="h2"> Let's build something. </RevealSection>
-        <RevealSection :delay="1" as="p">
+        <RevealSection as="h2">
+          Let's build something.
+        </RevealSection>
+        <RevealSection
+          :delay="1"
+          as="p"
+        >
           Have a project in mind, or just want to say hi? My inbox is open.
         </RevealSection>
         <RevealSection :delay="2">
-          <Button label="Get in touch" icon="pi pi-envelope" @click="router.push('/contact')" />
+          <Button
+            label="Get in touch"
+            icon="pi pi-envelope"
+            @click="router.push('/contact')"
+          />
         </RevealSection>
       </div>
     </section>
