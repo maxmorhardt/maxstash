@@ -54,11 +54,11 @@ import RevealSection from '../components/common/RevealSection.vue';
         >
           <h3>This site</h3>
           <p>
-            Vue 3 single-page app built with <code>Vite</code>, <code>Pinia</code>, and
-            <code>PrimeVue</code> on a custom design system. Containerized with
-            <code>Docker</code> behind <code>NGINX</code>, packaged into a <code>Helm</code> chart,
-            and deployed to my Kubernetes cluster through the same reusable
-            <code>GitHub Actions</code> pipeline that ships every other project here.
+            Vue 3 single-page app built with <code>Vite</code> and <code>PrimeVue</code> on a custom
+            design system. Containerized with <code>Docker</code> behind <code>NGINX</code>,
+            packaged into a <code>Helm</code> chart, and deployed to my Kubernetes cluster through
+            the same reusable <code>GitHub Actions</code> pipeline that ships every other project
+            here.
           </p>
         </RevealSection>
       </div>

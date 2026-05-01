@@ -1,5 +1,4 @@
 import { createApp } from 'vue';
-import { createPinia } from 'pinia';
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
@@ -7,7 +6,7 @@ import 'primeicons/primeicons.css';
 import './style.css';
 import App from './App.vue';
 import router from './router';
-import { useThemeStore } from './stores/theme';
+import { useTheme } from './composables/useTheme';
 
 const MaxstashPreset = definePreset(Aura, {
   semantic: {
@@ -59,8 +58,6 @@ const MaxstashPreset = definePreset(Aura, {
 
 const app = createApp(App);
 
-const pinia = createPinia();
-app.use(pinia);
 app.use(router);
 app.use(PrimeVue, {
   theme: {
@@ -71,6 +68,6 @@ app.use(PrimeVue, {
   },
 });
 
-useThemeStore(pinia).init();
+useTheme().init();
 
 app.mount('#app');

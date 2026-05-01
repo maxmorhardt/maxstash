@@ -61,8 +61,6 @@ const featured = [
     name: 'squares-api',
     blurb: 'Backend API that powers the Super Bowl squares game.',
     href: 'https://github.com/maxmorhardt/squares-api',
-    extraHref: 'https://squares-api.maxstash.io/swagger/index.html',
-    extraLabel: 'Swagger',
     tags: ['Go', 'Gin', 'GORM', 'PostgreSQL', 'NATS', 'OIDC', 'Swagger'],
   },
   {
@@ -87,7 +85,7 @@ const featured = [
     name: 'maxstash',
     blurb: 'This portfolio site.',
     href: 'https://github.com/maxmorhardt/maxstash',
-    tags: ['Vue 3', 'TypeScript', 'Vite', 'PrimeVue', 'Pinia'],
+    tags: ['Vue 3', 'TypeScript', 'Vite', 'PrimeVue'],
   },
 ];
 </script>
@@ -264,17 +262,19 @@ const featured = [
         >
           Day-to-day languages, frameworks, and platforms.
         </RevealSection>
-        <div class="chips">
-          <RevealSection
-            v-for="(item, i) in stack"
+        <RevealSection
+          :delay="2"
+          class="chips"
+        >
+          <span
+            v-for="item in stack"
             :key="item.name"
-            :delay="(i % 4) as 0 | 1 | 2 | 3"
             class="chip"
           >
             <span :class="item.icon" />
             <span>{{ item.name }}</span>
-          </RevealSection>
-        </div>
+          </span>
+        </RevealSection>
       </div>
     </section>
 
@@ -638,7 +638,20 @@ const featured = [
 }
 
 @media (max-width: 720px) {
+  .flow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .flow__node {
+    flex: 0 0 auto;
+    max-width: none;
+    width: 100%;
+    padding: 1rem;
+  }
+
   .flow__arrow {
+    align-self: center;
     transform: rotate(90deg);
   }
 }
