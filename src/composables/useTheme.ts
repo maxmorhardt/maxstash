@@ -39,6 +39,8 @@ function init() {
   applyClass();
 }
 
+const themeStore = reactive({ isDark, toggle, set, init });
+
 export function useTheme() {
-  return reactive({ isDark, toggle, set, init });
+  return themeStore;
 }

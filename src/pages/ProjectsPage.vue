@@ -260,7 +260,6 @@ const projects: Project[] = [
   border-top: 1px dashed var(--border);
 }
 
-/* Breathing room between tag chips and the extras divider */
 .tags {
   margin-bottom: 1rem;
 }
@@ -282,8 +281,6 @@ const projects: Project[] = [
   transform: translateY(-1px);
 }
 
-/* Override the generic .reveal fade-up with a card-specific entrance.
-   Cards rise, scale up, and un-tilt as they come into view. */
 .card.reveal {
   opacity: 0;
   transform: translateY(40px) scale(0.92) rotate(-1.5deg);
