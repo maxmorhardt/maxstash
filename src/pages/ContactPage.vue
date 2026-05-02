@@ -104,6 +104,7 @@ const channels = [
   padding: 1.5rem;
   text-decoration: none;
   color: var(--text-h);
+  min-width: 0;
 }
 
 .card__icon {
@@ -124,8 +125,11 @@ const channels = [
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0;
   font-size: 0.9rem;
   color: var(--text);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .card__body strong {

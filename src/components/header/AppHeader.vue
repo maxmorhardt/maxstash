@@ -2,9 +2,9 @@
 import { RouterLink } from 'vue-router';
 import Menubar from 'primevue/menubar';
 import Button from 'primevue/button';
-import { useThemeStore } from '../../stores/theme';
+import { useTheme } from '../../composables/useTheme';
 
-const theme = useThemeStore();
+const theme = useTheme();
 
 const items = [
   { label: 'Home', icon: 'pi pi-home', route: '/' },

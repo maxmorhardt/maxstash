@@ -85,7 +85,7 @@ const projects: Project[] = [
         icon: 'pi pi-external-link',
       },
     ],
-    tags: ['Vue 3', 'TypeScript', 'Vite', 'PrimeVue', 'Pinia'],
+    tags: ['Vue 3', 'TypeScript', 'Vite', 'PrimeVue'],
   },
 ];
 </script>
@@ -260,7 +260,6 @@ const projects: Project[] = [
   border-top: 1px dashed var(--border);
 }
 
-/* Breathing room between tag chips and the extras divider */
 .tags {
   margin-bottom: 1rem;
 }
@@ -280,5 +279,28 @@ const projects: Project[] = [
 
 .extras a:hover {
   transform: translateY(-1px);
+}
+
+.card.reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.92) rotate(-1.5deg);
+  transform-origin: center bottom;
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1) rotate(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card.reveal,
+  .card.reveal.is-visible {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
 }
 </style>

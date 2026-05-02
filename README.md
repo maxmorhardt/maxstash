@@ -4,7 +4,6 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 ![PrimeVue](https://img.shields.io/badge/PrimeVue-%2310B981.svg?style=for-the-badge&logo=vuedotjs&logoColor=white)
-![Pinia](https://img.shields.io/badge/Pinia-%23FFD859.svg?style=for-the-badge&logo=pinia&logoColor=black)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue?style=for-the-badge)
 
 ## Overview
@@ -15,7 +14,6 @@ Personal portfolio website built with Vue 3 and TypeScript. Features a full-widt
 
 - **Vue 3** with `<script setup>` and TypeScript
 - **PrimeVue + PrimeIcons** for the design system
-- **Pinia** for state management (theme, preferences)
 - **Vue Router** for client-side routing
 - **Light / Dark Mode** with system-preference detection and persistence
 - **Scroll Animations** powered by the `IntersectionObserver` API
@@ -30,7 +28,7 @@ The application is a static SPA. Pages are lazy-loaded route chunks served behin
 
 1. Install dependencies: `npm install`
 2. Start the development server: `npm run dev`
-3. Open browser to `http://localhost:3000`
+3. Open browser to `http://localhost:5173`
 
 ## Production Build
 

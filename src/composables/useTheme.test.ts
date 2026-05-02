@@ -1,35 +1,36 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { setActivePinia, createPinia } from 'pinia';
-import { useThemeStore } from './theme';
+import { useTheme } from './useTheme';
 
-describe('theme store', () => {
+describe('useTheme', () => {
   beforeEach(() => {
-    setActivePinia(createPinia());
     window.localStorage.clear();
     document.documentElement.classList.remove('dark');
+    useTheme().set('dark');
+    document.documentElement.classList.remove('dark');
+    window.localStorage.clear();
   });
 
   it('toggles dark mode and applies the dark class', () => {
-    const store = useThemeStore();
-    const initial = store.isDark;
-    store.toggle();
-    expect(store.isDark).toBe(!initial);
+    const theme = useTheme();
+    const initial = theme.isDark;
+    theme.toggle();
+    expect(theme.isDark).toBe(!initial);
     expect(document.documentElement.classList.contains('dark')).toBe(!initial);
   });
 
   it('persists the chosen mode to localStorage', () => {
-    const store = useThemeStore();
-    store.set('dark');
+    const theme = useTheme();
+    theme.set('dark');
     expect(window.localStorage.getItem('maxstash:theme')).toBe('dark');
-    store.set('light');
+    theme.set('light');
     expect(window.localStorage.getItem('maxstash:theme')).toBe('light');
   });
 
   it('init applies the current value to the document', () => {
-    const store = useThemeStore();
-    store.set('dark');
+    const theme = useTheme();
+    theme.set('dark');
     document.documentElement.classList.remove('dark');
-    store.init();
+    theme.init();
     expect(document.documentElement.classList.contains('dark')).toBe(true);
   });
 });
