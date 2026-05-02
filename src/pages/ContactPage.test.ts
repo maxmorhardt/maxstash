@@ -11,6 +11,8 @@ describe('ContactPage', () => {
     expect(wrapper.text()).toContain('Email');
     const links = wrapper.findAll('a');
     expect(links.length).toBe(3);
-    expect(links[0].attributes('href')).toContain('github.com');
+    const githubLink = links.find((link) => link.text().includes('GitHub'));
+    expect(githubLink).toBeTruthy();
+    expect(githubLink!.attributes('href')).toContain('github.com');
   });
 });
