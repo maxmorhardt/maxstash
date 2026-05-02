@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect, afterEach, vi } from 'vitest';
 import { defineComponent, h, nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
 import { useScrollReveal } from './useScrollReveal';
@@ -131,9 +131,5 @@ describe('useScrollReveal', () => {
     await nextTick();
     expect(observe).not.toHaveBeenCalled();
     wrapper.unmount();
-  });
-
-  beforeEach(() => {
-    // ensure no leftover observer from earlier test
   });
 });
