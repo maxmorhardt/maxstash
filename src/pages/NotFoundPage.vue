@@ -16,7 +16,7 @@ const router = useRouter();
       <!-- Actions -->
       <div class="actions">
         <Button label="Go home" icon="pi pi-home" @click="router.push('/')" />
-        <RouterLink to="/projects" class="link"> or browse projects &rarr; </RouterLink>
+        <RouterLink to="/projects" class="link">or browse projects &rarr;</RouterLink>
       </div>
     </div>
   </section>

@@ -30,8 +30,7 @@ const links = [
           href="https://github.com/maxmorhardt/maxstash/blob/main/LICENSE"
           target="_blank"
           rel="noreferrer"
-          >Apache 2.0</a
-        >
+          >Apache 2.0</a>
       </span>
       <!-- Social links -->
       <ul class="socials">
