@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import RevealSection from '../components/common/RevealSection.vue';
+import { usePageMeta } from '../composables/usePageMeta';
+
+usePageMeta({
+  title: 'Projects – Max Morhardt',
+  description:
+    "Explore Max Morhardt's projects: a real-time NFL squares app, Go APIs, a self-hosted Kubernetes platform, reusable Helm charts, and GitHub Actions workflows.",
+  canonical: 'https://maxstash.io/projects',
+});
 
 interface Project {
   name: string;

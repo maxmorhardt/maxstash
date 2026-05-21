@@ -3,6 +3,14 @@ import Button from 'primevue/button';
 import { useRouter } from 'vue-router';
 import { RouterLink } from 'vue-router';
 import RevealSection from '../components/common/RevealSection.vue';
+import { usePageMeta } from '../composables/usePageMeta';
+
+usePageMeta({
+  title: 'Max Morhardt – Software Engineer',
+  description:
+    'Max Morhardt is a software engineer at Fidelity Investments. Full-stack developer specializing in Java, Go, TypeScript, React, Vue 3, Kubernetes, and AWS.',
+  canonical: 'https://maxstash.io/',
+});
 
 const router = useRouter();
 
@@ -110,17 +118,17 @@ const featured = [
           :delay="1"
           as="h1"
         >
-          Hi, I'm <span class="grad">Max</span>.<br>
-          I design and ship <span class="grad">full-stack</span> software.
+          <span class="grad">Max Morhardt</span>,<br>
+          Software Engineer.
         </RevealSection>
         <RevealSection
           :delay="2"
           as="p"
           class="hero__lede"
         >
-          Software engineer at Fidelity Investments. Day to day I work in Java + Spring Boot,
-          Angular, React, and Python on Kubernetes in AWS, shipped through Jenkins and watched with
-          Datadog. Outside of work I do the same thing with Go on a self-hosted Kubernetes platform.
+          Software engineer at Fidelity Investments, building production systems in Java + Spring
+          Boot, Angular, React, and Python on Kubernetes in AWS. Independent projects apply the same
+          discipline, running Go APIs on a self-hosted Kubernetes platform.
         </RevealSection>
         <RevealSection
           :delay="3"
@@ -178,71 +186,6 @@ const featured = [
             <p>{{ h.body }}</p>
           </RevealSection>
         </div>
-      </div>
-    </section>
-
-    <!-- Ecosystem -->
-    <section class="section ecosystem full-bleed">
-      <div class="container">
-        <RevealSection
-          as="h2"
-          class="section__title"
-        >
-          The stack, end to end
-        </RevealSection>
-        <RevealSection
-          :delay="1"
-          as="p"
-          class="section__lede"
-        >
-          One example: the squares game ships across six repos that all share the same homelab
-          platform.
-        </RevealSection>
-
-        <div class="flow">
-          <RevealSection
-            :delay="1"
-            class="flow__node"
-          >
-            <span class="pi pi-desktop" />
-            <strong>squares</strong>
-            <span class="muted">React + Redux UI</span>
-          </RevealSection>
-          <span
-            class="flow__arrow"
-            aria-hidden="true"
-          >&rarr;</span>
-          <RevealSection
-            :delay="2"
-            class="flow__node"
-          >
-            <span class="pi pi-bolt" />
-            <strong>squares-api</strong>
-            <span class="muted">Go + Gin + Postgres + NATS</span>
-          </RevealSection>
-          <span
-            class="flow__arrow"
-            aria-hidden="true"
-          >&rarr;</span>
-          <RevealSection
-            :delay="3"
-            class="flow__node"
-          >
-            <span class="pi pi-server" />
-            <strong>k8s</strong>
-            <span class="muted">Kubernetes + Authentik + observability</span>
-          </RevealSection>
-        </div>
-
-        <RevealSection
-          :delay="2"
-          as="p"
-          class="flow__caption"
-        >
-          Packaged with <strong>charts</strong> (Helm) and shipped via reusable
-          <strong>workflows</strong> (GitHub Actions). Authenticated with
-          <strong>Authentik</strong>, observed with Prometheus + Grafana + Loki.
-        </RevealSection>
       </div>
     </section>
 
@@ -574,86 +517,6 @@ const featured = [
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.25rem;
-}
-
-.flow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: stretch;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-.flow__node {
-  flex: 1 1 220px;
-  max-width: 280px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.4rem;
-  padding: 1.25rem 1rem;
-  border-radius: 14px;
-  background: var(--bg-soft);
-  border: 1px solid var(--border);
-}
-
-.flow__node :first-child {
-  font-size: 1.5rem;
-  color: var(--accent);
-  margin-bottom: 0.25rem;
-}
-
-.flow__node strong {
-  color: var(--text-h);
-  font-family: var(--mono);
-  font-size: 0.95rem;
-}
-
-.flow__node .muted {
-  font-size: 0.8125rem;
-  opacity: 0.75;
-}
-
-.flow__arrow {
-  display: flex;
-  align-items: center;
-  font-size: 1.5rem;
-  color: var(--accent);
-  opacity: 0.6;
-}
-
-.flow__caption {
-  text-align: center;
-  max-width: 70ch;
-  margin: 0 auto;
-  color: var(--text);
-}
-
-.flow__caption strong {
-  color: var(--text-h);
-  font-family: var(--mono);
-  font-size: 0.9em;
-}
-
-@media (max-width: 720px) {
-  .flow {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .flow__node {
-    flex: 0 0 auto;
-    max-width: none;
-    width: 100%;
-    padding: 1rem;
-  }
-
-  .flow__arrow {
-    align-self: center;
-    transform: rotate(90deg);
-  }
 }
 
 .project {

@@ -14,7 +14,7 @@ const links = [
   },
   {
     label: 'Email',
-    href: 'mailto:maxmorhardt13@gmail.com',
+    href: 'mailto:max@maxstash.io',
     icon: 'pi pi-envelope',
   },
 ];

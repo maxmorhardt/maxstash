@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import RevealSection from '../components/common/RevealSection.vue';
+import { usePageMeta } from '../composables/usePageMeta';
+
+usePageMeta({
+  title: 'Contact – Max Morhardt',
+  description: 'Get in touch with Max Morhardt via GitHub, LinkedIn, or email.',
+  canonical: 'https://maxstash.io/contact',
+});
 
 const channels = [
   {
@@ -16,9 +23,9 @@ const channels = [
   },
   {
     label: 'Email',
-    href: 'mailto:maxmorhardt13@gmail.com',
+    href: 'mailto:max@maxstash.io',
     icon: 'pi pi-envelope',
-    handle: 'maxmorhardt13@gmail.com',
+    handle: 'max@maxstash.io',
   },
 ];
 </script>
@@ -149,5 +156,20 @@ const channels = [
   opacity: 1;
   transform: translate(2px, -2px);
   color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .contact {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .lede {
+    margin-bottom: 1.25rem;
+  }
+
+  .card__link {
+    padding: 1rem;
+  }
 }
 </style>

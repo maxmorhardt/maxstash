@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import RevealSection from '../components/common/RevealSection.vue';
+import { usePageMeta } from '../composables/usePageMeta';
+
+usePageMeta({
+  title: 'About – Max Morhardt',
+  description:
+    'About Max Morhardt, software engineer at Fidelity Investments building full-stack systems with Java, Go, TypeScript, and Kubernetes across cloud and homelab environments.',
+  canonical: 'https://maxstash.io/about',
+});
 </script>
 
 <template>
@@ -15,8 +23,8 @@ import RevealSection from '../components/common/RevealSection.vue';
         as="p"
         class="lede"
       >
-        I'm Max, a software engineer at Fidelity Investments. I like building things end-to-end,
-        from the APIs and infrastructure to the interfaces people actually click on.
+        Software engineer at Fidelity Investments, building production-grade systems across the full
+        stack, from API design and infrastructure to front-end interfaces.
       </RevealSection>
 
       <!-- Detail cards -->

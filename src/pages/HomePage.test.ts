@@ -32,7 +32,8 @@ describe('HomePage', () => {
       global: { plugins: [router], stubs: stubGlobals.stubs },
     });
 
-    expect(wrapper.text()).toContain("Hi, I'm");
+    expect(wrapper.text()).toContain('Max Morhardt');
+    expect(wrapper.text()).toContain('Software Engineer');
     expect(wrapper.text()).toContain('What I do');
     expect(wrapper.text()).toContain('Tools of the trade');
     expect(wrapper.text()).toContain('Featured work');
