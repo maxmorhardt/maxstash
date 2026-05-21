@@ -14,25 +14,16 @@ usePageMeta({
   <section class="about section">
     <div class="container">
       <!-- Page heading -->
-      <RevealSection as="h1">
-        About
-      </RevealSection>
+      <RevealSection as="h1"> About </RevealSection>
       <!-- Lede -->
-      <RevealSection
-        :delay="1"
-        as="p"
-        class="lede"
-      >
+      <RevealSection :delay="1" as="p" class="lede">
         Software engineer at Fidelity Investments, building production-grade systems across the full
         stack, from API design and infrastructure to front-end interfaces.
       </RevealSection>
 
       <!-- Detail cards -->
       <div class="grid">
-        <RevealSection
-          :delay="1"
-          class="block"
-        >
+        <RevealSection :delay="1" class="block">
           <h3>Day job</h3>
           <p>
             Software engineer at <strong>Fidelity Investments</strong>, working on full-stack
@@ -43,10 +34,7 @@ usePageMeta({
             of <code>Bash</code> glue ties it all together.
           </p>
         </RevealSection>
-        <RevealSection
-          :delay="2"
-          class="block"
-        >
+        <RevealSection :delay="2" class="block">
           <h3>Homelab platform</h3>
           <p>
             Everything I build runs on a self-hosted Kubernetes cluster:
@@ -56,10 +44,7 @@ usePageMeta({
             together.
           </p>
         </RevealSection>
-        <RevealSection
-          :delay="3"
-          class="block"
-        >
+        <RevealSection :delay="3" class="block">
           <h3>This site</h3>
           <p>
             Vue 3 single-page app built with <code>Vite</code> and <code>PrimeVue</code> on a custom

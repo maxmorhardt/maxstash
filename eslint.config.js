@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import globals from 'globals';
 import pluginVue from 'eslint-plugin-vue';
 import tseslint from 'typescript-eslint';
+import eslintConfigPrettier from 'eslint-config-prettier';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
@@ -12,6 +13,7 @@ export default defineConfig([
       js.configs.recommended,
       tseslint.configs.recommended,
       pluginVue.configs['flat/recommended'],
+      eslintConfigPrettier,
     ],
     languageOptions: {
       ecmaVersion: 2020,

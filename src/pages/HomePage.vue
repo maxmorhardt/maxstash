@@ -102,10 +102,7 @@ const featured = [
   <div class="home">
     <!-- Hero -->
     <section class="hero full-bleed">
-      <div
-        class="hero__bg"
-        aria-hidden="true"
-      >
+      <div class="hero__bg" aria-hidden="true">
         <div class="glow glow--1" />
         <div class="glow glow--2" />
         <div class="grid-overlay" />
@@ -114,44 +111,26 @@ const featured = [
         <RevealSection class="hero__eyebrow">
           <span class="dot" /> Open to Conversations
         </RevealSection>
-        <RevealSection
-          :delay="1"
-          as="h1"
-        >
-          <span class="grad">Max Morhardt</span>,<br>
+        <RevealSection :delay="1" as="h1">
+          <span class="grad">Max Morhardt</span>,<br />
           Software Engineer.
         </RevealSection>
-        <RevealSection
-          :delay="2"
-          as="p"
-          class="hero__lede"
-        >
+        <RevealSection :delay="2" as="p" class="hero__lede">
           Software engineer at Fidelity Investments, building production systems in Java + Spring
           Boot, Angular, React, and Python on Kubernetes in AWS. Independent projects apply the same
           discipline, running Go APIs on a self-hosted Kubernetes platform.
         </RevealSection>
-        <RevealSection
-          :delay="3"
-          class="hero__cta"
-        >
+        <RevealSection :delay="3" class="hero__cta">
           <Button
             label="See Projects"
             icon="pi pi-arrow-right"
             icon-pos="right"
             @click="router.push('/projects')"
           />
-          <Button
-            label="About me"
-            severity="secondary"
-            outlined
-            @click="router.push('/about')"
-          />
+          <Button label="About me" severity="secondary" outlined @click="router.push('/about')" />
         </RevealSection>
       </div>
-      <div
-        class="hero__scroll"
-        aria-hidden="true"
-      >
+      <div class="hero__scroll" aria-hidden="true">
         <span class="pi pi-chevron-down" />
       </div>
     </section>
@@ -159,17 +138,8 @@ const featured = [
     <!-- Highlights -->
     <section class="section highlights full-bleed">
       <div class="container">
-        <RevealSection
-          as="h2"
-          class="section__title"
-        >
-          What I do
-        </RevealSection>
-        <RevealSection
-          :delay="1"
-          as="p"
-          class="section__lede"
-        >
+        <RevealSection as="h2" class="section__title"> What I do </RevealSection>
+        <RevealSection :delay="1" as="p" class="section__lede">
           A few areas where I spend most of my engineering time.
         </RevealSection>
         <div class="cards">
@@ -192,28 +162,12 @@ const featured = [
     <!-- Stack chips -->
     <section class="section stack full-bleed">
       <div class="container">
-        <RevealSection
-          as="h2"
-          class="section__title"
-        >
-          Tools of the trade
-        </RevealSection>
-        <RevealSection
-          :delay="1"
-          as="p"
-          class="section__lede"
-        >
+        <RevealSection as="h2" class="section__title"> Tools of the trade </RevealSection>
+        <RevealSection :delay="1" as="p" class="section__lede">
           Day-to-day languages, frameworks, and platforms.
         </RevealSection>
-        <RevealSection
-          :delay="2"
-          class="chips"
-        >
-          <span
-            v-for="item in stack"
-            :key="item.name"
-            class="chip"
-          >
+        <RevealSection :delay="2" class="chips">
+          <span v-for="item in stack" :key="item.name" class="chip">
             <span :class="item.icon" />
             <span>{{ item.name }}</span>
           </span>
@@ -224,21 +178,10 @@ const featured = [
     <!-- Featured projects -->
     <section class="section featured full-bleed">
       <div class="container">
-        <RevealSection
-          as="h2"
-          class="section__title"
-        >
-          Featured work
-        </RevealSection>
-        <RevealSection
-          :delay="1"
-          as="p"
-          class="section__lede"
-        >
+        <RevealSection as="h2" class="section__title"> Featured work </RevealSection>
+        <RevealSection :delay="1" as="p" class="section__lede">
           A small slice of recent projects. More on the
-          <RouterLink to="/projects">
-            projects page
-          </RouterLink>.
+          <RouterLink to="/projects"> projects page </RouterLink>.
         </RevealSection>
         <div class="featured__grid">
           <RevealSection
@@ -249,21 +192,13 @@ const featured = [
           >
             <div class="project__head">
               <h3>{{ project.name }}</h3>
-              <a
-                :href="project.href"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="View on GitHub"
-              >
+              <a :href="project.href" target="_blank" rel="noreferrer" aria-label="View on GitHub">
                 <span class="pi pi-github" />
               </a>
             </div>
             <p>{{ project.blurb }}</p>
             <ul class="tags">
-              <li
-                v-for="tag in project.tags"
-                :key="tag"
-              >
+              <li v-for="tag in project.tags" :key="tag">
                 {{ tag }}
               </li>
             </ul>
@@ -275,21 +210,12 @@ const featured = [
     <!-- CTA -->
     <section class="section cta full-bleed">
       <div class="container cta__inner">
-        <RevealSection as="h2">
-          Let's build something.
-        </RevealSection>
-        <RevealSection
-          :delay="1"
-          as="p"
-        >
+        <RevealSection as="h2"> Let's build something. </RevealSection>
+        <RevealSection :delay="1" as="p">
           Have a project in mind, or just want to say hi? My inbox is open.
         </RevealSection>
         <RevealSection :delay="2">
-          <Button
-            label="Get in touch"
-            icon="pi pi-envelope"
-            @click="router.push('/contact')"
-          />
+          <Button label="Get in touch" icon="pi pi-envelope" @click="router.push('/contact')" />
         </RevealSection>
       </div>
     </section>
