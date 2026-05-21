@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import RevealSection from '../components/common/RevealSection.vue';
+import { usePageMeta } from '../composables/usePageMeta';
+
+usePageMeta({
+  title: 'Contact – Max Morhardt',
+  description: 'Get in touch with Max Morhardt via GitHub, LinkedIn, or email.',
+  canonical: 'https://maxstash.io/contact',
+});
 
 const channels = [
   {
@@ -16,9 +23,9 @@ const channels = [
   },
   {
     label: 'Email',
-    href: 'mailto:maxmorhardt13@gmail.com',
+    href: 'mailto:max@maxstash.io',
     icon: 'pi pi-envelope',
-    handle: 'maxmorhardt13@gmail.com',
+    handle: 'max@maxstash.io',
   },
 ];
 </script>
@@ -27,15 +34,9 @@ const channels = [
   <section class="contact section">
     <div class="container">
       <!-- Page heading -->
-      <RevealSection as="h1">
-        Contact
-      </RevealSection>
+      <RevealSection as="h1"> Contact </RevealSection>
       <!-- Lede -->
-      <RevealSection
-        :delay="1"
-        as="p"
-        class="lede"
-      >
+      <RevealSection :delay="1" as="p" class="lede">
         The fastest ways to reach me. I usually respond within a day or two.
       </RevealSection>
 
@@ -47,16 +48,8 @@ const channels = [
           :delay="(i + 1) as 1 | 2 | 3"
           class="card"
         >
-          <a
-            :href="c.href"
-            target="_blank"
-            rel="noreferrer"
-            class="card__link"
-          >
-            <span
-              class="card__icon"
-              :class="c.icon"
-            />
+          <a :href="c.href" target="_blank" rel="noreferrer" class="card__link">
+            <span class="card__icon" :class="c.icon" />
             <span class="card__body">
               <strong>{{ c.label }}</strong>
               <span>{{ c.handle }}</span>
@@ -149,5 +142,20 @@ const channels = [
   opacity: 1;
   transform: translate(2px, -2px);
   color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .contact {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .lede {
+    margin-bottom: 1.25rem;
+  }
+
+  .card__link {
+    padding: 1rem;
+  }
 }
 </style>
