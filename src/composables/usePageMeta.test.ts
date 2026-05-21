@@ -30,39 +30,64 @@ describe('usePageMeta', () => {
   });
 
   it('sets document title', () => {
-    mountPage({ title: 'Test Title', description: 'Desc', canonical: 'https://maxstash.io/' });
+    const wrapper = mountPage({
+      title: 'Test Title',
+      description: 'Desc',
+      canonical: 'https://maxstash.io/',
+    });
     expect(document.title).toBe('Test Title');
+    wrapper.unmount();
   });
 
   it('updates meta description', () => {
-    mountPage({ title: 'T', description: 'My description', canonical: 'https://maxstash.io/' });
+    const wrapper = mountPage({
+      title: 'T',
+      description: 'My description',
+      canonical: 'https://maxstash.io/',
+    });
     expect(document.querySelector('meta[name="description"]')?.getAttribute('content')).toBe(
       'My description'
     );
+    wrapper.unmount();
   });
 
   it('updates og:title and og:description', () => {
-    mountPage({ title: 'OG Title', description: 'OG Desc', canonical: 'https://maxstash.io/' });
+    const wrapper = mountPage({
+      title: 'OG Title',
+      description: 'OG Desc',
+      canonical: 'https://maxstash.io/',
+    });
     expect(document.querySelector('meta[property="og:title"]')?.getAttribute('content')).toBe(
       'OG Title'
     );
     expect(document.querySelector('meta[property="og:description"]')?.getAttribute('content')).toBe(
       'OG Desc'
     );
+    wrapper.unmount();
   });
 
   it('updates og:url', () => {
-    mountPage({ title: 'T', description: 'D', canonical: 'https://maxstash.io/about' });
+    const wrapper = mountPage({
+      title: 'T',
+      description: 'D',
+      canonical: 'https://maxstash.io/about',
+    });
     expect(document.querySelector('meta[property="og:url"]')?.getAttribute('content')).toBe(
       'https://maxstash.io/about'
     );
+    wrapper.unmount();
   });
 
   it('creates canonical link when absent', () => {
-    mountPage({ title: 'T', description: 'D', canonical: 'https://maxstash.io/projects' });
+    const wrapper = mountPage({
+      title: 'T',
+      description: 'D',
+      canonical: 'https://maxstash.io/projects',
+    });
     expect((document.querySelector('link[rel="canonical"]') as HTMLLinkElement)?.href).toBe(
       'https://maxstash.io/projects'
     );
+    wrapper.unmount();
   });
 
   it('updates existing canonical link', () => {
@@ -71,17 +96,21 @@ describe('usePageMeta', () => {
     link.href = 'https://maxstash.io/';
     document.head.appendChild(link);
 
-    mountPage({ title: 'T', description: 'D', canonical: 'https://maxstash.io/about' });
+    const wrapper = mountPage({
+      title: 'T',
+      description: 'D',
+      canonical: 'https://maxstash.io/about',
+    });
     expect((document.querySelector('link[rel="canonical"]') as HTMLLinkElement)?.href).toBe(
       'https://maxstash.io/about'
     );
+    wrapper.unmount();
   });
 
   it('handles missing meta elements gracefully', () => {
     document.head.innerHTML = '';
-    expect(() =>
-      mountPage({ title: 'T', description: 'D', canonical: 'https://maxstash.io/' })
-    ).not.toThrow();
+    const wrapper = mountPage({ title: 'T', description: 'D', canonical: 'https://maxstash.io/' });
     expect(document.title).toBe('T');
+    wrapper.unmount();
   });
 });
