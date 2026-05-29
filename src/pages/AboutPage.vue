@@ -27,21 +27,12 @@ usePageMeta({
         <RevealSection :delay="1" class="block">
           <h3>Day job</h3>
           <p>
-            Software engineer at
-            <strong>Fidelity Investments</strong>, working on full-stack systems across
-            <code>Java + Spring Boot</code>, <code>Angular</code>, and
-            <code>Python</code>
-            (scripting and
-            <code>FastAPI</code>
-            services). Everything runs on
-            <code>Kubernetes</code>
-            in
-            <code>AWS</code>, shipped through
-            <code>Jenkins</code>
-            pipelines and monitored with
-            <code>Datadog</code>. A healthy amount of
-            <code>Bash</code>
-            glue ties it all together.
+            Software engineer at <strong>Fidelity Investments</strong>, working on full-stack
+            systems across <code>Java + Spring Boot</code>, <code>Angular</code>, and
+            <code>Python</code> (scripting and <code>FastAPI</code> services). Everything runs on
+            <code>Kubernetes</code> in <code>AWS</code>, shipped through
+            <code>Jenkins</code> pipelines and monitored with <code>Datadog</code>. A healthy amount
+            of <code>Bash</code> glue ties it all together.
           </p>
         </RevealSection>
 
@@ -49,13 +40,8 @@ usePageMeta({
           <h3>Homelab platform</h3>
           <p>
             Everything I build runs on a self-hosted Kubernetes cluster:
-            <code>Authentik</code>
-            for OIDC/SAML,
-            <code>CloudNativePG</code>
-            HA,
-            <code>NATS</code>
-            messaging, and
-            <code>Prometheus + Grafana + Loki</code>
+            <code>Authentik</code> for OIDC/SAML, <code>CloudNativePG</code> HA,
+            <code>NATS</code> messaging, and <code>Prometheus + Grafana + Loki</code>
             for observability. Reusable Helm charts and GitHub Actions workflows tie it all
             together.
           </p>
@@ -64,18 +50,11 @@ usePageMeta({
         <RevealSection :delay="3" class="block">
           <h3>This site</h3>
           <p>
-            Vue 3 single-page app built with
-            <code>Vite</code>
-            and
-            <code>PrimeVue</code>
-            on a custom design system. Containerized with
-            <code>Docker</code>
-            behind
-            <code>NGINX</code>, packaged into a
-            <code>Helm</code>
-            chart, and deployed to my Kubernetes cluster through the same reusable
-            <code>GitHub Actions</code>
-            pipeline that ships every other project here.
+            Vue 3 single-page app built with <code>Vite</code> and <code>PrimeVue</code> on a custom
+            design system. Containerized with <code>Docker</code> behind <code>NGINX</code>,
+            packaged into a <code>Helm</code> chart, and deployed to my Kubernetes cluster through
+            the same reusable <code>GitHub Actions</code> pipeline that ships every other project
+            here.
           </p>
         </RevealSection>
       </div>
