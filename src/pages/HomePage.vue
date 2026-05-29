@@ -172,7 +172,11 @@ const featured = [
         <RevealSection :delay="1" as="p" class="section__lede">
           Day-to-day languages, frameworks, and platforms.
         </RevealSection>
-        <div ref="chipsTarget" class="chips" :class="{ 'is-visible': chipsVisible }">
+        <div
+          :ref="(el: unknown) => (chipsTarget = el as HTMLDivElement | null)"
+          class="chips"
+          :class="{ 'is-visible': chipsVisible }"
+        >
           <span
             v-for="(item, i) in stack"
             :key="item.name"
