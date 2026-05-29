@@ -33,20 +33,21 @@ const channels = [
 <template>
   <section class="contact section">
     <div class="container">
-      <!-- Page heading -->
-      <RevealSection as="h1"> Contact </RevealSection>
-      <!-- Lede -->
-      <RevealSection :delay="1" as="p" class="lede">
+      <!-- page heading -->
+      <RevealSection as="h1" class="reveal--left">Contact</RevealSection>
+
+      <!-- lede -->
+      <RevealSection :delay="1" as="p" class="lede reveal--left">
         The fastest ways to reach me. I usually respond within a day or two.
       </RevealSection>
 
-      <!-- Contact channel cards -->
+      <!-- contact channel cards -->
       <div class="grid">
         <RevealSection
           v-for="(c, i) in channels"
           :key="c.label"
           :delay="(i + 1) as 1 | 2 | 3"
-          class="card"
+          class="card reveal--scale"
         >
           <a :href="c.href" target="_blank" rel="noreferrer" class="card__link">
             <span class="card__icon" :class="c.icon" />
@@ -84,10 +85,22 @@ const channels = [
     box-shadow 0.3s ease;
 }
 
+.card.reveal {
+  transition:
+    opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
 .card:hover {
   transform: translateY(-4px);
   border-color: var(--accent-border);
   box-shadow: var(--shadow);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .card__link {

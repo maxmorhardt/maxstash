@@ -23,18 +23,10 @@ const links = [
 <template>
   <footer class="app-footer">
     <div class="app-footer__inner">
-      <!-- Copyright + license -->
-      <span class="app-footer__copy">
-        &copy; {{ year }} Max Morhardt &middot;
-        <a
-          href="https://github.com/maxmorhardt/maxstash/blob/main/LICENSE"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Apache 2.0
-        </a>
-      </span>
-      <!-- Social links -->
+      <!-- copyright -->
+      <span class="app-footer__copy">&copy; {{ year }} Max Morhardt</span>
+
+      <!-- social links -->
       <ul class="socials">
         <li v-for="link in links" :key="link.href">
           <a :href="link.href" target="_blank" rel="noreferrer" :aria-label="link.label">
@@ -102,14 +94,5 @@ const links = [
 .app-footer__copy {
   font-size: 0.8125rem;
   opacity: 0.8;
-}
-
-.app-footer__copy a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.app-footer__copy a:hover {
-  color: var(--accent);
 }
 </style>

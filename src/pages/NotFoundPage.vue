@@ -11,9 +11,9 @@ const router = useRouter();
     <div class="container">
       <!-- 404 code -->
       <h1 class="code">404</h1>
-      <!-- Message -->
+      <!-- message -->
       <p class="lede">This page doesn't exist (yet).</p>
-      <!-- Actions -->
+      <!-- actions -->
       <div class="actions">
         <Button label="Go home" icon="pi pi-home" @click="router.push('/')" />
         <RouterLink to="/projects" class="link">or browse projects &rarr;</RouterLink>

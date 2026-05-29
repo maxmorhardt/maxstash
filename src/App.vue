@@ -6,13 +6,15 @@ import AppFooter from './components/footer/AppFooter.vue';
 
 <template>
   <div class="app">
-    <!-- Site header / navigation -->
+    <!-- site header / navigation -->
     <AppHeader />
-    <!-- Routed page content -->
+
+    <!-- routed page content -->
     <main class="app-main">
       <RouterView />
     </main>
-    <!-- Site footer -->
+
+    <!-- site footer -->
     <AppFooter />
   </div>
 </template>

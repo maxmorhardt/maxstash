@@ -17,21 +17,23 @@ const items = [
 <template>
   <header class="app-header">
     <Menubar :model="items" class="app-header__bar">
-      <!-- Brand / logo -->
+      <!-- brand / logo -->
       <template #start>
         <RouterLink to="/" class="brand" aria-label="maxstash home">
           <img src="/logo.svg" alt="" class="brand__mark" width="28" height="28" />
           <span class="brand__text">maxstash</span>
         </RouterLink>
       </template>
-      <!-- Nav links (rendered per Menubar item) -->
+
+      <!-- nav links -->
       <template #item="{ item, props }">
         <RouterLink v-if="item.route" :to="item.route" v-bind="props.action" class="nav-link">
           <span :class="item.icon" />
           <span>{{ item.label }}</span>
         </RouterLink>
       </template>
-      <!-- Theme toggle -->
+
+      <!-- theme toggle -->
       <template #end>
         <Button
           :icon="theme.isDark ? 'pi pi-sun' : 'pi pi-moon'"
@@ -66,8 +68,6 @@ const items = [
   margin: 0 auto;
 }
 
-/* PrimeVue keeps the focused/active background on a menubar item after click.
-   Suppress it so the hover-style highlight doesn't linger. */
 .app-header :deep(.p-menubar-item:not(:hover) > .p-menubar-item-content),
 .app-header :deep(.p-menubar-item:not(:hover)[data-p-focused='true'] > .p-menubar-item-content),
 .app-header :deep(.p-menubar-item.p-focus:not(:hover) > .p-menubar-item-content) {

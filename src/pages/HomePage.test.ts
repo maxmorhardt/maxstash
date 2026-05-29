@@ -8,7 +8,10 @@ function findButtonByLabel(wrapper: VueWrapper, label: string): DOMWrapper<HTMLB
   const button = wrapper.findAll('button').find((b) => b.text().trim() === label) as
     | DOMWrapper<HTMLButtonElement>
     | undefined;
-  if (!button) throw new Error(`Button with label "${label}" not found`);
+  if (!button) {
+    throw new Error(`Button with label "${label}" not found`);
+  }
+
   return button;
 }
 
