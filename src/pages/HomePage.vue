@@ -116,8 +116,7 @@ const featured = [
           Open to Conversations
         </RevealSection>
         <RevealSection :delay="1" as="h1">
-          <span class="grad">Max Morhardt</span>
-          ,
+          <span class="grad">Max Morhardt</span>,
           <br />
           Software Engineer.
         </RevealSection>
@@ -196,8 +195,7 @@ const featured = [
         <RevealSection as="h2" class="section__title">Featured work</RevealSection>
         <RevealSection :delay="1" as="p" class="section__lede">
           A small slice of recent projects. More on the
-          <RouterLink to="/projects">projects page</RouterLink>
-          .
+          <RouterLink to="/projects">projects page</RouterLink>.
         </RevealSection>
         <div class="featured__grid">
           <RevealSection

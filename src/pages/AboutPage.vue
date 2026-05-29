@@ -28,24 +28,18 @@ usePageMeta({
           <h3>Day job</h3>
           <p>
             Software engineer at
-            <strong>Fidelity Investments</strong>
-            , working on full-stack systems across
-            <code>Java + Spring Boot</code>
-            ,
-            <code>Angular</code>
-            , and
+            <strong>Fidelity Investments</strong>, working on full-stack systems across
+            <code>Java + Spring Boot</code>, <code>Angular</code>, and
             <code>Python</code>
             (scripting and
             <code>FastAPI</code>
             services). Everything runs on
             <code>Kubernetes</code>
             in
-            <code>AWS</code>
-            , shipped through
+            <code>AWS</code>, shipped through
             <code>Jenkins</code>
             pipelines and monitored with
-            <code>Datadog</code>
-            . A healthy amount of
+            <code>Datadog</code>. A healthy amount of
             <code>Bash</code>
             glue ties it all together.
           </p>
@@ -77,8 +71,7 @@ usePageMeta({
             on a custom design system. Containerized with
             <code>Docker</code>
             behind
-            <code>NGINX</code>
-            , packaged into a
+            <code>NGINX</code>, packaged into a
             <code>Helm</code>
             chart, and deployed to my Kubernetes cluster through the same reusable
             <code>GitHub Actions</code>
