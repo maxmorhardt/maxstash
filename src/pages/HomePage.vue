@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import { RouterLink } from 'vue-router';
 import RevealSection from '../components/common/RevealSection.vue';
 import { usePageMeta } from '../composables/usePageMeta';
+import { useScrollReveal } from '../composables/useScrollReveal';
 
 usePageMeta({
   title: 'Max Morhardt – Software Engineer',
@@ -13,6 +14,8 @@ usePageMeta({
 });
 
 const router = useRouter();
+
+const { target: chipsTarget, visible: chipsVisible } = useScrollReveal<HTMLDivElement>();
 
 const stack = [
   { name: 'Java + Spring Boot', icon: 'pi pi-server' },
@@ -100,7 +103,7 @@ const featured = [
 
 <template>
   <div class="home">
-    <!-- Hero -->
+    <!-- hero -->
     <section class="hero full-bleed">
       <div class="hero__bg" aria-hidden="true">
         <div class="glow glow--1" />
@@ -109,10 +112,12 @@ const featured = [
       </div>
       <div class="container hero__inner">
         <RevealSection class="hero__eyebrow">
-          <span class="dot" /> Open to Conversations
+          <span class="dot" />
+          Open to Conversations
         </RevealSection>
         <RevealSection :delay="1" as="h1">
-          <span class="grad">Max Morhardt</span>,<br />
+          <span class="grad">Max Morhardt</span>,
+          <br />
           Software Engineer.
         </RevealSection>
         <RevealSection :delay="2" as="p" class="hero__lede">
@@ -135,10 +140,10 @@ const featured = [
       </div>
     </section>
 
-    <!-- Highlights -->
+    <!-- highlights -->
     <section class="section highlights full-bleed">
       <div class="container">
-        <RevealSection as="h2" class="section__title"> What I do </RevealSection>
+        <RevealSection as="h2" class="section__title">What I do</RevealSection>
         <RevealSection :delay="1" as="p" class="section__lede">
           A few areas where I spend most of my engineering time.
         </RevealSection>
@@ -147,7 +152,7 @@ const featured = [
             v-for="(h, i) in highlights"
             :key="h.title"
             :delay="(i + 1) as 1 | 2 | 3"
-            class="card"
+            class="card reveal--rise"
           >
             <div class="card__icon">
               <span :class="h.icon" />
@@ -159,29 +164,38 @@ const featured = [
       </div>
     </section>
 
-    <!-- Stack chips -->
+    <!-- stack chips -->
     <section class="section stack full-bleed">
       <div class="container">
-        <RevealSection as="h2" class="section__title"> Tools of the trade </RevealSection>
+        <RevealSection as="h2" class="section__title">Tools of the trade</RevealSection>
         <RevealSection :delay="1" as="p" class="section__lede">
           Day-to-day languages, frameworks, and platforms.
         </RevealSection>
-        <RevealSection :delay="2" class="chips">
-          <span v-for="item in stack" :key="item.name" class="chip">
+        <div
+          :ref="(el: unknown) => (chipsTarget = el as HTMLDivElement | null)"
+          class="chips"
+          :class="{ 'is-visible': chipsVisible }"
+        >
+          <span
+            v-for="(item, i) in stack"
+            :key="item.name"
+            class="chip"
+            :style="{ transitionDelay: `${i * 45}ms` }"
+          >
             <span :class="item.icon" />
             <span>{{ item.name }}</span>
           </span>
-        </RevealSection>
+        </div>
       </div>
     </section>
 
-    <!-- Featured projects -->
+    <!-- featured projects -->
     <section class="section featured full-bleed">
       <div class="container">
-        <RevealSection as="h2" class="section__title"> Featured work </RevealSection>
+        <RevealSection as="h2" class="section__title">Featured work</RevealSection>
         <RevealSection :delay="1" as="p" class="section__lede">
           A small slice of recent projects. More on the
-          <RouterLink to="/projects"> projects page </RouterLink>.
+          <RouterLink to="/projects">projects page</RouterLink>.
         </RevealSection>
         <div class="featured__grid">
           <RevealSection
@@ -189,6 +203,7 @@ const featured = [
             :key="project.name"
             :delay="(i + 1) as 1 | 2 | 3"
             class="project"
+            :class="i % 2 === 0 ? 'reveal--left' : 'reveal--right'"
           >
             <div class="project__head">
               <h3>{{ project.name }}</h3>
@@ -207,15 +222,20 @@ const featured = [
       </div>
     </section>
 
-    <!-- CTA -->
+    <!-- cta -->
     <section class="section cta full-bleed">
       <div class="container cta__inner">
-        <RevealSection as="h2"> Let's build something. </RevealSection>
+        <RevealSection as="h2" class="reveal--scale">Let's build something.</RevealSection>
         <RevealSection :delay="1" as="p">
           Have a project in mind, or just want to say hi? My inbox is open.
         </RevealSection>
-        <RevealSection :delay="2">
-          <Button label="Get in touch" icon="pi pi-envelope" @click="router.push('/contact')" />
+        <RevealSection :delay="2" class="reveal--rise">
+          <Button
+            label="Get in touch"
+            icon="pi pi-arrow-right"
+            icon-pos="right"
+            @click="router.push('/contact')"
+          />
         </RevealSection>
       </div>
     </section>
@@ -391,10 +411,22 @@ const featured = [
     box-shadow 0.3s ease;
 }
 
+.card.reveal {
+  transition:
+    opacity 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
 .card:hover {
   transform: translateY(-4px);
   border-color: var(--accent-border);
   box-shadow: var(--shadow);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .card__icon {
@@ -427,11 +459,33 @@ const featured = [
   border: 1px solid var(--border);
   font-size: 0.95rem;
   color: var(--text-h);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.chips.is-visible .chip {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .chip:hover {
   border-color: var(--accent-border);
   color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    opacity: 1;
+    transform: none;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
 }
 
 .featured {
@@ -456,10 +510,22 @@ const featured = [
     box-shadow 0.3s ease;
 }
 
+.project.reveal {
+  transition:
+    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
 .project:hover {
   transform: translateY(-4px);
   border-color: var(--accent-border);
   box-shadow: var(--shadow);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .project__head {
