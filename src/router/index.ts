@@ -37,10 +37,14 @@ const router = createRouter({
 });
 
 // preload all route chunks after the first navigation
+type AsyncComponentLoader = () => Promise<unknown>;
+
 router.isReady().then(() => {
   const preload = () =>
     routes.forEach((r) => {
-      if (typeof r.component === 'function') (r.component as () => void)();
+      if (typeof r.component === 'function') {
+        (r.component as AsyncComponentLoader)().catch(() => undefined);
+      }
     });
 
   if ('requestIdleCallback' in window) {

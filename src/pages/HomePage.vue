@@ -487,7 +487,8 @@ const featured = [
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chip {
+  .chip,
+  .chips.is-visible .chip {
     opacity: 1;
     transform: none;
     animation: none;
