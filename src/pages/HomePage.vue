@@ -180,7 +180,7 @@ const featured = [
             v-for="(item, i) in stack"
             :key="item.name"
             class="chip"
-            :style="{ transitionDelay: `${i * 45}ms` }"
+            :style="{ animationDelay: `${i * 45}ms` }"
           >
             <span :class="item.icon" />
             <span>{{ item.name }}</span>
@@ -449,6 +449,17 @@ const featured = [
   justify-content: center;
 }
 
+@keyframes chip-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .chip {
   display: inline-flex;
   align-items: center;
@@ -462,15 +473,12 @@ const featured = [
   opacity: 0;
   transform: translateY(12px);
   transition:
-    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.2s ease,
     color 0.2s ease;
 }
 
 .chips.is-visible .chip {
-  opacity: 1;
-  transform: translateY(0);
+  animation: chip-reveal 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .chip:hover {
@@ -482,9 +490,7 @@ const featured = [
   .chip {
     opacity: 1;
     transform: none;
-    transition:
-      border-color 0.2s ease,
-      color 0.2s ease;
+    animation: none;
   }
 }
 

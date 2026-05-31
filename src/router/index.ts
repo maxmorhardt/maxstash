@@ -36,4 +36,18 @@ const router = createRouter({
   },
 });
 
+// preload all route chunks after the first navigation
+router.isReady().then(() => {
+  const preload = () =>
+    routes.forEach((r) => {
+      if (typeof r.component === 'function') (r.component as () => void)();
+    });
+
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(preload);
+  } else {
+    setTimeout(preload, 100);
+  }
+});
+
 export default router;
