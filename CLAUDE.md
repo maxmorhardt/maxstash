@@ -17,12 +17,12 @@ This guide provides context for coding agents working in this repository. Maxsta
 
 ## Tooling
 
-- Package manager: **npm**.
-- Build/dev: **Vite** (`npm run dev`, `npm run build`, `npm run preview`).
-- Lint: **ESLint** flat config (`npm run lint`).
-- Format: **Prettier** (`npm run format`); enforced on commit via **Husky + lint-staged**.
-- Type check: `npm run type-check` (uses `vue-tsc`).
-- Tests: **Vitest** + **@vue/test-utils** + **jsdom** (`npm run test`, `npm run test:watch`, `npm run test:coverage`).
+- Package manager: **pnpm** (pinned via the `packageManager` field; `npm`/`yarn` are blocked by an `only-allow pnpm` preinstall hook). Enable with `corepack enable`. `pnpm-workspace.yaml` sets `minimumReleaseAge: 1440` to refuse dependency versions published less than 24h ago.
+- Build/dev: **Vite** (`pnpm dev`, `pnpm build`, `pnpm preview`).
+- Lint: **ESLint** flat config (`pnpm lint`).
+- Format: **Prettier** (`pnpm format`); enforced on commit via **Husky + lint-staged**.
+- Type check: `pnpm type-check` (uses `vue-tsc`).
+- Tests: **Vitest** + **@vue/test-utils** + **jsdom** (`pnpm test`, `pnpm test:watch`, `pnpm test:coverage`).
 
 Coverage thresholds are enforced at **80%** for statements / branches / functions / lines in `vitest.config.ts`. Keep them passing.
 
@@ -59,7 +59,7 @@ Coverage thresholds are enforced at **80%** for statements / branches / function
   - `stubGlobals.stubs` – lightweight stubs for PrimeVue `Button` and `Menubar` so component tests don't need the full PrimeVue plugin.
 - For navigation assertions after a click, `await flushPromises()` before checking `router.currentRoute.value.path`.
 - When mocking `IntersectionObserver`, restore `globalThis.IntersectionObserver` in `afterEach` (see `useScrollReveal.test.ts`).
-- Run `npm run test:coverage` before committing changes that touch `src/`. The build will fail if any coverage metric drops below 80%.
+- Run `pnpm test:coverage` before committing changes that touch `src/`. The build will fail if any coverage metric drops below 80%.
 
 ## Deployment
 
@@ -75,4 +75,4 @@ Use conventional commits. Common types and scopes for this repo:
 
 Example: `feat(pages): add resume download link to AboutPage`.
 
-Always run `npm run lint`, `npm run type-check`, and `npm run test` before committing.
+Always run `pnpm lint`, `pnpm type-check`, and `pnpm test` before committing.
