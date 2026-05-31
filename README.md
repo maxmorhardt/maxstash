@@ -26,8 +26,10 @@ The application is a static SPA. Pages are lazy-loaded route chunks served behin
 
 ## Development
 
-1. Install dependencies: `npm install`
-2. Start the development server: `npm run dev`
+This project uses [pnpm](https://pnpm.io) (enforced — `npm`/`yarn` installs are blocked). Enable it with `corepack enable`.
+
+1. Install dependencies: `pnpm install`
+2. Start the development server: `pnpm dev`
 3. Open browser to `http://localhost:5173`
 
 ## Production Build
@@ -35,7 +37,7 @@ The application is a static SPA. Pages are lazy-loaded route chunks served behin
 Build the application for production deployment:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 ## License
