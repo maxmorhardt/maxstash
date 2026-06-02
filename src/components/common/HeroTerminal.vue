@@ -117,6 +117,7 @@ const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve,
 
 function out(text: string, kind: Kind = 'out', link?: LineLink, label?: string) {
   lines.value.push({ text, kind, typing: false, link, label });
+  scrollToBottom();
 }
 
 function echo(text: string) {
@@ -126,6 +127,7 @@ function echo(text: string) {
 function printMenu() {
   selected.value = 0;
   lines.value.push({ text: '', kind: 'out', typing: false, menu: true });
+  scrollToBottom();
 }
 
 async function type(line: ScriptLine) {
@@ -135,6 +137,7 @@ async function type(line: ScriptLine) {
   }
 
   const i = lines.value.push({ text: '', kind: 'cmd', typing: true }) - 1;
+  scrollToBottom();
   for (const ch of line.text) {
     if (!alive) return;
     lines.value[i].text += ch;
@@ -152,6 +155,7 @@ async function run() {
   if (alive) {
     printMenu();
     enable();
+    scrollToBottom();
   }
 }
 
@@ -285,6 +289,7 @@ onMounted(() => {
     }));
     printMenu();
     enable();
+    scrollToBottom();
     return;
   }
   run();
