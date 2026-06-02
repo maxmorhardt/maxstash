@@ -249,12 +249,12 @@ const featured = [
 
 .hero {
   position: relative;
-  min-height: calc(100svh - var(--header-h));
+  min-height: calc(100dvh - var(--header-h));
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 3rem 0;
+  padding: 1.5rem 0 2.5rem;
 }
 
 .hero__bg {
@@ -326,7 +326,7 @@ const featured = [
 
 @media (max-width: 880px) {
   .hero {
-    padding: 2rem 0 3rem;
+    padding: 1rem 0 1.5rem;
   }
 
   .hero__scroll {

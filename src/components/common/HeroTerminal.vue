@@ -48,11 +48,32 @@ const STACK = [
   { label: 'auth/edge', value: 'authentik · cloudflare' },
 ];
 
+const MOBILE_STACK = [
+  { label: 'languages', value: 'java · ts · go · py · sql' },
+  { label: 'backend', value: 'spring · gin · gorm · jpa' },
+  { label: 'frontend', value: 'react · ng · vue · mui' },
+  { label: 'cloud', value: 'aws · eks · lambda' },
+  { label: 'platform', value: 'k8s · docker · helm' },
+  { label: 'ci/cd', value: 'jenkins · actions' },
+  { label: 'observe', value: 'datadog · prometheus' },
+  { label: 'auth/edge', value: 'authentik · cloudflare' },
+];
+
+const isMobile =
+  typeof window !== 'undefined' && (window.matchMedia?.('(max-width: 880px)').matches ?? false);
+
+const whoamiLine: ScriptLine = {
+  text: 'Max Morhardt, software engineer @ Fidelity',
+  kind: 'out',
+};
+
+const stackSource = isMobile ? MOBILE_STACK : STACK;
+
 const boot: ScriptLine[] = [
   { text: 'whoami', kind: 'cmd' },
-  { text: 'Max Morhardt, full stack engineer @ Fidelity Investments', kind: 'out' },
+  whoamiLine,
   { text: 'cat stack.txt', kind: 'cmd' },
-  ...STACK.map((s) => ({ text: s.value, kind: 'out' as const, label: s.label })),
+  ...stackSource.map((s) => ({ text: s.value, kind: 'out' as const, label: s.label })),
   { text: 'kubectl get ingress -A', kind: 'cmd' },
   {
     text: '',
@@ -77,7 +98,7 @@ const boot: ScriptLine[] = [
     kind: 'out',
     label: 'squares-api',
     link: {
-      text: 'squares-api.maxstash.io/swagger ↗',
+      text: 'squares-api.maxstash.io ↗',
       href: 'https://squares-api.maxstash.io/swagger/index.html',
     },
   },
@@ -95,6 +116,7 @@ const nav: NavItem[] = [
 const lines = ref<RenderedLine[]>([]);
 const ready = ref(false);
 const input = ref('');
+
 // index of the launchpad item highlighted by the arrow-key cursor
 const selected = ref(0);
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -211,11 +233,11 @@ function runCommand(raw: string) {
       out('Max Morhardt');
       break;
     case 'whoami':
-      out('Max Morhardt, full stack engineer @ Fidelity Investments');
+      out(whoamiLine.text);
       break;
     case 'stack':
     case 'skills':
-      STACK.forEach((s) => out(s.value, 'out', undefined, s.label));
+      stackSource.forEach((s) => out(s.value, 'out', undefined, s.label));
       break;
     case 'email':
       out('', 'out', { text: EMAIL, href: `mailto:${EMAIL}` });
@@ -379,7 +401,10 @@ onBeforeUnmount(() => {
       </div>
 
       <div v-if="ready" class="term__hint">
-        type a command (try 'help') · arrow keys to select · enter to open
+        <span class="term__hint-full">
+          type a command (try 'help') · arrow keys to select · enter to open
+        </span>
+        <span class="term__hint-short"> try 'help' · enter to open </span>
       </div>
     </div>
   </div>
@@ -389,6 +414,9 @@ onBeforeUnmount(() => {
 .term {
   width: 100%;
   max-width: 720px;
+  max-height: calc(100dvh - var(--header-h) - 2.5rem);
+  display: flex;
+  flex-direction: column;
   border-radius: 14px;
   overflow: hidden;
   background: #0d1117;
@@ -433,10 +461,11 @@ onBeforeUnmount(() => {
 }
 
 .term__body {
+  flex: 1;
+  min-height: 0;
   padding: 1.15rem 1.3rem 1.25rem;
   font-size: 0.88rem;
   line-height: 1.6;
-  max-height: calc(100svh - 11rem);
   overflow-y: auto;
 }
 
@@ -549,6 +578,10 @@ onBeforeUnmount(() => {
   font-style: italic;
 }
 
+.term__hint-short {
+  display: none;
+}
+
 @keyframes term-blink {
   0%,
   50% {
@@ -572,9 +605,39 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 880px) {
+  .term {
+    max-height: calc(100dvh - var(--header-h) - 1.75rem);
+  }
+
   .term__body {
-    font-size: 0.78rem;
-    max-height: 64svh;
+    padding: 0.9rem 0.9rem 1rem;
+    font-size: 0.72rem;
+  }
+
+  .term__cols {
+    grid-template-columns: 12ch 1fr;
+    column-gap: 0.45rem;
+  }
+
+  .term__item {
+    font-size: 0.72rem;
+    padding: 0.15rem 0.4rem;
+  }
+
+  .term__input {
+    font-size: 16px;
+  }
+
+  .term__hint {
+    font-size: 0.68rem;
+  }
+
+  .term__hint-full {
+    display: none;
+  }
+
+  .term__hint-short {
+    display: inline;
   }
 }
 
