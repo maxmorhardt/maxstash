@@ -54,6 +54,10 @@ const items = [
   top: 0;
   z-index: 50;
   width: 100%;
+  height: var(--header-h);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
   backdrop-filter: saturate(180%) blur(10px);
   background: var(--header-bg);
   border-bottom: 1px solid var(--border);
@@ -64,6 +68,7 @@ const items = [
   border: 0;
   border-radius: 0;
   padding: 0.5rem 1.5rem;
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
 }

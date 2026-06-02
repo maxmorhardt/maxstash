@@ -10,7 +10,7 @@ import { useScrollReveal } from '../composables/useScrollReveal';
 usePageMeta({
   title: 'Max Morhardt – Software Engineer',
   description:
-    'Max Morhardt is a software engineer at Fidelity Investments. Full-stack developer specializing in Java, Go, TypeScript, React, Vue 3, Kubernetes, and AWS.',
+    'Max Morhardt is a Full Stack Engineer at Fidelity Investments specializing in Java, Spring Boot, Go, TypeScript, React, Angular, Kubernetes, and AWS.',
   canonical: 'https://maxstash.io/',
 });
 
@@ -19,82 +19,102 @@ const router = useRouter();
 const { target: chipsTarget, visible: chipsVisible } = useScrollReveal<HTMLDivElement>();
 
 const stack = [
-  { name: 'Java + Spring Boot', icon: 'pi pi-server' },
-  { name: 'Go + Gin', icon: 'pi pi-bolt' },
-  { name: 'Bash', icon: 'pi pi-code' },
+  { name: 'Java', icon: 'pi pi-server' },
   { name: 'TypeScript', icon: 'pi pi-code' },
-  { name: 'Angular', icon: 'pi pi-code' },
+  { name: 'Go', icon: 'pi pi-bolt' },
+  { name: 'Python', icon: 'pi pi-code' },
+  { name: 'SQL', icon: 'pi pi-database' },
+  { name: 'Spring Boot', icon: 'pi pi-server' },
+  { name: 'Gin', icon: 'pi pi-bolt' },
+  { name: 'GORM', icon: 'pi pi-database' },
+  { name: 'JPA', icon: 'pi pi-database' },
   { name: 'React', icon: 'pi pi-prime' },
+  { name: 'Angular', icon: 'pi pi-code' },
   { name: 'Vue 3', icon: 'pi pi-code' },
+  { name: 'PrimeNG', icon: 'pi pi-prime' },
+  { name: 'Material UI', icon: 'pi pi-palette' },
   { name: 'PostgreSQL', icon: 'pi pi-database' },
   { name: 'NATS', icon: 'pi pi-sync' },
   { name: 'WebSockets', icon: 'pi pi-bolt' },
-  { name: 'EKS', icon: 'pi pi-server' },
-  { name: 'AWS', icon: 'pi pi-cloud' },
+  { name: 'Docker', icon: 'pi pi-box' },
   { name: 'Kubernetes', icon: 'pi pi-server' },
   { name: 'Helm', icon: 'pi pi-box' },
-  { name: 'Docker', icon: 'pi pi-box' },
+  { name: 'AWS', icon: 'pi pi-cloud' },
+  { name: 'EKS', icon: 'pi pi-server' },
+  { name: 'EC2', icon: 'pi pi-server' },
+  { name: 'S3', icon: 'pi pi-database' },
+  { name: 'EFS', icon: 'pi pi-database' },
+  { name: 'Lambda', icon: 'pi pi-bolt' },
+  { name: 'DynamoDB', icon: 'pi pi-database' },
+  { name: 'CloudWatch', icon: 'pi pi-chart-line' },
+  { name: 'CloudFormation', icon: 'pi pi-cloud' },
   { name: 'Jenkins', icon: 'pi pi-cog' },
   { name: 'GitHub Actions', icon: 'pi pi-github' },
-  { name: 'Authentik (OIDC)', icon: 'pi pi-shield' },
+  { name: 'Karate', icon: 'pi pi-check-circle' },
   { name: 'Datadog', icon: 'pi pi-chart-line' },
   { name: 'Prometheus', icon: 'pi pi-chart-line' },
   { name: 'Grafana', icon: 'pi pi-chart-bar' },
-  { name: 'Loki + Alloy', icon: 'pi pi-list' },
+  { name: 'Loki', icon: 'pi pi-list' },
+  { name: 'Authentik', icon: 'pi pi-shield' },
+  { name: 'Cloudflare', icon: 'pi pi-cloud' },
+  { name: 'Bash', icon: 'pi pi-code' },
 ];
 
 const highlights = [
   {
     title: 'Full-stack engineering',
-    body: 'Go + Gin APIs and TypeScript front-ends (React and Vue), designed, tested, and shipped end-to-end.',
+    body: 'Java + Spring Boot and Go + Gin services behind Angular and React interfaces, designed, tested, and shipped end to end.',
     icon: 'pi pi-sitemap',
   },
   {
-    title: 'Real-time systems',
-    body: 'WebSockets backed by NATS pub/sub for horizontally-scaled, cross-instance broadcasting.',
-    icon: 'pi pi-bolt',
+    title: 'Cloud and Kubernetes platforms',
+    body: 'Multi-tenant developer platforms on AWS and EKS, with Spring Boot APIs orchestrating Kubernetes workloads for thousands of users.',
+    icon: 'pi pi-server',
   },
   {
-    title: 'Self-hosted platform',
-    body: 'Self-hosted Kubernetes cluster running Authentik, PostgreSQL HA, Prometheus/Grafana/Loki, and GitHub-Actions-driven CI/CD.',
-    icon: 'pi pi-server',
+    title: 'Real-time and self-hosted systems',
+    body: 'A production k3s cluster running Authentik SSO, highly available PostgreSQL, and NATS pub/sub for horizontally scaled WebSocket broadcasting.',
+    icon: 'pi pi-bolt',
   },
 ];
 
 const featured = [
   {
     name: 'squares',
-    blurb: 'Web app for playing Super Bowl squares with friends in real time.',
+    blurb:
+      'Real-time NFL squares platform with a live grid, automated winner calculation, and OIDC accounts.',
     href: 'https://github.com/maxmorhardt/squares',
     tags: ['React', 'TypeScript', 'Redux', 'MUI', 'OIDC', 'WebSocket'],
   },
   {
     name: 'squares-api',
-    blurb: 'Backend API that powers the Super Bowl squares game.',
+    blurb:
+      'Go and Gin API powering the squares platform, with a contest state machine and NATS-backed real-time updates.',
     href: 'https://github.com/maxmorhardt/squares-api',
     tags: ['Go', 'Gin', 'GORM', 'PostgreSQL', 'NATS', 'OIDC', 'Swagger'],
   },
   {
     name: 'k8s',
-    blurb: 'Self-hosted Kubernetes cluster that runs every app on this site.',
+    blurb:
+      'Self-hosted k3s cluster running every app on this site, with SSO, HA PostgreSQL, and full observability.',
     href: 'https://github.com/maxmorhardt/k8s',
     tags: ['Kubernetes', 'Authentik', 'PostgreSQL', 'NATS', 'Prometheus', 'Grafana', 'Loki'],
   },
   {
     name: 'charts',
-    blurb: 'Reusable Helm charts shared across all my app deployments.',
+    blurb: 'Reusable Helm charts shared across all my application deployments.',
     href: 'https://github.com/maxmorhardt/charts',
     tags: ['Helm', 'Kubernetes', 'HPA', 'Ingress', 'Prometheus'],
   },
   {
     name: 'workflows',
-    blurb: 'Reusable GitHub Actions workflows that build, test, and deploy every other repo.',
+    blurb: 'Reusable GitHub Actions workflows that build, test, and deploy every other repository.',
     href: 'https://github.com/maxmorhardt/workflows',
     tags: ['GitHub Actions', 'Docker', 'Helm', 'Trivy', 'Tailscale'],
   },
   {
     name: 'maxstash',
-    blurb: 'This portfolio site.',
+    blurb: 'This portfolio site, built with Vue 3, Vite, and PrimeVue.',
     href: 'https://github.com/maxmorhardt/maxstash',
     tags: ['Vue 3', 'TypeScript', 'Vite', 'PrimeVue'],
   },
@@ -110,32 +130,8 @@ const featured = [
         <div class="glow glow--2" />
       </div>
       <div class="container hero__inner">
-        <div class="hero__copy">
-          <RevealSection class="hero__eyebrow">
-            <span class="dot" />
-            Open to Conversations
-          </RevealSection>
-          <RevealSection :delay="1" as="h1">
-            <span class="grad">Max Morhardt</span>,
-            <br />
-            Software Engineer.
-          </RevealSection>
-          <RevealSection :delay="2" as="p" class="hero__lede">
-            Software engineer at Fidelity Investments, building production systems in Java + Spring
-            Boot, Angular, React, and Python on Kubernetes in AWS. Independent projects apply the
-            same discipline, running Go APIs on a self-hosted Kubernetes platform.
-          </RevealSection>
-          <RevealSection :delay="3" class="hero__cta">
-            <Button
-              label="See Projects"
-              icon="pi pi-arrow-right"
-              icon-pos="right"
-              @click="router.push('/projects')"
-            />
-            <Button label="About me" severity="secondary" outlined @click="router.push('/about')" />
-          </RevealSection>
-        </div>
-        <RevealSection :delay="2" class="hero__visual">
+        <h1 class="sr-only">Max Morhardt, Software Engineer</h1>
+        <RevealSection class="hero__terminal">
           <HeroTerminal />
         </RevealSection>
       </div>
@@ -253,11 +249,12 @@ const featured = [
 
 .hero {
   position: relative;
-  min-height: calc(100svh - 80px);
+  min-height: calc(100svh - var(--header-h));
   display: flex;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
-  padding: 4rem 0 6rem;
+  padding: 3rem 0;
 }
 
 .hero__bg {
@@ -301,81 +298,40 @@ const featured = [
   }
 }
 
+/* the terminal is the whole hero: centered, it carries the identity and the nav */
 .hero__inner {
   position: relative;
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  align-items: center;
-  gap: 2.5rem;
-}
-
-.hero__copy {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.25rem;
-  text-align: left;
+  justify-content: center;
+  width: 100%;
 }
 
-.hero__copy :deep(h1) {
-  font-size: clamp(1.75rem, 3.4vw, 3rem);
-  line-height: 1.1;
-}
-
-.hero__visual {
+.hero__terminal {
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 @media (max-width: 880px) {
-  .hero__inner {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+  .hero {
+    padding: 2rem 0 3rem;
   }
 
-  .hero__visual {
-    justify-content: flex-start;
+  .hero__scroll {
+    display: none;
   }
-}
-
-.hero__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  background: var(--accent-bg);
-  color: var(--accent);
-  border: 1px solid var(--accent-border);
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-bg);
-}
-
-.grad {
-  background: linear-gradient(120deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hero__lede {
-  max-width: 60ch;
-  font-size: clamp(1rem, 1.4vw, 1.2rem);
-  color: var(--text);
-}
-
-.hero__cta {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-top: 0.75rem;
 }
 
 .hero__scroll {
