@@ -60,7 +60,7 @@ const MOBILE_STACK = [
 ];
 
 const isMobile =
-  typeof window !== 'undefined' && (window.matchMedia?.('(max-width: 880px)').matches ?? false);
+  typeof window !== 'undefined' && (window.matchMedia?.('(max-width: 880px)')?.matches ?? false);
 
 const whoamiLine: ScriptLine = {
   text: 'Max Morhardt, software engineer @ Fidelity',
@@ -133,7 +133,7 @@ const lastMenuIndex = computed(() => {
 let alive = true;
 const reduced =
   typeof window !== 'undefined' &&
-  (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false);
+  (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false);
 
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
