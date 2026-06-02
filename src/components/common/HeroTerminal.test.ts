@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { flushPromises, mount } from '@vue/test-utils';
+import { flushPromises, mount, type VueWrapper } from '@vue/test-utils';
 import HeroTerminal from './HeroTerminal.vue';
 
 function mockMatchMedia(matches: boolean) {
@@ -32,17 +32,21 @@ describe('HeroTerminal', () => {
     window.matchMedia = mockMatchMedia(false);
     vi.useFakeTimers();
 
-    const wrapper = mount(HeroTerminal);
-    expect(wrapper.text()).not.toContain('shipped ✓');
+    let wrapper: VueWrapper | undefined;
+    try {
+      wrapper = mount(HeroTerminal);
+      // last line is only reached after the whole script has typed out
+      expect(wrapper.text()).not.toContain('open_to_work');
 
-    await vi.runAllTimersAsync();
+      await vi.runAllTimersAsync();
 
-    expect(wrapper.text()).toContain('whoami');
-    expect(wrapper.text()).toContain('postgres-cluster');
-    expect(wrapper.text()).toContain('open_to_work');
-
-    wrapper.unmount();
-    vi.useRealTimers();
-    window.matchMedia = original;
+      expect(wrapper.text()).toContain('whoami');
+      expect(wrapper.text()).toContain('postgres-cluster');
+      expect(wrapper.text()).toContain('open_to_work');
+    } finally {
+      wrapper?.unmount();
+      vi.useRealTimers();
+      window.matchMedia = original;
+    }
   });
 });
