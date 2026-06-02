@@ -3,6 +3,7 @@ import Button from 'primevue/button';
 import { useRouter } from 'vue-router';
 import { RouterLink } from 'vue-router';
 import RevealSection from '../components/common/RevealSection.vue';
+import HeroTerminal from '../components/common/HeroTerminal.vue';
 import { usePageMeta } from '../composables/usePageMeta';
 import { useScrollReveal } from '../composables/useScrollReveal';
 
@@ -20,7 +21,6 @@ const { target: chipsTarget, visible: chipsVisible } = useScrollReveal<HTMLDivEl
 const stack = [
   { name: 'Java + Spring Boot', icon: 'pi pi-server' },
   { name: 'Go + Gin', icon: 'pi pi-bolt' },
-  { name: 'Python + FastAPI', icon: 'pi pi-code' },
   { name: 'Bash', icon: 'pi pi-code' },
   { name: 'TypeScript', icon: 'pi pi-code' },
   { name: 'Angular', icon: 'pi pi-code' },
@@ -108,31 +108,35 @@ const featured = [
       <div class="hero__bg" aria-hidden="true">
         <div class="glow glow--1" />
         <div class="glow glow--2" />
-        <div class="grid-overlay" />
       </div>
       <div class="container hero__inner">
-        <RevealSection class="hero__eyebrow">
-          <span class="dot" />
-          Open to Conversations
-        </RevealSection>
-        <RevealSection :delay="1" as="h1">
-          <span class="grad">Max Morhardt</span>,
-          <br />
-          Software Engineer.
-        </RevealSection>
-        <RevealSection :delay="2" as="p" class="hero__lede">
-          Software engineer at Fidelity Investments, building production systems in Java + Spring
-          Boot, Angular, React, and Python on Kubernetes in AWS. Independent projects apply the same
-          discipline, running Go APIs on a self-hosted Kubernetes platform.
-        </RevealSection>
-        <RevealSection :delay="3" class="hero__cta">
-          <Button
-            label="See Projects"
-            icon="pi pi-arrow-right"
-            icon-pos="right"
-            @click="router.push('/projects')"
-          />
-          <Button label="About me" severity="secondary" outlined @click="router.push('/about')" />
+        <div class="hero__copy">
+          <RevealSection class="hero__eyebrow">
+            <span class="dot" />
+            Open to Conversations
+          </RevealSection>
+          <RevealSection :delay="1" as="h1">
+            <span class="grad">Max Morhardt</span>,
+            <br />
+            Software Engineer.
+          </RevealSection>
+          <RevealSection :delay="2" as="p" class="hero__lede">
+            Software engineer at Fidelity Investments, building production systems in Java + Spring
+            Boot, Angular, React, and Python on Kubernetes in AWS. Independent projects apply the
+            same discipline, running Go APIs on a self-hosted Kubernetes platform.
+          </RevealSection>
+          <RevealSection :delay="3" class="hero__cta">
+            <Button
+              label="See Projects"
+              icon="pi pi-arrow-right"
+              icon-pos="right"
+              @click="router.push('/projects')"
+            />
+            <Button label="About me" severity="secondary" outlined @click="router.push('/about')" />
+          </RevealSection>
+        </div>
+        <RevealSection :delay="2" class="hero__visual">
+          <HeroTerminal />
         </RevealSection>
       </div>
       <div class="hero__scroll" aria-hidden="true">
@@ -287,17 +291,6 @@ const featured = [
   animation: float 14s ease-in-out infinite reverse;
 }
 
-.grid-overlay {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
-  opacity: 0.35;
-}
-
 @keyframes float {
   0%,
   100% {
@@ -310,11 +303,39 @@ const featured = [
 
 .hero__inner {
   position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.hero__copy {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1.25rem;
   text-align: left;
+}
+
+.hero__copy :deep(h1) {
+  font-size: clamp(1.75rem, 3.4vw, 3rem);
+  line-height: 1.1;
+}
+
+.hero__visual {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 880px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .hero__visual {
+    justify-content: flex-start;
+  }
 }
 
 .hero__eyebrow {
