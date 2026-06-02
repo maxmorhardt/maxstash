@@ -34,11 +34,11 @@ const channels = [
   <section class="contact section">
     <div class="container">
       <!-- page heading -->
-      <RevealSection as="h1" class="reveal--left">Contact</RevealSection>
+      <RevealSection as="h1" class="page-title reveal--left">Contact</RevealSection>
 
       <!-- lede -->
       <RevealSection :delay="1" as="p" class="lede reveal--left">
-        The fastest ways to reach me. I usually respond within a day or two.
+        The best ways to reach me. I read every message and usually reply within a day or two.
       </RevealSection>
 
       <!-- contact channel cards -->
@@ -64,6 +64,10 @@ const channels = [
 </template>
 
 <style scoped>
+.contact {
+  padding-top: 3rem;
+}
+
 .lede {
   max-width: 60ch;
   margin-bottom: 3rem;

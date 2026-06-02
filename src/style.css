@@ -15,6 +15,7 @@
   --hero-glow-1: rgba(91, 33, 182, 0.35);
   --hero-glow-2: rgba(30, 64, 175, 0.3);
   --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --header-h: 64px;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -34,6 +35,7 @@
 @media (max-width: 1024px) {
   :root {
     font-size: 16px;
+    --header-h: 56px;
   }
 }
 
@@ -192,6 +194,11 @@ code {
 
 .section {
   padding: 5rem 1.5rem;
+}
+
+.page-title {
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  margin-bottom: 0.5rem;
 }
 
 @media (max-width: 1024px) {

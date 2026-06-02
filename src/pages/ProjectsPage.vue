@@ -23,7 +23,7 @@ const projects: Project[] = [
     name: 'squares',
     category: 'Frontend',
     description:
-      'Web app for playing Super Bowl squares with friends in real time. Built around a live grid that updates instantly as numbers get drawn and quarters end. Auth is handled through OIDC so games stay tied to real accounts.',
+      'Real-time NFL squares platform built around a live grid that updates instantly as numbers are drawn and quarters end. Includes a contest state machine, automated winner calculation, and OIDC accounts through Authentik.',
     href: 'https://github.com/maxmorhardt/squares',
     links: [
       {
@@ -53,7 +53,7 @@ const projects: Project[] = [
     name: 'k8s',
     category: 'Infrastructure',
     description:
-      'Self-hosted Kubernetes cluster that runs every app on this site. Includes single sign-on, a highly-available Postgres, message bus, and full metrics + logs stack. Everything is declarative and rebuilt automatically on a weekly schedule.',
+      'Self-hosted k3s cluster that runs every app on this site, with single sign-on, a highly available Postgres, NATS messaging, and a full metrics and logs stack. Automated node maintenance runs through kured with coordinated rolling reboots and alerting.',
     href: 'https://github.com/maxmorhardt/k8s',
     links: [
       {
@@ -102,7 +102,7 @@ const projects: Project[] = [
   <section class="projects section">
     <div class="container">
       <!-- page heading -->
-      <RevealSection as="h1">Projects</RevealSection>
+      <RevealSection as="h1" class="page-title">Projects</RevealSection>
 
       <!-- lede -->
       <RevealSection :delay="1" as="p" class="lede">
@@ -156,6 +156,10 @@ const projects: Project[] = [
 </template>
 
 <style scoped>
+.projects {
+  padding-top: 3rem;
+}
+
 .lede {
   max-width: 60ch;
   margin-bottom: 3rem;

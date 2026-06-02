@@ -4,6 +4,10 @@ import HomePage from './HomePage.vue';
 import { createTestRouter, stubGlobals } from '../testUtils';
 import type { Router } from 'vue-router';
 
+function mountHome(router: Router) {
+  return mount(HomePage, { global: { plugins: [router], stubs: stubGlobals.stubs } });
+}
+
 function findButtonByLabel(wrapper: VueWrapper, label: string): DOMWrapper<HTMLButtonElement> {
   const button = wrapper.findAll('button').find((b) => b.text().trim() === label) as
     | DOMWrapper<HTMLButtonElement>
@@ -15,25 +19,12 @@ function findButtonByLabel(wrapper: VueWrapper, label: string): DOMWrapper<HTMLB
   return button;
 }
 
-async function clickAndExpectRoute(
-  wrapper: VueWrapper,
-  router: Router,
-  label: string,
-  path: string
-) {
-  await findButtonByLabel(wrapper, label).trigger('click');
-  await flushPromises();
-  expect(router.currentRoute.value.path).toBe(path);
-}
-
 describe('HomePage', () => {
   it('renders hero and section headings', async () => {
     const router = createTestRouter();
     router.push('/');
     await router.isReady();
-    const wrapper = mount(HomePage, {
-      global: { plugins: [router], stubs: stubGlobals.stubs },
-    });
+    const wrapper = mountHome(router);
 
     expect(wrapper.text()).toContain('Max Morhardt');
     expect(wrapper.text()).toContain('Software Engineer');
@@ -43,17 +34,33 @@ describe('HomePage', () => {
   });
 
   it.each([
-    ['See Projects', '/projects'],
-    ['About me', '/about'],
-    ['Get in touch', '/contact'],
-  ])('navigates to %s when "%s" CTA is clicked', async (label, path) => {
+    ['projects', '/projects'],
+    ['about', '/about'],
+    ['contact', '/contact'],
+  ])('navigates to %s via the terminal launchpad', async (label, path) => {
     const router = createTestRouter();
     router.push('/');
     await router.isReady();
-    const wrapper = mount(HomePage, {
-      global: { plugins: [router], stubs: stubGlobals.stubs },
-    });
+    const wrapper = mountHome(router);
+    await flushPromises();
 
-    await clickAndExpectRoute(wrapper, router, label, path);
+    const link = wrapper.findAll('.term__item').find((a) => a.text().includes(label));
+    if (!link) {
+      throw new Error(`launchpad link "${label}" not found`);
+    }
+    await link.trigger('click');
+    await flushPromises();
+    expect(router.currentRoute.value.path).toBe(path);
+  });
+
+  it('navigates to contact via the bottom CTA', async () => {
+    const router = createTestRouter();
+    router.push('/');
+    await router.isReady();
+    const wrapper = mountHome(router);
+
+    await findButtonByLabel(wrapper, 'Get in touch').trigger('click');
+    await flushPromises();
+    expect(router.currentRoute.value.path).toBe('/contact');
   });
 });

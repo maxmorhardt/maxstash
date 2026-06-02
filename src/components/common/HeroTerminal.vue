@@ -1,34 +1,112 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
 
 type Kind = 'cmd' | 'out' | 'ok';
+
+interface LineLink {
+  text: string;
+  href: string;
+}
 
 interface ScriptLine {
   text: string;
   kind: Kind;
+  link?: LineLink;
+  label?: string;
 }
 
 interface RenderedLine {
   text: string;
   kind: Kind;
   typing: boolean;
+  link?: LineLink;
+  label?: string;
+  menu?: boolean;
 }
 
-const script: ScriptLine[] = [
+interface NavItem {
+  label: string;
+  to: string;
+  external: boolean;
+}
+
+const router = useRouter();
+
+const EMAIL = 'max@maxstash.io';
+const GITHUB = 'https://github.com/maxmorhardt';
+const LINKEDIN = 'https://www.linkedin.com/in/max-morhardt-60b9121b8/';
+
+const STACK = [
+  { label: 'languages', value: 'java · typescript · go · python · sql' },
+  { label: 'backend', value: 'spring boot · gin · gorm · jpa' },
+  { label: 'frontend', value: 'react · angular · vue · primeng · material ui' },
+  { label: 'cloud', value: 'aws · eks · ec2 · s3 · efs · lambda · dynamodb' },
+  { label: 'platform', value: 'kubernetes · docker · helm · nats' },
+  { label: 'ci/cd', value: 'jenkins · github actions · karate' },
+  { label: 'observe', value: 'datadog · prometheus · grafana · loki' },
+  { label: 'auth/edge', value: 'authentik · cloudflare' },
+];
+
+const boot: ScriptLine[] = [
   { text: 'whoami', kind: 'cmd' },
-  { text: 'max morhardt — software engineer', kind: 'out' },
+  { text: 'Max Morhardt, full stack engineer @ Fidelity Investments', kind: 'out' },
   { text: 'cat stack.txt', kind: 'cmd' },
-  { text: 'go · typescript · react · vue · kubernetes', kind: 'out' },
-  { text: 'kubectl get pods -A', kind: 'cmd' },
-  { text: 'authentik    authentik-server   Running', kind: 'out' },
-  { text: 'cnpg         postgres-cluster   Running', kind: 'out' },
-  { text: 'squares      squares-api        Running', kind: 'out' },
-  { text: 'monitoring   grafana            Running', kind: 'out' },
-  { text: 'curl -s maxstash.io/status', kind: 'cmd' },
-  { text: '{"status":"online","open_to_work":true}', kind: 'ok' },
+  ...STACK.map((s) => ({ text: s.value, kind: 'out' as const, label: s.label })),
+  { text: 'kubectl get ingress -A', kind: 'cmd' },
+  {
+    text: '',
+    kind: 'out',
+    label: 'maxstash',
+    link: { text: 'maxstash.io ↗', href: 'https://maxstash.io' },
+  },
+  {
+    text: '',
+    kind: 'out',
+    label: 'squares',
+    link: { text: 'squares.maxstash.io ↗', href: 'https://squares.maxstash.io' },
+  },
+  {
+    text: '',
+    kind: 'out',
+    label: 'authentik',
+    link: { text: 'login.maxstash.io ↗', href: 'https://login.maxstash.io' },
+  },
+  {
+    text: '',
+    kind: 'out',
+    label: 'squares-api',
+    link: {
+      text: 'squares-api.maxstash.io/swagger ↗',
+      href: 'https://squares-api.maxstash.io/swagger/index.html',
+    },
+  },
+  { text: 'ls ~', kind: 'cmd' },
+];
+
+const nav: NavItem[] = [
+  { label: 'projects', to: '/projects', external: false },
+  { label: 'about', to: '/about', external: false },
+  { label: 'contact', to: '/contact', external: false },
+  { label: 'github', to: GITHUB, external: true },
+  { label: 'linkedin', to: LINKEDIN, external: true },
 ];
 
 const lines = ref<RenderedLine[]>([]);
+const ready = ref(false);
+const input = ref('');
+// index of the launchpad item highlighted by the arrow-key cursor
+const selected = ref(0);
+const inputRef = ref<HTMLInputElement | null>(null);
+const bodyRef = ref<HTMLElement | null>(null);
+
+// only the most recently printed `ls` menu is keyboard-interactive
+const lastMenuIndex = computed(() => {
+  for (let i = lines.value.length - 1; i >= 0; i--) {
+    if (lines.value[i].menu) return i;
+  }
+  return -1;
+});
 
 let alive = true;
 const reduced =
@@ -37,13 +115,22 @@ const reduced =
 
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
-function pushIdlePrompt() {
-  lines.value.push({ text: '', kind: 'cmd', typing: true });
+function out(text: string, kind: Kind = 'out', link?: LineLink, label?: string) {
+  lines.value.push({ text, kind, typing: false, link, label });
+}
+
+function echo(text: string) {
+  lines.value.push({ text, kind: 'cmd', typing: false });
+}
+
+function printMenu() {
+  selected.value = 0;
+  lines.value.push({ text: '', kind: 'out', typing: false, menu: true });
 }
 
 async function type(line: ScriptLine) {
   if (line.kind !== 'cmd') {
-    lines.value.push({ text: line.text, kind: line.kind, typing: false });
+    out(line.text, line.kind, line.link, line.label);
     return;
   }
 
@@ -57,18 +144,147 @@ async function type(line: ScriptLine) {
 }
 
 async function run() {
-  for (const line of script) {
+  for (const line of boot) {
     if (!alive) return;
     await type(line);
-    await sleep(line.kind === 'cmd' ? 260 : 130);
+    await sleep(line.kind === 'cmd' ? 240 : 120);
   }
-  if (alive) pushIdlePrompt();
+  if (alive) {
+    printMenu();
+    enable();
+  }
+}
+
+function enable() {
+  ready.value = true;
+  nextTick(focusInput);
+}
+
+function focusInput() {
+  inputRef.value?.focus();
+}
+
+function scrollToBottom() {
+  nextTick(() => {
+    if (bodyRef.value) bodyRef.value.scrollTop = bodyRef.value.scrollHeight;
+  });
+}
+
+function activate(item: NavItem) {
+  out(`> ${item.external ? 'opening' : 'cd'} ${item.to}`, 'ok');
+  if (item.external) window.open(item.to, '_blank', 'noopener');
+  else router.push(item.to);
+  scrollToBottom();
+}
+
+function help() {
+  out('available commands:');
+  out('  help       show this list');
+  out('  name       who is this');
+  out('  whoami     current role');
+  out('  stack      tools i use');
+  out('  email      get my email');
+  out('  social     github · linkedin · email');
+  out('  projects   view my work');
+  out('  about      more about me');
+  out('  contact    reach out');
+  out('  clear      clear the screen');
+  out('tip: use the arrow keys to pick a directory, enter to open', 'out');
+}
+
+function runCommand(raw: string) {
+  const cmd = raw.trim();
+  echo(cmd);
+
+  switch (cmd.toLowerCase()) {
+    case '':
+      break;
+    case 'help':
+    case '?':
+      help();
+      break;
+    case 'name':
+      out('Max Morhardt');
+      break;
+    case 'whoami':
+      out('Max Morhardt, full stack engineer @ Fidelity Investments');
+      break;
+    case 'stack':
+    case 'skills':
+      STACK.forEach((s) => out(s.value, 'out', undefined, s.label));
+      break;
+    case 'email':
+      out('', 'out', { text: EMAIL, href: `mailto:${EMAIL}` });
+      break;
+    case 'social':
+      out('', 'out', { text: GITHUB, href: GITHUB }, 'github');
+      out('', 'out', { text: LINKEDIN, href: LINKEDIN }, 'linkedin');
+      out('', 'out', { text: EMAIL, href: `mailto:${EMAIL}` }, 'email');
+      break;
+    case 'ls':
+      printMenu();
+      break;
+    case 'projects':
+      activate(nav[0]);
+      return;
+    case 'about':
+      activate(nav[1]);
+      return;
+    case 'contact':
+      activate(nav[2]);
+      return;
+    case 'github':
+      activate(nav[3]);
+      return;
+    case 'linkedin':
+      activate(nav[4]);
+      return;
+    case 'clear':
+      lines.value = [];
+      break;
+    default:
+      out(`command not found: ${cmd} (try 'help')`);
+  }
+
+  scrollToBottom();
+}
+
+function onKeydown(e: KeyboardEvent) {
+  const empty = input.value.trim() === '';
+  const hasMenu = lastMenuIndex.value >= 0;
+
+  if (empty && hasMenu && (e.key === 'ArrowDown' || e.key === 'ArrowRight')) {
+    e.preventDefault();
+    selected.value = (selected.value + 1) % nav.length;
+    return;
+  }
+  if (empty && hasMenu && (e.key === 'ArrowUp' || e.key === 'ArrowLeft')) {
+    e.preventDefault();
+    selected.value = selected.value <= 0 ? nav.length - 1 : selected.value - 1;
+    return;
+  }
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    if (!empty) {
+      runCommand(input.value);
+      input.value = '';
+    } else if (hasMenu) {
+      activate(nav[selected.value]);
+    }
+  }
 }
 
 onMounted(() => {
   if (reduced) {
-    lines.value = script.map((l) => ({ text: l.text, kind: l.kind, typing: false }));
-    pushIdlePrompt();
+    lines.value = boot.map((l) => ({
+      text: l.text,
+      kind: l.kind,
+      typing: false,
+      link: l.link,
+      label: l.label,
+    }));
+    printMenu();
+    enable();
     return;
   }
   run();
@@ -80,18 +296,85 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="term" aria-hidden="true">
+  <div class="term" @click="focusInput">
     <div class="term__bar">
       <span class="term__dot term__dot--r" />
       <span class="term__dot term__dot--y" />
       <span class="term__dot term__dot--g" />
       <span class="term__title">max@maxstash: ~</span>
     </div>
-    <div class="term__body">
+    <div ref="bodyRef" class="term__body">
       <div v-for="(l, i) in lines" :key="i" class="term__line" :class="`term__line--${l.kind}`">
-        <span v-if="l.kind === 'cmd'" class="term__prompt">~ $</span>
-        <span class="term__text">{{ l.text }}</span>
-        <span v-if="l.typing" class="term__cursor" />
+        <nav v-if="l.menu" class="term__menu" aria-label="Explore the site">
+          <component
+            :is="item.external ? 'a' : RouterLink"
+            v-for="(item, idx) in nav"
+            :key="item.label"
+            class="term__item"
+            :class="{ 'is-active': i === lastMenuIndex && selected === idx }"
+            v-bind="
+              item.external
+                ? { href: item.to, target: '_blank', rel: 'noreferrer' }
+                : { to: item.to }
+            "
+            @mouseenter="i === lastMenuIndex && (selected = idx)"
+            @click.stop
+          >
+            <span class="term__pointer">{{
+              i === lastMenuIndex && selected === idx ? '❯' : ' '
+            }}</span>
+            <span>{{ item.label }}{{ item.external ? ' ↗' : '/' }}</span>
+          </component>
+        </nav>
+        <div v-else-if="l.label" class="term__cols">
+          <span class="term__col-label">{{ l.label }}</span>
+          <span class="term__col-value"
+            >{{ l.text
+            }}<a
+              v-if="l.link"
+              class="term__out-link"
+              :href="l.link.href"
+              target="_blank"
+              rel="noreferrer"
+              @click.stop
+              >{{ l.link.text }}</a
+            ></span
+          >
+        </div>
+        <template v-else>
+          <span v-if="l.kind === 'cmd'" class="term__prompt">~ $</span>
+          <span class="term__text">{{ l.text }}</span>
+          <a
+            v-if="l.link"
+            class="term__out-link"
+            :href="l.link.href"
+            target="_blank"
+            rel="noreferrer"
+            @click.stop
+            >{{ l.link.text }}</a
+          >
+          <span v-if="l.typing" class="term__cursor" />
+        </template>
+      </div>
+
+      <div v-if="ready" class="term__input-line">
+        <span class="term__prompt">~ $</span>
+        <input
+          ref="inputRef"
+          v-model="input"
+          class="term__input"
+          type="text"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          aria-label="Terminal command input"
+          @keydown="onKeydown"
+        />
+      </div>
+
+      <div v-if="ready" class="term__hint">
+        type a command (try 'help') · arrow keys to select · enter to open
       </div>
     </div>
   </div>
@@ -100,14 +383,14 @@ onBeforeUnmount(() => {
 <style scoped>
 .term {
   width: 100%;
-  max-width: 500px;
-  border-radius: 12px;
+  max-width: 720px;
+  border-radius: 14px;
   overflow: hidden;
   background: #0d1117;
   border: 1px solid var(--accent-border);
   box-shadow:
     var(--shadow),
-    0 0 70px -24px var(--hero-glow-1);
+    0 0 100px -18px var(--hero-glow-1);
   font-family: var(--mono);
 }
 
@@ -115,7 +398,7 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.55rem 0.8rem;
+  padding: 0.6rem 0.85rem;
   background: #161b22;
   border-bottom: 1px solid #21262d;
 }
@@ -145,15 +428,28 @@ onBeforeUnmount(() => {
 }
 
 .term__body {
-  padding: 0.95rem 1.05rem 1.25rem;
-  font-size: 0.85rem;
-  line-height: 1.7;
-  min-height: 250px;
+  padding: 1.15rem 1.3rem 1.25rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  max-height: calc(100svh - 11rem);
+  overflow-y: auto;
 }
 
 .term__line {
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.term__cols {
+  display: grid;
+  grid-template-columns: 12ch 1fr;
+  column-gap: 0.75rem;
+}
+
+.term__col-label,
+.term__col-value {
+  color: #8b949e;
+  min-width: 0;
 }
 
 .term__prompt {
@@ -173,6 +469,15 @@ onBeforeUnmount(() => {
   color: #27c93f;
 }
 
+.term__out-link {
+  color: #58a6ff;
+  text-decoration: none;
+}
+
+.term__out-link:hover {
+  text-decoration: underline;
+}
+
 .term__cursor {
   display: inline-block;
   width: 8px;
@@ -181,6 +486,62 @@ onBeforeUnmount(() => {
   vertical-align: text-bottom;
   background: #a855f7;
   animation: term-blink 1s step-end infinite;
+}
+
+.term__menu {
+  display: flex;
+  flex-direction: column;
+  margin: 0.6rem 0 0.2rem;
+  animation: term-fade 0.4s ease both;
+}
+
+.term__item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 6px;
+  color: #58a6ff;
+  text-decoration: none;
+  font-size: 0.86rem;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.term__item.is-active {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.term__pointer {
+  width: 0.8em;
+  color: var(--accent);
+}
+
+.term__input-line {
+  display: flex;
+  align-items: center;
+  margin-top: 0.35rem;
+}
+
+.term__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #e6edf3;
+  font: inherit;
+  caret-color: #a855f7;
+}
+
+.term__hint {
+  margin-top: 0.6rem;
+  color: #56607a;
+  font-size: 0.78rem;
+  font-style: italic;
 }
 
 @keyframes term-blink {
@@ -194,8 +555,31 @@ onBeforeUnmount(() => {
   }
 }
 
+@keyframes term-fade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 880px) {
+  .term__body {
+    font-size: 0.78rem;
+    max-height: 64svh;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .term__cursor {
+    animation: none;
+  }
+
+  .term__menu,
+  .term__hint {
     animation: none;
   }
 }
