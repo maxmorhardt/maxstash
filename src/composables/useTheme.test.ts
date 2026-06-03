@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useTheme } from './useTheme';
 
 describe('useTheme', () => {
@@ -32,5 +32,19 @@ describe('useTheme', () => {
     document.documentElement.classList.remove('dark');
     theme.init();
     expect(document.documentElement.classList.contains('dark')).toBe(true);
+  });
+
+  it('uses a saved light theme on first load', async () => {
+    vi.resetModules();
+    window.localStorage.setItem('maxstash:theme', 'light');
+    const mod = await import('./useTheme');
+    expect(mod.useTheme().isDark).toBe(false);
+  });
+
+  it('falls back to dark for an invalid saved value', async () => {
+    vi.resetModules();
+    window.localStorage.setItem('maxstash:theme', 'nonsense');
+    const mod = await import('./useTheme');
+    expect(mod.useTheme().isDark).toBe(true);
   });
 });

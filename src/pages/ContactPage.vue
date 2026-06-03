@@ -74,12 +74,16 @@ const channels = [
 }
 
 .grid {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .card {
+  flex: 1 1 280px;
+  max-width: 400px;
+  min-width: 0;
   border-radius: 14px;
   background: var(--bg-soft);
   border: 1px solid var(--border);

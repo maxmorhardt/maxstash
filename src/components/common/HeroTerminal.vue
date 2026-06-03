@@ -215,7 +215,12 @@ function help() {
   out('  about      more about me');
   out('  contact    reach out');
   out('  clear      clear the screen');
-  out('tip: use the arrow keys to pick a directory, enter to open', 'out');
+  out(
+    isMobile
+      ? 'tip: tap a directory to open'
+      : 'tip: use the arrow keys to pick a directory, enter to open',
+    'out'
+  );
 }
 
 function runCommand(raw: string) {

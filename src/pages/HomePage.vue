@@ -249,7 +249,7 @@ const featured = [
 
 .hero {
   position: relative;
-  min-height: calc(100dvh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -372,12 +372,16 @@ const featured = [
 }
 
 .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.25rem;
 }
 
 .card {
+  flex: 1 1 280px;
+  max-width: 360px;
+  min-width: 0;
   padding: 1.75rem;
   border-radius: 14px;
   background: var(--bg);
@@ -478,12 +482,16 @@ const featured = [
 }
 
 .featured__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.25rem;
 }
 
 .project {
+  flex: 1 1 300px;
+  max-width: 400px;
+  min-width: 0;
   padding: 1.75rem;
   border-radius: 14px;
   background: var(--bg);

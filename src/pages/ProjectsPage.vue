@@ -106,8 +106,8 @@ const projects: Project[] = [
 
       <!-- lede -->
       <RevealSection :delay="1" as="p" class="lede">
-        A connected ecosystem of frontends, APIs, and infrastructure I build and self-host. All open
-        source under Apache 2.0 (or PolyForm Noncommercial for the games).
+        A connected ecosystem of frontends, APIs, and infrastructure I design, build, and self-host,
+        where every project deploys to the same Kubernetes platform that runs this site.
       </RevealSection>
 
       <!-- project cards -->
