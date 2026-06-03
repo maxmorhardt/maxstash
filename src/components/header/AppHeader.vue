@@ -79,6 +79,11 @@ const items = [
   background: transparent;
 }
 
+/* drop the item's own padding so the link can fill the whole row and be fully clickable */
+.app-header :deep(.p-menubar-item-content) {
+  padding: 0;
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -101,9 +106,11 @@ const items = [
 }
 
 .nav-link {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
   text-decoration: none;
   color: var(--text);
 }
