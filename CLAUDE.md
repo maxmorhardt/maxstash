@@ -1,6 +1,6 @@
 # Maxstash Contribution Guide
 
-This guide provides context for coding agents working in this repository. Maxstash is a personal portfolio site: a Vue 3 + TypeScript SPA built with Vite, styled with PrimeVue + custom CSS variables, and shipped as a Docker image.
+This guide provides context for coding agents working in this repository. Maxstash is a personal portfolio site: a Vue 3 + TypeScript SPA built with Vite, styled with PrimeVue (v4) + `@primeuix/themes` + custom CSS variables, and shipped as a Docker image.
 
 ## Directory overview
 
