@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { flushPromises } from '@vue/test-utils';
+import type { RouteLocationNormalizedGeneric } from 'vue-router';
 import router from './index';
 
 describe('router', () => {
@@ -12,8 +13,8 @@ describe('router', () => {
   });
 
   it('scrolls to the top on navigation', () => {
-    const from = router.resolve('/');
-    const to = router.resolve('/about');
+    const from = router.resolve('/') as unknown as RouteLocationNormalizedGeneric;
+    const to = router.resolve('/about') as unknown as RouteLocationNormalizedGeneric;
     expect(router.options.scrollBehavior?.(to, from, null)).toEqual({ top: 0 });
   });
 
