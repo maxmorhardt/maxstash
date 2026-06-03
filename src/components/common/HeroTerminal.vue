@@ -419,7 +419,7 @@ onBeforeUnmount(() => {
 .term {
   width: 100%;
   max-width: 720px;
-  max-height: calc(100dvh - var(--header-h) - 2.5rem);
+  max-height: calc(100svh - var(--header-h) - 6.5rem);
   display: flex;
   flex-direction: column;
   border-radius: 14px;
@@ -472,6 +472,7 @@ onBeforeUnmount(() => {
   font-size: 0.88rem;
   line-height: 1.6;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .term__line {
@@ -611,7 +612,7 @@ onBeforeUnmount(() => {
 
 @media (max-width: 880px) {
   .term {
-    max-height: calc(100dvh - var(--header-h) - 1.75rem);
+    max-height: calc(100svh - var(--header-h) - 3rem);
   }
 
   .term__body {

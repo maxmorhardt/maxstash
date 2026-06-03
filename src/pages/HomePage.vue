@@ -249,12 +249,13 @@ const featured = [
 
 .hero {
   position: relative;
+  box-sizing: border-box;
   min-height: calc(100svh - var(--header-h));
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 1.5rem 0 2.5rem;
+  padding: 1.5rem 0 4.5rem;
 }
 
 .hero__bg {
