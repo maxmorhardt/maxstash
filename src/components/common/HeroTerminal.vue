@@ -472,7 +472,6 @@ onBeforeUnmount(() => {
   font-size: 0.88rem;
   line-height: 1.6;
   overflow-y: auto;
-  overscroll-behavior: contain;
 }
 
 .term__line {
