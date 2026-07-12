@@ -8,6 +8,9 @@ describe('ProjectsPage', () => {
     expect(wrapper.text()).toContain('Projects');
     expect(wrapper.text()).toContain('squares');
     expect(wrapper.text()).toContain('squares-api');
+    expect(wrapper.text()).toContain('olympics');
+    expect(wrapper.text()).toContain('olympics-api');
+    expect(wrapper.text()).toContain('Renovate');
     expect(wrapper.text()).toContain('k8s');
     expect(wrapper.text()).toContain('charts');
     expect(wrapper.text()).toContain('workflows');

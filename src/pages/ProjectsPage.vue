@@ -69,9 +69,9 @@ const projects: Project[] = [
     name: 'workflows',
     category: 'CI/CD',
     description:
-      'Reusable GitHub Actions workflows that build, test, and deploy every other repo. Covers Node, Go, Docker image publishing, and Helm releases, plus security scanning with Trivy. Deploys land in the cluster over a private Tailscale network.',
+      'Reusable GitHub Actions workflows that build, test, and deploy every other repo. Covers Node, Go, Docker image publishing, and Helm releases, plus security scanning with Trivy and automated dependency updates with Renovate. Deploys land in the cluster over a private Tailscale network.',
     href: 'https://github.com/maxmorhardt/workflows',
-    tags: ['GitHub Actions', 'Docker', 'Helm', 'Trivy', 'Tailscale'],
+    tags: ['GitHub Actions', 'Docker', 'Helm', 'Trivy', 'Renovate', 'Tailscale'],
   },
   {
     name: 'maxstash',
@@ -87,6 +87,29 @@ const projects: Project[] = [
       },
     ],
     tags: ['Vue 3', 'TypeScript', 'Vite', 'PrimeVue'],
+  },
+  {
+    name: 'olympics',
+    category: 'Frontend',
+    description:
+      'Tournament platform for backyard olympics: add participants, generate random teams and group stages, record match results, and follow live standings through to the playoff bracket.',
+    href: 'https://github.com/maxmorhardt/olympics',
+    links: [
+      {
+        label: 'Live site',
+        href: 'https://olympics.maxstash.io',
+        icon: 'pi pi-external-link',
+      },
+    ],
+    tags: ['React', 'TypeScript', 'Redux', 'MUI', 'OIDC', 'WebSocket'],
+  },
+  {
+    name: 'olympics-api',
+    category: 'Backend',
+    description:
+      'Backend API for the olympics platform. Owns the tournament lifecycle from participants and team generation through group stages, playoffs, and standings, with real-time updates pushed over WebSockets.',
+    href: 'https://github.com/maxmorhardt/olympics-api',
+    tags: ['Go', 'Gin', 'GORM', 'PostgreSQL', 'WebSocket', 'OIDC'],
   },
 ];
 </script>
