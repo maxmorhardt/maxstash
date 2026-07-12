@@ -20,8 +20,8 @@ defineProps<{
       <div v-for="section in sections" :key="section.title" class="block">
         <h2>{{ section.title }}</h2>
         <template v-if="Array.isArray(section.content)">
-          <p>{{ section.content[0] }}</p>
-          <ul>
+          <p v-if="section.content.length > 0">{{ section.content[0] }}</p>
+          <ul v-if="section.content.length > 1">
             <li v-for="item in section.content.slice(1)" :key="item">{{ item }}</li>
           </ul>
         </template>
