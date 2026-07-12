@@ -111,7 +111,7 @@ const featured = [
     name: 'workflows',
     blurb: 'Reusable GitHub Actions workflows that build, test, and deploy every other repository.',
     href: 'https://github.com/maxmorhardt/workflows',
-    tags: ['GitHub Actions', 'Docker', 'Helm', 'Trivy', 'Tailscale'],
+    tags: ['GitHub Actions', 'Docker', 'Helm', 'Trivy', 'Renovate', 'Tailscale'],
   },
   {
     name: 'maxstash',
