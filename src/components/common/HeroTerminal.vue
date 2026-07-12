@@ -41,22 +41,18 @@ const STACK = [
   { label: 'languages', value: 'java · typescript · go · python · sql' },
   { label: 'backend', value: 'spring boot · gin · gorm · jpa' },
   { label: 'frontend', value: 'react · angular · vue · primeng · material ui' },
-  { label: 'cloud', value: 'aws · eks · ec2 · s3 · efs · lambda · dynamodb' },
-  { label: 'platform', value: 'kubernetes · docker · helm · nats' },
-  { label: 'ci/cd', value: 'jenkins · github actions · karate' },
-  { label: 'observe', value: 'datadog · prometheus · grafana · loki' },
-  { label: 'auth/edge', value: 'authentik · cloudflare' },
+  { label: 'cloud', value: 'aws · eks · ec2 · s3 · lambda · cloudflare' },
+  { label: 'platform', value: 'kubernetes · docker · helm · envoy gateway · dex · nats' },
+  { label: 'ops', value: 'github actions · jenkins · prometheus · grafana · loki · datadog' },
 ];
 
 const MOBILE_STACK = [
   { label: 'languages', value: 'java · ts · go · py · sql' },
   { label: 'backend', value: 'spring · gin · gorm · jpa' },
   { label: 'frontend', value: 'react · ng · vue · mui' },
-  { label: 'cloud', value: 'aws · eks · lambda' },
-  { label: 'platform', value: 'k8s · docker · helm' },
-  { label: 'ci/cd', value: 'jenkins · actions' },
-  { label: 'observe', value: 'datadog · prometheus' },
-  { label: 'auth/edge', value: 'authentik · cloudflare' },
+  { label: 'cloud', value: 'aws · eks · cloudflare' },
+  { label: 'platform', value: 'k8s · helm · envoy · dex' },
+  { label: 'ops', value: 'actions · prometheus · grafana' },
 ];
 
 const isMobile =
@@ -74,7 +70,7 @@ const boot: ScriptLine[] = [
   whoamiLine,
   { text: 'cat stack.txt', kind: 'cmd' },
   ...stackSource.map((s) => ({ text: s.value, kind: 'out' as const, label: s.label })),
-  { text: 'kubectl get ingress -A', kind: 'cmd' },
+  { text: 'kubectl get httproute -A', kind: 'cmd' },
   {
     text: '',
     kind: 'out',
@@ -90,16 +86,16 @@ const boot: ScriptLine[] = [
   {
     text: '',
     kind: 'out',
-    label: 'authentik',
-    link: { text: 'login.maxstash.io ↗', href: 'https://login.maxstash.io' },
+    label: 'olympics',
+    link: { text: 'olympics.maxstash.io ↗', href: 'https://olympics.maxstash.io' },
   },
   {
     text: '',
     kind: 'out',
     label: 'squares-api',
     link: {
-      text: 'squares-api.maxstash.io ↗',
-      href: 'https://squares-api.maxstash.io/swagger/index.html',
+      text: 'api.maxstash.io/squares ↗',
+      href: 'https://api.maxstash.io/squares/swagger',
     },
   },
   { text: 'ls ~', kind: 'cmd' },

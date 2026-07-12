@@ -55,7 +55,8 @@ const stack = [
   { name: 'Prometheus', icon: 'pi pi-chart-line' },
   { name: 'Grafana', icon: 'pi pi-chart-bar' },
   { name: 'Loki', icon: 'pi pi-list' },
-  { name: 'Authentik', icon: 'pi pi-shield' },
+  { name: 'Dex', icon: 'pi pi-shield' },
+  { name: 'Envoy Gateway', icon: 'pi pi-arrow-right-arrow-left' },
   { name: 'Cloudflare', icon: 'pi pi-cloud' },
   { name: 'Bash', icon: 'pi pi-code' },
 ];
@@ -73,7 +74,7 @@ const highlights = [
   },
   {
     title: 'Real-time and self-hosted systems',
-    body: 'A production k3s cluster running Authentik SSO, highly available PostgreSQL, and NATS pub/sub for horizontally scaled WebSocket broadcasting.',
+    body: 'A production k3s cluster fronted by Envoy Gateway, with Dex federated sign-in, highly available PostgreSQL, and NATS pub/sub for horizontally scaled WebSocket broadcasting.',
     icon: 'pi pi-bolt',
   },
 ];
@@ -98,13 +99,13 @@ const featured = [
     blurb:
       'Self-hosted k3s cluster running every app on this site, with SSO, HA PostgreSQL, and full observability.',
     href: 'https://github.com/maxmorhardt/k8s',
-    tags: ['Kubernetes', 'Authentik', 'PostgreSQL', 'NATS', 'Prometheus', 'Grafana', 'Loki'],
+    tags: ['Kubernetes', 'Envoy Gateway', 'Dex', 'PostgreSQL', 'NATS', 'Prometheus', 'Grafana'],
   },
   {
     name: 'charts',
     blurb: 'Reusable Helm charts shared across all my application deployments.',
     href: 'https://github.com/maxmorhardt/charts',
-    tags: ['Helm', 'Kubernetes', 'HPA', 'Ingress', 'Prometheus'],
+    tags: ['Helm', 'Kubernetes', 'HPA', 'Gateway API', 'Prometheus'],
   },
   {
     name: 'workflows',

@@ -21,6 +21,17 @@ const routes: RouteRecordRaw[] = [
     name: 'contact',
     component: () => import('../pages/ContactPage.vue'),
   },
+  // legal pages for all maxstash services, reachable by direct link only
+  {
+    path: '/terms-of-service',
+    name: 'terms-of-service',
+    component: () => import('../pages/TermsOfServicePage.vue'),
+  },
+  {
+    path: '/privacy-policy',
+    name: 'privacy-policy',
+    component: () => import('../pages/PrivacyPolicyPage.vue'),
+  },
   {
     path: '/:pathMatch(.*)*',
     name: 'not-found',

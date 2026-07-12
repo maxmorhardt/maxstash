@@ -14,6 +14,6 @@ describe('ProjectsPage', () => {
     expect(wrapper.text()).toContain('maxstash');
     expect(wrapper.text()).toContain('Live site');
     expect(wrapper.text()).toContain('Swagger');
-    expect(wrapper.text()).toContain('Authentik');
+    expect(wrapper.text()).toContain('Dex');
   });
 });
