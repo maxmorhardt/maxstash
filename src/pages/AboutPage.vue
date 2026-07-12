@@ -85,8 +85,8 @@ const experience: { company: string; roles: Role[] }[] = [
             <code>Gin</code> REST API behind a <code>React</code> and <code>TypeScript</code> front
             end, deployed to my self-hosted Kubernetes cluster through GitHub Actions. It implements
             a contest state machine, automated winner calculation, <code>NATS</code> pub/sub for
-            horizontally scaled WebSocket broadcasting, OIDC sign-in through <code>Authentik</code>,
-            and <code>PostgreSQL</code> persistence with <code>GORM</code>.
+            horizontally scaled WebSocket broadcasting, Google and GitHub sign-in through
+            <code>Dex</code>, and <code>PostgreSQL</code> persistence with <code>GORM</code>.
           </p>
           <div class="links">
             <a href="https://squares.maxstash.io" target="_blank" rel="noreferrer">
@@ -107,7 +107,8 @@ const experience: { company: string; roles: Role[] }[] = [
         <div class="row__content">
           <p>
             Everything I build runs on a self-hosted <code>k3s</code> cluster:
-            <code>Authentik</code> for OIDC/SAML single sign-on, highly available
+            <code>Envoy Gateway</code> routing every app through one front door,
+            <code>Dex</code> federating Google and GitHub sign-in, highly available
             <code>PostgreSQL</code>, <code>NATS</code> messaging, and a full
             <code>Prometheus</code>, <code>Grafana</code>, and <code>Loki</code> observability
             stack. <code>Cloudflare</code> handles DNS and edge security,

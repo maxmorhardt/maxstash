@@ -23,7 +23,7 @@ const projects: Project[] = [
     name: 'squares',
     category: 'Frontend',
     description:
-      'Real-time NFL squares platform built around a live grid that updates instantly as numbers are drawn and quarters end. Includes a contest state machine, automated winner calculation, and OIDC accounts through Authentik.',
+      'Real-time NFL squares platform built around a live grid that updates instantly as numbers are drawn and quarters end. Includes a contest state machine, automated winner calculation, and Google and GitHub sign-in through Dex.',
     href: 'https://github.com/maxmorhardt/squares',
     links: [
       {
@@ -43,7 +43,7 @@ const projects: Project[] = [
     links: [
       {
         label: 'Swagger',
-        href: 'https://squares-api.maxstash.io/swagger/index.html',
+        href: 'https://api.maxstash.io/squares/swagger',
         icon: 'pi pi-book',
       },
     ],
@@ -53,24 +53,17 @@ const projects: Project[] = [
     name: 'k8s',
     category: 'Infrastructure',
     description:
-      'Self-hosted k3s cluster that runs every app on this site, with single sign-on, a highly available Postgres, NATS messaging, and a full metrics and logs stack. Automated node maintenance runs through kured with coordinated rolling reboots and alerting.',
+      'Self-hosted k3s cluster that runs every app on this site: Envoy Gateway routes all traffic through one front door, Dex federates Google and GitHub sign-in, and a highly available Postgres, NATS messaging, and a full metrics and logs stack back it all. Automated node maintenance runs through kured with coordinated rolling reboots and alerting.',
     href: 'https://github.com/maxmorhardt/k8s',
-    links: [
-      {
-        label: 'Authentik',
-        href: 'https://login.maxstash.io/',
-        icon: 'pi pi-shield',
-      },
-    ],
-    tags: ['Kubernetes', 'Authentik', 'PostgreSQL', 'NATS', 'Prometheus', 'Grafana', 'Loki'],
+    tags: ['Kubernetes', 'Envoy Gateway', 'Dex', 'PostgreSQL', 'NATS', 'Prometheus', 'Grafana'],
   },
   {
     name: 'charts',
     category: 'Infrastructure',
     description:
-      'Reusable Helm charts shared across all my app deployments. Each chart bundles the standard pieces (Deployment, Service, Ingress, autoscaling, monitoring) so a new app only needs a values file. Keeps every workload in the cluster consistent.',
+      'Reusable Helm charts shared across all my app deployments. Each chart bundles the standard pieces (Deployment, Service, HTTPRoute, autoscaling, monitoring) so a new app only needs a values file. Keeps every workload in the cluster consistent.',
     href: 'https://github.com/maxmorhardt/charts',
-    tags: ['Helm', 'Kubernetes', 'HPA', 'Ingress', 'Prometheus'],
+    tags: ['Helm', 'Kubernetes', 'HPA', 'Gateway API', 'Prometheus'],
   },
   {
     name: 'workflows',
