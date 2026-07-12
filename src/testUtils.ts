@@ -5,7 +5,10 @@ export function createTestRouter(): Router {
     history: createMemoryHistory(),
     routes: [
       { path: '/', name: 'home', component: { template: '<div />' } },
+      { path: '/apps', name: 'apps', component: { template: '<div />' } },
       { path: '/projects', name: 'projects', component: { template: '<div />' } },
+      { path: '/terms-of-service', name: 'terms-of-service', component: { template: '<div />' } },
+      { path: '/privacy-policy', name: 'privacy-policy', component: { template: '<div />' } },
       { path: '/about', name: 'about', component: { template: '<div />' } },
       { path: '/contact', name: 'contact', component: { template: '<div />' } },
       { path: '/:pathMatch(.*)*', name: 'not-found', component: { template: '<div />' } },

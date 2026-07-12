@@ -14,6 +14,7 @@ describe('AppHeader', () => {
     });
     expect(wrapper.text()).toContain('maxstash');
     expect(wrapper.text()).toContain('Home');
+    expect(wrapper.text()).toContain('Apps');
     expect(wrapper.text()).toContain('Projects');
     expect(wrapper.text()).toContain('About');
     expect(wrapper.text()).toContain('Contact');

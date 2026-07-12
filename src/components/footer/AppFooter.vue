@@ -1,5 +1,13 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
+
 const year = new Date().getFullYear();
+
+const legalLinks = [
+  { label: 'Apps', route: '/apps' },
+  { label: 'Terms of Service', route: '/terms-of-service' },
+  { label: 'Privacy Policy', route: '/privacy-policy' },
+];
 
 const links = [
   {
@@ -25,6 +33,13 @@ const links = [
     <div class="app-footer__inner">
       <!-- copyright -->
       <span class="app-footer__copy">&copy; {{ year }} Max Morhardt</span>
+
+      <!-- legal / platform links -->
+      <ul class="legal">
+        <li v-for="link in legalLinks" :key="link.route">
+          <RouterLink :to="link.route">{{ link.label }}</RouterLink>
+        </li>
+      </ul>
 
       <!-- social links -->
       <ul class="socials">
@@ -56,6 +71,32 @@ const links = [
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.legal {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1rem;
+  font-size: 0.8125rem;
+}
+
+.legal a {
+  color: var(--text);
+  text-decoration: none;
+  opacity: 0.8;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.legal a:hover,
+.legal a.router-link-active {
+  color: var(--accent);
+  opacity: 1;
 }
 
 .socials {
