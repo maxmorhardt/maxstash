@@ -460,6 +460,7 @@ const platform = [
   justify-content: space-between;
   gap: 1.5rem;
   margin-top: 3rem;
+  margin-bottom: 2rem;
   padding: 1.75rem;
   border-radius: 16px;
   background: var(--bg-soft);
