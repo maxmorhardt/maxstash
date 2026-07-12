@@ -183,11 +183,20 @@ async function run() {
 
 function enable() {
   ready.value = true;
-  nextTick(focusInput);
+  // only grab focus when the terminal is on screen so the page never jumps back to it
+  nextTick(() => {
+    if (isTerminalInView()) focusInput();
+  });
+}
+
+function isTerminalInView() {
+  const rect = bodyRef.value?.getBoundingClientRect();
+  if (!rect) return false;
+  return rect.top < window.innerHeight && rect.bottom > 0;
 }
 
 function focusInput() {
-  inputRef.value?.focus();
+  inputRef.value?.focus({ preventScroll: true });
 }
 
 function scrollToBottom() {
