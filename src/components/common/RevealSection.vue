@@ -4,14 +4,21 @@ import { useScrollReveal } from '../../composables/useScrollReveal';
 interface Props {
   delay?: 0 | 1 | 2 | 3 | 4;
   as?: keyof HTMLElementTagNameMap;
+  threshold?: number;
+  rootMargin?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   delay: 0,
   as: 'div',
+  threshold: undefined,
+  rootMargin: undefined,
 });
 
-const { target, visible } = useScrollReveal<HTMLElement>();
+const { target, visible } = useScrollReveal<HTMLElement>({
+  threshold: props.threshold,
+  rootMargin: props.rootMargin,
+});
 </script>
 
 <template>

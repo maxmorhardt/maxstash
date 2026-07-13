@@ -43,7 +43,7 @@ const STACK = [
   { label: 'frontend', value: 'react · angular · vue · primeng · material ui' },
   { label: 'cloud', value: 'aws · eks · ec2 · s3 · lambda · cloudflare' },
   { label: 'platform', value: 'kubernetes · docker · helm · envoy gateway · dex · nats' },
-  { label: 'ops', value: 'github actions · jenkins · prometheus · grafana · loki · datadog' },
+  { label: 'ops', value: 'gha · jenkins · prometheus · grafana · loki · datadog' },
 ];
 
 const MOBILE_STACK = [
@@ -51,8 +51,8 @@ const MOBILE_STACK = [
   { label: 'backend', value: 'spring · gin · gorm · jpa' },
   { label: 'frontend', value: 'react · ng · vue · mui' },
   { label: 'cloud', value: 'aws · eks · cloudflare' },
-  { label: 'platform', value: 'k8s · helm · envoy · dex' },
-  { label: 'ops', value: 'actions · prometheus · grafana' },
+  { label: 'platform', value: 'k8s · docker · helm · envoy' },
+  { label: 'ops', value: 'gha · prometheus · datadog' },
 ];
 
 const isMobile =
@@ -89,20 +89,12 @@ const boot: ScriptLine[] = [
     label: 'olympics',
     link: { text: 'olympics.maxstash.io ↗', href: 'https://olympics.maxstash.io' },
   },
-  {
-    text: '',
-    kind: 'out',
-    label: 'squares-api',
-    link: {
-      text: 'api.maxstash.io/squares ↗',
-      href: 'https://api.maxstash.io/squares/swagger',
-    },
-  },
   { text: 'ls ~', kind: 'cmd' },
 ];
 
 const nav: NavItem[] = [
   { label: 'projects', to: '/projects', external: false },
+  { label: 'apps', to: '/apps', external: false },
   { label: 'about', to: '/about', external: false },
   { label: 'contact', to: '/contact', external: false },
   { label: 'github', to: GITHUB, external: true },
@@ -217,6 +209,7 @@ function help() {
   out('  email      get my email');
   out('  social     github · linkedin · email');
   out('  projects   view my work');
+  out('  apps       live apps i run');
   out('  about      more about me');
   out('  contact    reach out');
   out('  clear      clear the screen');
@@ -261,20 +254,15 @@ function runCommand(raw: string) {
       printMenu();
       break;
     case 'projects':
-      activate(nav[0]);
-      return;
+    case 'apps':
     case 'about':
-      activate(nav[1]);
-      return;
     case 'contact':
-      activate(nav[2]);
-      return;
     case 'github':
-      activate(nav[3]);
+    case 'linkedin': {
+      const item = nav.find((n) => n.label === cmd.toLowerCase());
+      if (item) activate(item);
       return;
-    case 'linkedin':
-      activate(nav[4]);
-      return;
+    }
     case 'clear':
       lines.value = [];
       break;

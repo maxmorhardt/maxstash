@@ -9,6 +9,29 @@ usePageMeta({
   canonical: 'https://maxstash.io/projects',
 });
 
+const platform = [
+  {
+    icon: 'pi pi-shield',
+    title: 'Federated single sign-on',
+    body: 'One account works across every app, with Google and GitHub sign-in federated through a self-hosted Dex identity provider.',
+  },
+  {
+    icon: 'pi pi-bolt',
+    title: 'Real-time everywhere',
+    body: 'Live grids, scores, and standings update instantly for everyone, powered by WebSockets fanned out across instances over NATS.',
+  },
+  {
+    icon: 'pi pi-server',
+    title: 'Self-hosted on Kubernetes',
+    body: 'Every app runs on a self-managed k3s cluster behind a single Envoy gateway, with highly available Postgres and full observability.',
+  },
+  {
+    icon: 'pi pi-sync',
+    title: 'Continuous delivery',
+    body: 'Shared CI/CD pipelines and reusable Helm charts build, test, and deploy every service the same way.',
+  },
+];
+
 interface Project {
   name: string;
   category: string;
@@ -122,16 +145,37 @@ const projects: Project[] = [
 
       <!-- lede -->
       <RevealSection :delay="1" as="p" class="lede">
-        A connected ecosystem of frontends, APIs, and infrastructure I design, build, and self-host,
-        where every project deploys to the same Kubernetes platform that runs this site.
+        A connected ecosystem of frontends, APIs, and infrastructure I design, build, and self-host.
+        The apps are the surface. Underneath, every project deploys to the same Kubernetes platform
+        that runs this site, sharing sign-on, real-time messaging, and delivery pipelines.
       </RevealSection>
 
-      <!-- project cards -->
+      <!-- under the hood: the shared platform every repo builds on -->
+      <RevealSection as="h2" class="section-heading">Under the hood</RevealSection>
+      <div class="feature-grid">
+        <RevealSection
+          v-for="(f, i) in platform"
+          :key="f.title"
+          :delay="((i % 3) + 1) as 1 | 2 | 3"
+          class="feature"
+        >
+          <span class="feature__icon"><span :class="f.icon" /></span>
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.body }}</p>
+        </RevealSection>
+      </div>
+
+      <!-- the repositories -->
+      <RevealSection as="h2" class="section-heading">The repositories</RevealSection>
+
+      <!-- project cards: the first row reveals as it enters so it isn't blank; later
+           rows keep the default (slightly delayed) reveal so the animation plays on scroll -->
       <div class="grid">
         <RevealSection
           v-for="(project, i) in projects"
           :key="project.name"
           :delay="((i % 3) + 1) as 1 | 2 | 3"
+          :root-margin="i < 3 ? '0px 0px 15% 0px' : undefined"
           class="card"
         >
           <div class="card__head">
@@ -177,8 +221,61 @@ const projects: Project[] = [
 }
 
 .lede {
-  max-width: 60ch;
-  margin-bottom: 3rem;
+  max-width: 62ch;
+  margin-bottom: 2.5rem;
+}
+
+.section-heading {
+  margin: 3rem 0 1.5rem;
+  font-size: 1.4rem;
+}
+
+/* under the hood platform band */
+.feature-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.feature {
+  padding: 1.5rem;
+  border-radius: 14px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-border);
+}
+
+.feature__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 1.3rem;
+  border: 1px solid var(--accent-border);
+  margin-bottom: 0.9rem;
+}
+
+.feature h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 0.9rem;
 }
 
 .grid {

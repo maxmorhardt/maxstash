@@ -8,8 +8,8 @@ const theme = useTheme();
 
 const items = [
   { label: 'Home', icon: 'pi pi-home', route: '/' },
-  { label: 'Apps', icon: 'pi pi-th-large', route: '/apps' },
   { label: 'Projects', icon: 'pi pi-briefcase', route: '/projects' },
+  { label: 'Apps', icon: 'pi pi-th-large', route: '/apps' },
   { label: 'About', icon: 'pi pi-user', route: '/about' },
   { label: 'Contact', icon: 'pi pi-envelope', route: '/contact' },
 ];

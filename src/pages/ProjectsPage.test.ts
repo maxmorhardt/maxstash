@@ -19,4 +19,11 @@ describe('ProjectsPage', () => {
     expect(wrapper.text()).toContain('Swagger');
     expect(wrapper.text()).toContain('Dex');
   });
+
+  it('frames the shared platform under the hood', () => {
+    const wrapper = mount(ProjectsPage);
+    expect(wrapper.text()).toContain('Under the hood');
+    expect(wrapper.text()).toContain('Federated single sign-on');
+    expect(wrapper.text()).toContain('Self-hosted on Kubernetes');
+  });
 });
