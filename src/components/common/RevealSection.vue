@@ -11,6 +11,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   delay: 0,
   as: 'div',
+  threshold: undefined,
+  rootMargin: undefined,
 });
 
 const { target, visible } = useScrollReveal<HTMLElement>({
