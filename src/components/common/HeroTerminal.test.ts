@@ -29,7 +29,7 @@ describe('HeroTerminal', () => {
 
     expect(wrapper.text()).toContain('whoami');
     expect(wrapper.text()).toContain('java · typescript · go · python · sql');
-    expect(wrapper.findAll('.term__item')).toHaveLength(5);
+    expect(wrapper.findAll('.term__item')).toHaveLength(6);
     expect(wrapper.find('.term__input').exists()).toBe(true);
   });
 
@@ -67,12 +67,12 @@ describe('HeroTerminal', () => {
     expect(wrapper.find('.term__item.is-active').text()).toContain('projects');
 
     const field = wrapper.find('.term__input');
-    await field.trigger('keydown', { key: 'ArrowDown' }); // move to about
-    expect(wrapper.find('.term__item.is-active').text()).toContain('about');
+    await field.trigger('keydown', { key: 'ArrowDown' }); // move to apps
+    expect(wrapper.find('.term__item.is-active').text()).toContain('apps');
 
     await field.trigger('keydown', { key: 'Enter' });
     await flushPromises();
-    expect(router.currentRoute.value.path).toBe('/about');
+    expect(router.currentRoute.value.path).toBe('/apps');
   });
 
   it('reveals the launchpad only after the boot script types out when motion is allowed', async () => {
@@ -87,7 +87,7 @@ describe('HeroTerminal', () => {
 
       await vi.runAllTimersAsync();
 
-      expect(wrapper.text()).toContain('squares-api');
+      expect(wrapper.text()).toContain('olympics.maxstash.io');
       expect(wrapper.find('.term__menu').exists()).toBe(true);
       expect(wrapper.find('.term__input').exists()).toBe(true);
     } finally {

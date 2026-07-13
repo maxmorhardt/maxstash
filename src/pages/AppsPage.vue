@@ -4,9 +4,9 @@ import RevealSection from '../components/common/RevealSection.vue';
 import { usePageMeta } from '../composables/usePageMeta';
 
 usePageMeta({
-  title: 'maxstash – A platform for real-time web apps',
+  title: 'maxstash – Apps by Max Morhardt',
   description:
-    'maxstash is a personal platform that hosts a small collection of real-time web apps, including Squares and Olympics, behind a single secure Google or GitHub sign-in.',
+    'maxstash is home to the apps Max Morhardt builds and runs for game day and get-togethers, including Squares and Olympics. Start a game, share the link, and everyone plays along live.',
   canonical: 'https://maxstash.io/apps',
 });
 
@@ -15,51 +15,61 @@ interface App {
   icon: string;
   tagline: string;
   description: string;
+  howToPlay: string[];
   href: string;
-  tags: string[];
 }
 
 const apps: App[] = [
   {
     name: 'Squares',
     icon: 'pi pi-th-large',
-    tagline: 'Real-time football squares',
+    tagline: 'Football squares for the whole party',
     description:
-      'Create or join a squares pool for a football game, claim your squares on a live grid, and watch numbers, quarter results, and winners update instantly for everyone in the pool.',
+      'The classic Super Bowl squares pool, online. One person sets up the board for a game, everyone else claims squares, and the app draws the numbers and figures out who wins each quarter.',
+    howToPlay: [
+      'Create a pool for an upcoming football game',
+      'Friends join and claim the squares they want',
+      'Numbers are drawn at random once the board fills up',
+      'Winners light up automatically as each quarter ends',
+    ],
     href: 'https://squares.maxstash.io',
-    tags: ['React', 'TypeScript', 'WebSocket', 'OIDC'],
   },
   {
     name: 'Olympics',
     icon: 'pi pi-sitemap',
-    tagline: 'Backyard tournament brackets',
+    tagline: 'Backyard tournament, bracket and all',
     description:
-      'Run a backyard olympics: add participants, generate random teams and group stages, record match results, and follow live standings all the way through the playoff bracket.',
+      'Run a backyard olympics without the spreadsheet. Add everyone playing, let the app build fair teams and group stages, then record results as you go and watch the bracket play out to a champion.',
+    howToPlay: [
+      'Add the people playing and the events',
+      'Random teams and group stages are generated for you',
+      'Punch in match results as each game finishes',
+      'Standings and the playoff bracket update in real time',
+    ],
     href: 'https://olympics.maxstash.io',
-    tags: ['React', 'TypeScript', 'WebSocket', 'OIDC'],
   },
 ];
 
-const platform = [
+const steps = [
+  {
+    icon: 'pi pi-plus-circle',
+    title: 'Start a game',
+    body: 'Pick an app and set up a squares pool or an olympics bracket in a couple of taps.',
+  },
+  {
+    icon: 'pi pi-share-alt',
+    title: 'Invite everyone',
+    body: 'Share a link and friends join from their own phones, with nothing to install.',
+  },
   {
     icon: 'pi pi-shield',
-    title: 'One secure sign-in',
-    body: 'Sign in once with Google or GitHub and the same account works across every app, federated through a self-hosted Dex identity provider.',
+    title: 'Sign in once',
+    body: 'Players sign in with Google or GitHub, and the same account works across every maxstash app.',
   },
   {
     icon: 'pi pi-bolt',
-    title: 'Real-time by default',
-    body: 'Live grids, scores, and standings update instantly for everyone, powered by WebSockets fanned out across instances over NATS.',
-  },
-  {
-    icon: 'pi pi-server',
-    title: 'Self-hosted platform',
-    body: 'Every app runs on a self-managed Kubernetes cluster behind a single Envoy gateway, with highly available Postgres and full observability.',
-  },
-  {
-    icon: 'pi pi-sync',
-    title: 'Shipped continuously',
-    body: 'Each app is built, tested, and deployed through shared CI/CD pipelines and reusable Helm charts, so every service stays consistent.',
+    title: 'Play along live',
+    body: 'Squares, numbers, scores, and standings update instantly for everyone as the game unfolds.',
   },
 ];
 </script>
@@ -75,25 +85,24 @@ const platform = [
       <div class="container hero__inner">
         <RevealSection as="span" class="eyebrow">
           <span class="pi pi-box" />
-          Platform
+          Live apps
         </RevealSection>
         <RevealSection :delay="1" as="h1" class="hero__title">maxstash</RevealSection>
         <RevealSection :delay="2" as="p" class="hero__lede">
-          maxstash is a personal platform that hosts a small collection of real-time web apps behind
-          a single, secure sign-in. Create an account once and use it across every app on the
-          platform.
+          maxstash is home to a couple of apps built for game day and get-togethers. Start a game,
+          share the link, and everyone plays along on their own phone while it updates live.
         </RevealSection>
         <RevealSection :delay="3" as="div" class="hero__meta">
           <span class="pill"><span class="pi pi-th-large" /> {{ apps.length }} live apps</span>
-          <span class="pill"><span class="pi pi-shield" /> Single sign-on</span>
-          <span class="pill"><span class="pi pi-bolt" /> Real-time</span>
+          <span class="pill"><span class="pi pi-users" /> Play with friends</span>
+          <span class="pill"><span class="pi pi-bolt" /> Live updates</span>
         </RevealSection>
       </div>
     </div>
 
     <div class="container body">
-      <!-- apps -->
-      <RevealSection as="h2" class="section-heading">Apps on the platform</RevealSection>
+      <!-- apps: what each game is and how it plays -->
+      <RevealSection as="h2" class="section-heading">The apps</RevealSection>
       <div class="grid">
         <RevealSection
           v-for="(app, i) in apps"
@@ -109,32 +118,32 @@ const platform = [
             </div>
           </div>
           <p class="card__desc">{{ app.description }}</p>
-          <ul class="tags">
-            <li v-for="tag in app.tags" :key="tag">{{ tag }}</li>
-          </ul>
+          <ol class="how">
+            <li v-for="play in app.howToPlay" :key="play">{{ play }}</li>
+          </ol>
           <a :href="app.href" target="_blank" rel="noreferrer" class="card__link">
-            <span>Open {{ app.name }}</span>
+            <span>Play {{ app.name }}</span>
             <span class="pi pi-external-link" />
           </a>
         </RevealSection>
       </div>
 
-      <!-- platform: engineering behind it -->
-      <RevealSection as="h2" class="section-heading">Under the hood</RevealSection>
+      <!-- how a game comes together, sign-in included -->
+      <RevealSection as="h2" class="section-heading">How it works</RevealSection>
       <RevealSection :delay="1" as="p" class="section-lede">
-        Every app shares the same foundation, so new apps get accounts, real-time updates, and
-        deployment for free.
+        Getting a game going takes about a minute, and everyone follows along together.
       </RevealSection>
-      <div class="feature-grid">
+      <div class="steps">
         <RevealSection
-          v-for="(f, i) in platform"
-          :key="f.title"
+          v-for="(s, i) in steps"
+          :key="s.title"
           :delay="((i % 3) + 1) as 1 | 2 | 3"
-          class="feature"
+          class="step"
         >
-          <span class="feature__icon"><span :class="f.icon" /></span>
-          <h3>{{ f.title }}</h3>
-          <p>{{ f.body }}</p>
+          <span class="step__num">{{ i + 1 }}</span>
+          <span class="step__icon"><span :class="s.icon" /></span>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.body }}</p>
         </RevealSection>
       </div>
 
@@ -142,14 +151,15 @@ const platform = [
       <RevealSection as="h2" class="section-heading">Signing in</RevealSection>
       <RevealSection :delay="1" as="div" class="prose">
         <p>
-          maxstash lets you sign in with Google or GitHub. Signing in is used only to create your
-          account and identify you across the apps on the platform. maxstash requests your basic
-          profile and email address and does not access anything else in your Google or GitHub
+          When an app needs an account, you can sign in with Google or GitHub. One sign-in works
+          across every maxstash app, so you never make a separate account per game. Signing in is
+          used only to create your account and identify you while you play. maxstash requests your
+          basic profile and email address and does not access anything else in your Google or GitHub
           account.
         </p>
         <p>
           You can delete your account at any time from within any app, which removes your personal
-          data from the platform.
+          data from maxstash.
         </p>
       </RevealSection>
 
@@ -157,7 +167,7 @@ const platform = [
       <RevealSection as="div" class="legal-callout">
         <div class="legal-callout__text">
           <h2>Terms &amp; policies</h2>
-          <p>How the platform is used and how your data is handled.</p>
+          <p>How maxstash apps may be used and how your data is handled.</p>
         </div>
         <div class="legal-links">
           <RouterLink to="/terms-of-service" class="legal-links__item">
@@ -329,8 +339,7 @@ const platform = [
   margin-bottom: 1rem;
 }
 
-.card__icon,
-.feature__icon {
+.card__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -362,22 +371,42 @@ const platform = [
   margin: 0 0 1rem;
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0 0 1.25rem;
+/* how-to-play steps inside each app card */
+.how {
+  margin: 0 0 1.5rem;
   padding: 0;
   list-style: none;
+  counter-reset: how;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
-.tags li {
-  font-size: 0.72rem;
-  padding: 0.22rem 0.6rem;
+.how li {
+  position: relative;
+  counter-increment: how;
+  padding-left: 2rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.how li::before {
+  content: counter(how);
+  position: absolute;
+  left: 0;
+  top: -0.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 999px;
-  background: var(--bg);
-  color: var(--text-h);
-  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
 }
 
 .card__link {
@@ -403,14 +432,15 @@ const platform = [
   transform: translateY(-1px);
 }
 
-/* platform features */
-.feature-grid {
+/* how it works steps */
+.steps {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
-.feature {
+.step {
+  position: relative;
   padding: 1.5rem;
   border-radius: 14px;
   background: var(--bg-soft);
@@ -420,28 +450,49 @@ const platform = [
     border-color 0.3s ease;
 }
 
-.feature:hover {
+.step:hover {
   transform: translateY(-3px);
   border-color: var(--accent-border);
 }
 
-.feature__icon {
+.step__num {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text);
+  opacity: 0.18;
+}
+
+.step__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 1.3rem;
+  border: 1px solid var(--accent-border);
   margin-bottom: 0.9rem;
 }
 
-.feature h3 {
+.step h3 {
   margin: 0 0 0.4rem;
   font-size: 1.05rem;
 }
 
-.feature p {
+.step p {
   margin: 0;
   color: var(--text);
   line-height: 1.6;
   font-size: 0.9rem;
 }
 
-/* sign-in prose */
+/* prose sections */
 .prose {
   max-width: 68ch;
 }
