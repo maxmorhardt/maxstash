@@ -237,6 +237,12 @@ const projects: Project[] = [
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+@media (min-width: 800px) and (max-width: 1140px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .feature {
   padding: 1.5rem;
   border-radius: 14px;

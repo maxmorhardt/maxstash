@@ -439,6 +439,12 @@ const steps = [
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
+@media (min-width: 760px) and (max-width: 1000px) {
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .step {
   position: relative;
   padding: 1.5rem;
