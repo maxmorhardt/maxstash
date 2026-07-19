@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/maxmorhardt/maxstash/compare/1.0.1...1.0.2) (2026-07-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @primeuix/themes to v3 ([#34](https://github.com/maxmorhardt/maxstash/issues/34)) ([7d452e0](https://github.com/maxmorhardt/maxstash/commit/7d452e0063caa3881a6e77b8f8954d7729728b75))
+* **deps:** update pnpm to v11.8.0 [security] ([#29](https://github.com/maxmorhardt/maxstash/issues/29)) ([83110a2](https://github.com/maxmorhardt/maxstash/commit/83110a250aeef30a13ab6415e7673f173852ed15))
+
 ## [1.0.1](https://github.com/maxmorhardt/maxstash/compare/1.0.0...1.0.1) (2026-07-15)
 
 
