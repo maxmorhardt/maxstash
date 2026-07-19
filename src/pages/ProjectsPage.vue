@@ -138,13 +138,13 @@ const projects: Project[] = [
 </script>
 
 <template>
-  <section class="projects section">
-    <div class="container">
+  <section class="layout-section pt-12">
+    <div class="layout-container">
       <!-- page heading -->
       <RevealSection as="h1" class="page-title">Projects</RevealSection>
 
       <!-- lede -->
-      <RevealSection :delay="1" as="p" class="lede">
+      <RevealSection :delay="1" as="p" class="mb-10 max-w-[62ch]">
         A connected ecosystem of frontends, APIs, and infrastructure I design, build, and self-host.
         The apps are the surface. Underneath, every project deploys to the same Kubernetes platform
         that runs this site, sharing sign-on, real-time messaging, and delivery pipelines.
@@ -152,16 +152,22 @@ const projects: Project[] = [
 
       <!-- under the hood: the shared platform every repo builds on -->
       <RevealSection as="h2" class="section-heading">Under the hood</RevealSection>
-      <div class="feature-grid">
+      <div
+        class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-4 min-[800px]:max-[1140px]:grid-cols-2"
+      >
         <RevealSection
           v-for="(f, i) in platform"
           :key="f.title"
           :delay="((i % 3) + 1) as 1 | 2 | 3"
-          class="feature"
+          class="rounded-card border border-border bg-bg-soft p-6 transition-[transform,border-color] duration-300 ease-out hover:-translate-y-[3px] hover:border-accent-border"
         >
-          <span class="feature__icon"><span :class="f.icon" /></span>
-          <h3>{{ f.title }}</h3>
-          <p>{{ f.body }}</p>
+          <span
+            class="mb-[0.9rem] inline-flex size-[46px] items-center justify-center rounded-xl border border-accent-border bg-accent-bg text-[1.3rem] text-accent"
+          >
+            <span :class="f.icon" />
+          </span>
+          <h3 class="mt-0 mb-[0.4rem] text-[1.05rem]">{{ f.title }}</h3>
+          <p class="m-0 text-[0.9rem] leading-[1.6] text-text">{{ f.body }}</p>
         </RevealSection>
       </div>
 
@@ -170,40 +176,58 @@ const projects: Project[] = [
 
       <!-- project cards: the first row reveals as it enters so it isn't blank; later
            rows keep the default (slightly delayed) reveal so the animation plays on scroll -->
-      <div class="grid">
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-5">
         <RevealSection
           v-for="(project, i) in projects"
           :key="project.name"
           :delay="((i % 3) + 1) as 1 | 2 | 3"
           :root-margin="i < 3 ? '0px 0px 15% 0px' : undefined"
-          class="card"
+          class="card flex min-w-0 flex-col rounded-card border border-border bg-bg-soft p-7 [overflow-wrap:anywhere] hover:border-accent-border hover:shadow-card"
         >
-          <div class="card__head">
-            <div class="card__title">
-              <h3>{{ project.name }}</h3>
-              <span class="badge">{{ project.category }}</span>
+          <div class="mb-2 flex items-start justify-between gap-4">
+            <div class="flex flex-wrap items-center gap-2">
+              <h3 class="m-0 font-mono">{{ project.name }}</h3>
+              <span
+                class="rounded-full border border-accent-border bg-accent-bg px-[0.55rem] py-[0.2rem] text-[0.7rem] tracking-[0.04em] text-accent uppercase"
+              >
+                {{ project.category }}
+              </span>
             </div>
 
-            <a :href="project.href" target="_blank" rel="noreferrer" aria-label="View on GitHub">
+            <a
+              :href="project.href"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="View on GitHub"
+              class="text-xl text-text no-underline hover:text-accent"
+            >
               <span class="pi pi-github" />
             </a>
           </div>
 
           <p>{{ project.description }}</p>
 
-          <ul class="tags">
-            <li v-for="tag in project.tags" :key="tag">
+          <ul class="mt-4 mb-4 flex list-none flex-wrap gap-[0.4rem] p-0">
+            <li
+              v-for="tag in project.tags"
+              :key="tag"
+              class="rounded-full border border-border bg-bg px-[0.6rem] py-1 text-xs text-text-h"
+            >
               {{ tag }}
             </li>
           </ul>
 
-          <div v-if="project.links" class="extras">
+          <div
+            v-if="project.links"
+            class="mt-auto flex flex-wrap gap-2 border-t border-dashed border-border pt-4"
+          >
             <a
               v-for="link in project.links"
               :key="link.href"
               :href="link.href"
               target="_blank"
               rel="noreferrer"
+              class="inline-flex items-center gap-1.5 rounded-full border border-accent-border bg-accent-bg px-[0.7rem] py-1.5 text-sm text-accent no-underline hover:-translate-y-px"
             >
               <span :class="link.icon || 'pi pi-external-link'" />
               <span>{{ link.label }}</span>
@@ -216,207 +240,41 @@ const projects: Project[] = [
 </template>
 
 <style scoped>
-.projects {
-  padding-top: 3rem;
-}
-
-.lede {
-  max-width: 62ch;
-  margin-bottom: 2.5rem;
-}
+@reference '../style.css';
 
 .section-heading {
-  margin: 3rem 0 1.5rem;
-  font-size: 1.4rem;
+  @apply mt-12 mb-6 text-[1.4rem];
 }
 
-/* under the hood platform band */
-.feature-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-}
-
-@media (min-width: 800px) and (max-width: 1140px) {
-  .feature-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.feature {
-  padding: 1.5rem;
-  border-radius: 14px;
-  background: var(--bg-soft);
-  border: 1px solid var(--border);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
-}
-
-.feature:hover {
-  transform: translateY(-3px);
-  border-color: var(--accent-border);
-}
-
-.feature__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  background: var(--accent-bg);
-  color: var(--accent);
-  font-size: 1.3rem;
-  border: 1px solid var(--accent-border);
-  margin-bottom: 0.9rem;
-}
-
-.feature h3 {
-  margin: 0 0 0.4rem;
-  font-size: 1.05rem;
-}
-
-.feature p {
-  margin: 0;
-  color: var(--text);
-  line-height: 1.6;
-  font-size: 0.9rem;
-}
-
-.grid {
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-}
-
+/* cards tilt in on reveal, which needs a composed transform the utilities can't
+   express alongside the .is-visible state toggle */
 .card {
-  display: flex;
-  flex-direction: column;
-  padding: 1.75rem;
-  border-radius: 14px;
-  background: var(--bg-soft);
-  border: 1px solid var(--border);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent-border);
-  box-shadow: var(--shadow);
-}
-
-.card__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.card__title {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.card__title h3 {
-  margin: 0;
-  font-family: var(--mono);
-}
-
-.badge {
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-  background: var(--accent-bg);
-  color: var(--accent);
-  border: 1px solid var(--accent-border);
-}
-
-.card__head a {
-  color: var(--text);
-  font-size: 1.25rem;
-  text-decoration: none;
-}
-
-.card__head a:hover {
-  color: var(--accent);
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 1rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.tags li {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  background: var(--bg);
-  color: var(--text-h);
-  border: 1px solid var(--border);
-}
-
-.extras {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px dashed var(--border);
-}
-
-.tags {
-  margin-bottom: 1rem;
-}
-
-.extras a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.875rem;
-  padding: 0.35rem 0.7rem;
-  border-radius: 999px;
-  background: var(--accent-bg);
-  color: var(--accent);
-  border: 1px solid var(--accent-border);
-  text-decoration: none;
-}
-
-.extras a:hover {
-  transform: translateY(-1px);
-}
-
-.card.reveal {
   opacity: 0;
   transform: translateY(40px) scale(0.92) rotate(-1.5deg);
   transform-origin: center bottom;
   transition:
     opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.card.reveal.is-visible {
+.card.is-visible {
   opacity: 1;
   transform: translateY(0) scale(1) rotate(0);
 }
 
+.card.is-visible:hover {
+  transform: translateY(-4px);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .card.reveal,
-  .card.reveal.is-visible {
+  .card,
+  .card.is-visible {
     transition: none;
     transform: none;
     opacity: 1;

@@ -33,6 +33,13 @@ interface NavItem {
 
 const router = useRouter();
 
+// terminal palette is deliberately fixed (GitHub dark) rather than theme-driven
+const KIND_COLOR: Record<Kind, string> = {
+  cmd: 'text-[#e6edf3]',
+  out: 'text-[#8b949e]',
+  ok: 'text-[#27c93f]',
+};
+
 const EMAIL = 'max@maxstash.io';
 const GITHUB = 'https://github.com/maxmorhardt';
 const LINKEDIN = 'https://www.linkedin.com/in/max-morhardt-60b9121b8/';
@@ -321,21 +328,33 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="term" @click="focusInput">
-    <div class="term__bar">
-      <span class="term__dot term__dot--r" />
-      <span class="term__dot term__dot--y" />
-      <span class="term__dot term__dot--g" />
-      <span class="term__title">max@maxstash: ~</span>
+  <div
+    class="term flex max-h-[calc(100svh-var(--header-h)-6.5rem)] w-full max-w-[720px] flex-col overflow-hidden rounded-card border border-accent-border bg-[#0d1117] font-mono shadow-[var(--shadow),0_0_100px_-18px_var(--hero-glow-1)] max-[880px]:max-h-[calc(100svh-var(--header-h)-3rem)]"
+    @click="focusInput"
+  >
+    <div
+      class="flex items-center gap-[0.45rem] border-b border-[#21262d] bg-[#161b22] px-[0.85rem] py-[0.6rem]"
+    >
+      <span class="size-[11px] rounded-full bg-[#ff5f56]" />
+      <span class="size-[11px] rounded-full bg-[#ffbd2e]" />
+      <span class="size-[11px] rounded-full bg-[#27c93f]" />
+      <span class="ml-2 text-[0.78rem] text-[#8b949e]">max@maxstash: ~</span>
     </div>
-    <div ref="bodyRef" class="term__body">
-      <div v-for="(l, i) in lines" :key="i" class="term__line" :class="`term__line--${l.kind}`">
-        <nav v-if="l.menu" class="term__menu" aria-label="Explore the site">
+    <div
+      ref="bodyRef"
+      class="min-h-0 flex-1 overflow-y-auto px-[1.3rem] pt-[1.15rem] pb-[1.25rem] text-[0.88rem] leading-[1.6] max-[880px]:px-[0.9rem] max-[880px]:pt-[0.9rem] max-[880px]:pb-4 max-[880px]:text-[0.72rem]"
+    >
+      <div v-for="(l, i) in lines" :key="i" class="break-words whitespace-pre-wrap">
+        <nav
+          v-if="l.menu"
+          class="term__menu mt-[0.6rem] mb-[0.2rem] flex flex-col"
+          aria-label="Explore the site"
+        >
           <component
             :is="item.external ? 'a' : RouterLink"
             v-for="(item, idx) in nav"
             :key="item.label"
-            class="term__item"
+            class="term__item flex items-center gap-[0.55rem] rounded-md px-2 py-[0.18rem] text-[0.86rem] text-[#58a6ff] no-underline transition-[background-color,color] duration-150 ease-out max-[880px]:px-[0.4rem] max-[880px]:py-[0.15rem] max-[880px]:text-[0.72rem]"
             :class="{ 'is-active': i === lastMenuIndex && selected === idx }"
             v-bind="
               item.external
@@ -345,19 +364,22 @@ onBeforeUnmount(() => {
             @mouseenter="i === lastMenuIndex && (selected = idx)"
             @click.stop
           >
-            <span class="term__pointer">{{
+            <span class="w-[0.8em] text-accent">{{
               i === lastMenuIndex && selected === idx ? '❯' : ' '
             }}</span>
             <span>{{ item.label }}{{ item.external ? ' ↗' : '/' }}</span>
           </component>
         </nav>
-        <div v-else-if="l.label" class="term__cols">
-          <span class="term__col-label">{{ l.label }}</span>
-          <span class="term__col-value"
+        <div
+          v-else-if="l.label"
+          class="grid grid-cols-[12ch_1fr] gap-x-3 max-[880px]:gap-x-[0.45rem]"
+        >
+          <span class="min-w-0 text-[#8b949e]">{{ l.label }}</span>
+          <span class="min-w-0 text-[#8b949e]"
             >{{ l.text
             }}<a
               v-if="l.link"
-              class="term__out-link"
+              class="term__out-link text-[#58a6ff] no-underline hover:underline"
               :href="l.link.href"
               target="_blank"
               rel="noreferrer"
@@ -367,27 +389,30 @@ onBeforeUnmount(() => {
           >
         </div>
         <template v-else>
-          <span v-if="l.kind === 'cmd'" class="term__prompt">~ $</span>
-          <span class="term__text">{{ l.text }}</span>
+          <span v-if="l.kind === 'cmd'" class="mr-2 text-[#a855f7]">~ $</span>
+          <span :class="KIND_COLOR[l.kind]">{{ l.text }}</span>
           <a
             v-if="l.link"
-            class="term__out-link"
+            class="term__out-link text-[#58a6ff] no-underline hover:underline"
             :href="l.link.href"
             target="_blank"
             rel="noreferrer"
             @click.stop
             >{{ l.link.text }}</a
           >
-          <span v-if="l.typing" class="term__cursor" />
+          <span
+            v-if="l.typing"
+            class="term__cursor ml-0.5 inline-block h-[1.05em] w-2 bg-[#a855f7] align-text-bottom"
+          />
         </template>
       </div>
 
-      <div v-if="ready" class="term__input-line">
-        <span class="term__prompt">~ $</span>
+      <div v-if="ready" class="mt-[0.35rem] flex items-center">
+        <span class="mr-2 text-[#a855f7]">~ $</span>
         <input
           ref="inputRef"
           v-model="input"
-          class="term__input"
+          class="term__input min-w-0 flex-1 border-none bg-transparent p-0 text-[#e6edf3] caret-[#a855f7] outline-none max-[880px]:text-[16px]"
           type="text"
           autocomplete="off"
           autocapitalize="off"
@@ -398,186 +423,33 @@ onBeforeUnmount(() => {
         />
       </div>
 
-      <div v-if="ready" class="term__hint">
-        <span class="term__hint-full">
+      <div
+        v-if="ready"
+        class="mt-[0.6rem] text-[0.78rem] text-[#56607a] italic max-[880px]:text-[0.68rem]"
+      >
+        <span class="max-[880px]:hidden">
           type a command (try 'help') · arrow keys to select · enter to open
         </span>
-        <span class="term__hint-short"> try 'help' · enter to open </span>
+        <span class="hidden max-[880px]:inline"> try 'help' · enter to open </span>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.term {
-  width: 100%;
-  max-width: 720px;
-  max-height: calc(100svh - var(--header-h) - 6.5rem);
-  display: flex;
-  flex-direction: column;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #0d1117;
-  border: 1px solid var(--accent-border);
-  box-shadow:
-    var(--shadow),
-    0 0 100px -18px var(--hero-glow-1);
-  font-family: var(--mono);
+@reference '../../style.css';
+
+.term__item.is-active {
+  @apply bg-accent-bg text-accent;
 }
 
-.term__bar {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.6rem 0.85rem;
-  background: #161b22;
-  border-bottom: 1px solid #21262d;
-}
-
-.term__dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-}
-
-.term__dot--r {
-  background: #ff5f56;
-}
-
-.term__dot--y {
-  background: #ffbd2e;
-}
-
-.term__dot--g {
-  background: #27c93f;
-}
-
-.term__title {
-  margin-left: 0.5rem;
-  font-size: 0.78rem;
-  color: #8b949e;
-}
-
-.term__body {
-  flex: 1;
-  min-height: 0;
-  padding: 1.15rem 1.3rem 1.25rem;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  overflow-y: auto;
-}
-
-.term__line {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.term__cols {
-  display: grid;
-  grid-template-columns: 12ch 1fr;
-  column-gap: 0.75rem;
-}
-
-.term__col-label,
-.term__col-value {
-  color: #8b949e;
-  min-width: 0;
-}
-
-.term__prompt {
-  margin-right: 0.5rem;
-  color: #a855f7;
-}
-
-.term__line--cmd .term__text {
-  color: #e6edf3;
-}
-
-.term__line--out .term__text {
-  color: #8b949e;
-}
-
-.term__line--ok .term__text {
-  color: #27c93f;
-}
-
-.term__out-link {
-  color: #58a6ff;
-  text-decoration: none;
-}
-
-.term__out-link:hover {
-  text-decoration: underline;
-}
-
+/* the blinking caret and the menu fade-in are keyframe-driven */
 .term__cursor {
-  display: inline-block;
-  width: 8px;
-  height: 1.05em;
-  margin-left: 2px;
-  vertical-align: text-bottom;
-  background: #a855f7;
   animation: term-blink 1s step-end infinite;
 }
 
 .term__menu {
-  display: flex;
-  flex-direction: column;
-  margin: 0.6rem 0 0.2rem;
   animation: term-fade 0.4s ease both;
-}
-
-.term__item {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.18rem 0.5rem;
-  border-radius: 6px;
-  color: #58a6ff;
-  text-decoration: none;
-  font-size: 0.86rem;
-  transition:
-    background 0.15s ease,
-    color 0.15s ease;
-}
-
-.term__item.is-active {
-  background: var(--accent-bg);
-  color: var(--accent);
-}
-
-.term__pointer {
-  width: 0.8em;
-  color: var(--accent);
-}
-
-.term__input-line {
-  display: flex;
-  align-items: center;
-  margin-top: 0.35rem;
-}
-
-.term__input {
-  flex: 1;
-  min-width: 0;
-  padding: 0;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #e6edf3;
-  font: inherit;
-  caret-color: #a855f7;
-}
-
-.term__hint {
-  margin-top: 0.6rem;
-  color: #56607a;
-  font-size: 0.78rem;
-  font-style: italic;
-}
-
-.term__hint-short {
-  display: none;
 }
 
 @keyframes term-blink {
@@ -602,50 +474,9 @@ onBeforeUnmount(() => {
   }
 }
 
-@media (max-width: 880px) {
-  .term {
-    max-height: calc(100svh - var(--header-h) - 3rem);
-  }
-
-  .term__body {
-    padding: 0.9rem 0.9rem 1rem;
-    font-size: 0.72rem;
-  }
-
-  .term__cols {
-    grid-template-columns: 12ch 1fr;
-    column-gap: 0.45rem;
-  }
-
-  .term__item {
-    font-size: 0.72rem;
-    padding: 0.15rem 0.4rem;
-  }
-
-  .term__input {
-    font-size: 16px;
-  }
-
-  .term__hint {
-    font-size: 0.68rem;
-  }
-
-  .term__hint-full {
-    display: none;
-  }
-
-  .term__hint-short {
-    display: inline;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .term__cursor {
-    animation: none;
-  }
-
-  .term__menu,
-  .term__hint {
+  .term__cursor,
+  .term__menu {
     animation: none;
   }
 }

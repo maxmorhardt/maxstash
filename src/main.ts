@@ -64,6 +64,10 @@ app.use(PrimeVue, {
     preset: MaxstashPreset,
     options: {
       darkModeSelector: '.dark',
+      cssLayer: {
+        name: 'primevue',
+        order: 'theme, base, primevue, components, utilities',
+      },
     },
   },
 });

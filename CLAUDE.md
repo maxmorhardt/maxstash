@@ -1,6 +1,6 @@
 # Maxstash Contribution Guide
 
-This guide provides context for coding agents working in this repository. Maxstash is a personal portfolio site: a Vue 3 + TypeScript SPA built with Vite, styled with PrimeVue (v4) + `@primeuix/themes` + custom CSS variables, and shipped as a Docker image.
+This guide provides context for coding agents working in this repository. Maxstash is a personal portfolio site: a Vue 3 + TypeScript SPA built with Vite, styled with Tailwind CSS v4 over PrimeVue (v4) + `@primeuix/themes` and custom CSS variables, and shipped as a Docker image.
 
 ## Directory overview
 
@@ -31,8 +31,9 @@ Coverage thresholds are enforced at **80%** for statements / branches / function
 - Vue SFCs use `<script setup lang="ts">`.
 - Props: declare with `defineProps<Props>()` and `withDefaults` when needed; `Props` is a local `interface` (not exported) unless reused.
 - Composables live in `src/composables/` and are named `useXxx`. Prefer module-scoped singletons for shared state (see `useTheme`); avoid allocating a new `reactive(...)` per call.
-- Pages and components keep their template, script, and scoped styles colocated in the SFC.
-- Use the existing CSS variables (`--bg`, `--text`, `--accent`, etc.) and PrimeIcons (`pi pi-*`) for icons rather than introducing new icon libraries.
+- Style with **Tailwind utility classes in the template**. A `<style scoped>` block is a fallback, not the default — reach for one only when a rule genuinely can't be a utility (see Styling below).
+- Use the theme colors (`bg-bg-soft`, `text-text-h`, `border-accent-border`, …) rather than raw hex or `var(--…)`; they are bridged from the CSS variables so they follow light/dark automatically.
+- Use PrimeIcons (`pi pi-*`) for icons rather than introducing new icon libraries.
 - Avoid comments unless the code is genuinely non-obvious.
 - Never type with `any`; use `unknown` if the type is truly unknown.
 - Let TypeScript infer composable/hook return types where possible.
@@ -42,10 +43,20 @@ Coverage thresholds are enforced at **80%** for statements / branches / function
 - Routes are registered in [src/router/index.ts](src/router/index.ts) and lazy-load page components from `src/pages/`.
 - New top-level views: add a `XxxPage.vue` in `src/pages/` and a route in the router. Use `RouterLink` for in-app navigation; use `useRouter().push(...)` from event handlers.
 
+## Styling
+
+- **Tailwind CSS v4**, wired through the `@tailwindcss/vite` plugin. There is no `tailwind.config.js`; all configuration lives in [src/style.css](src/style.css).
+- `style.css` holds, in order: the `@layer` declaration, `@import 'tailwindcss'`, the `@theme` block, the `:root` / `:root.dark` variables, base element styles, the `.reveal` scroll-reveal classes, and the shared `layout-container` / `layout-section` / `page-title` utilities.
+- The `@theme` block **bridges the CSS variables into Tailwind** (`--color-bg: var(--bg)` and friends), so `bg-bg`, `text-text-h`, `border-accent-border`, `font-mono`, `rounded-card`, `shadow-card` all track the light/dark variables with no `dark:` variant needed. To add a color, add the `--x` variable to both `:root` and `:root.dark`, then map it once in `@theme`.
+- `.container` and `.section` were renamed to `layout-container` / `layout-section` to avoid colliding with Tailwind's built-in `container`.
+- Keep a `<style scoped>` block only for what utilities can't express: `@keyframes` and the rules that drive them, multi-state `transition` shorthands that differ between reveal and hover, and PrimeVue `:deep()` overrides. When a scoped block needs theme values, start it with `@reference '<path>/style.css'` so `@apply` resolves.
+- PrimeVue is emitted into a `primevue` CSS layer (configured in `src/main.ts`) ordered `theme, base, primevue, components, utilities`, so Tailwind's preflight doesn't strip PrimeVue component styling and utilities still win over it. Don't reorder those layers.
+- Some class names (`term__item`, `term__input`, `term__menu`, `term__out-link`, `card__link`, `legal-links__item`) are retained purely as **test selectors** and carry no styling — don't remove them without updating the tests.
+
 ## Theming
 
 - Theme state lives in [src/composables/useTheme.ts](src/composables/useTheme.ts) as a module-scoped reactive singleton. Toggling sets/removes the `dark` class on `document.documentElement` and persists the choice to `localStorage` under `maxstash:theme`.
-- Both PrimeVue (configured in `src/main.ts`) and the global CSS variables in `src/style.css` react to the `.dark` class. Prefer extending those variables over hard-coding colors.
+- Both PrimeVue (configured in `src/main.ts`) and the CSS variables in `src/style.css` react to the `.dark` class. Prefer extending those variables over hard-coding colors.
 
 ## Animations
 

@@ -16,19 +16,30 @@ const items = [
 </script>
 
 <template>
-  <header class="app-header">
-    <Menubar :model="items" class="app-header__bar">
+  <header
+    class="app-header sticky top-0 z-50 box-border flex h-[var(--header-h)] w-full items-center border-b border-border bg-header-bg backdrop-blur-[10px] backdrop-saturate-[180%]"
+  >
+    <Menubar :model="items">
       <!-- brand / logo -->
       <template #start>
-        <RouterLink to="/" class="brand" aria-label="maxstash home">
-          <img src="/logo.svg" alt="" class="brand__mark" width="28" height="28" />
-          <span class="brand__text">maxstash</span>
+        <RouterLink
+          to="/"
+          class="mr-4 inline-flex items-center gap-2 text-[1.05rem] font-semibold tracking-[-0.01em] text-text-h no-underline"
+          aria-label="maxstash home"
+        >
+          <img src="/logo.svg" alt="" class="block rounded-md" width="28" height="28" />
+          <span class="text-text-h">maxstash</span>
         </RouterLink>
       </template>
 
       <!-- nav links -->
       <template #item="{ item, props }">
-        <RouterLink v-if="item.route" :to="item.route" v-bind="props.action" class="nav-link">
+        <RouterLink
+          v-if="item.route"
+          :to="item.route"
+          v-bind="props.action"
+          class="nav-link flex w-full items-center gap-2 px-3 py-2 text-text no-underline"
+        >
           <span :class="item.icon" />
           <span>{{ item.label }}</span>
         </RouterLink>
@@ -50,20 +61,6 @@ const items = [
 </template>
 
 <style scoped>
-.app-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  width: 100%;
-  height: var(--header-h);
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  backdrop-filter: saturate(180%) blur(10px);
-  background: var(--header-bg);
-  border-bottom: 1px solid var(--border);
-}
-
 .app-header :deep(.p-menubar) {
   background: transparent;
   border: 0;
@@ -83,37 +80,6 @@ const items = [
 /* drop the item's own padding so the link can fill the whole row and be fully clickable */
 .app-header :deep(.p-menubar-item-content) {
   padding: 0;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
-  font-size: 1.05rem;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  color: var(--text-h);
-  margin-right: 1rem;
-}
-
-.brand__mark {
-  display: block;
-  border-radius: 6px;
-}
-
-.brand__text {
-  color: var(--text-h);
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  text-decoration: none;
-  color: var(--text);
 }
 
 .nav-link.router-link-exact-active {

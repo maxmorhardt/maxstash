@@ -31,31 +31,43 @@ const channels = [
 </script>
 
 <template>
-  <section class="contact section">
-    <div class="container">
+  <section class="layout-section pt-12 max-[600px]:pt-8 max-[600px]:pb-8">
+    <div class="layout-container">
       <!-- page heading -->
       <RevealSection as="h1" class="page-title reveal--left">Contact</RevealSection>
 
       <!-- lede -->
-      <RevealSection :delay="1" as="p" class="lede reveal--left">
+      <RevealSection :delay="1" as="p" class="reveal--left mb-12 max-w-[60ch] max-[600px]:mb-5">
         The best ways to reach me. I read every message and usually reply within a day or two.
       </RevealSection>
 
       <!-- contact channel cards -->
-      <div class="grid">
+      <div class="flex flex-wrap justify-center gap-4">
         <RevealSection
           v-for="(c, i) in channels"
           :key="c.label"
           :delay="(i + 1) as 1 | 2 | 3"
-          class="card reveal--scale"
+          class="card reveal--scale min-w-0 max-w-[400px] flex-[1_1_280px] rounded-card border border-border bg-bg-soft hover:border-accent-border hover:shadow-card"
         >
-          <a :href="c.href" target="_blank" rel="noreferrer" class="card__link">
-            <span class="card__icon" :class="c.icon" />
-            <span class="card__body">
-              <strong>{{ c.label }}</strong>
+          <a
+            :href="c.href"
+            target="_blank"
+            rel="noreferrer"
+            class="card__link flex min-w-0 items-center gap-4 p-6 text-text-h no-underline max-[600px]:p-4"
+          >
+            <span
+              class="inline-flex size-11 shrink-0 items-center justify-center rounded-[10px] border border-border bg-bg text-xl text-text-h"
+              :class="c.icon"
+            />
+            <span
+              class="flex min-w-0 flex-1 flex-col break-words text-[0.9rem] text-text [overflow-wrap:anywhere]"
+            >
+              <strong class="text-base text-text-h">{{ c.label }}</strong>
               <span>{{ c.handle }}</span>
             </span>
-            <span class="pi pi-arrow-up-right card__arrow" />
+            <span
+              class="pi pi-arrow-up-right card__arrow text-text opacity-50 transition-[opacity,transform,color] duration-200 ease-out"
+            />
           </a>
         </RevealSection>
       </div>
@@ -64,29 +76,9 @@ const channels = [
 </template>
 
 <style scoped>
-.contact {
-  padding-top: 3rem;
-}
-
-.lede {
-  max-width: 60ch;
-  margin-bottom: 3rem;
-}
-
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
-
+/* the card swaps between a springy reveal transition and a snappy hover one,
+   so the transition shorthand has to be redeclared per state */
 .card {
-  flex: 1 1 280px;
-  max-width: 400px;
-  min-width: 0;
-  border-radius: 14px;
-  background: var(--bg-soft);
-  border: 1px solid var(--border);
   transition:
     transform 0.3s ease,
     border-color 0.3s ease,
@@ -95,88 +87,23 @@ const channels = [
 
 .card.reveal {
   transition:
-    opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
-    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.8s var(--ease-spring),
+    transform 0.8s var(--ease-spring),
     border-color 0.3s ease,
     box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  border-color: var(--accent-border);
-  box-shadow: var(--shadow);
   transition:
     transform 0.3s ease,
     border-color 0.3s ease,
     box-shadow 0.3s ease;
 }
 
-.card__link {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-  text-decoration: none;
-  color: var(--text-h);
-  min-width: 0;
-}
-
-.card__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: var(--bg);
-  color: var(--text-h);
-  border: 1px solid var(--border);
-  font-size: 1.25rem;
-  flex-shrink: 0;
-}
-
-.card__body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
-  font-size: 0.9rem;
-  color: var(--text);
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-
-.card__body strong {
-  color: var(--text-h);
-  font-size: 1rem;
-}
-
-.card__arrow {
-  color: var(--text);
-  opacity: 0.5;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-}
-
 .card:hover .card__arrow {
   opacity: 1;
   transform: translate(2px, -2px);
   color: var(--accent);
-}
-
-@media (max-width: 600px) {
-  .contact {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
-
-  .lede {
-    margin-bottom: 1.25rem;
-  }
-
-  .card__link {
-    padding: 1rem;
-  }
 }
 </style>
