@@ -55,10 +55,13 @@ const channels = [
             rel="noreferrer"
             class="card__link flex min-w-0 items-center gap-4 p-6 text-text-h no-underline max-[600px]:p-4"
           >
+            <!-- the pi class goes on a child: primeicons is unlayered, so its
+                 `display: inline-block` would beat any utility on the same element -->
             <span
-              class="inline-flex size-11 shrink-0 items-center justify-center rounded-[10px] border border-border bg-bg text-xl text-text-h"
-              :class="c.icon"
-            />
+              class="inline-flex size-11 shrink-0 items-center justify-center rounded-[10px] border border-border bg-bg text-text-h"
+            >
+              <span class="text-xl" :class="c.icon" />
+            </span>
             <span
               class="flex min-w-0 flex-1 flex-col break-words text-[0.9rem] text-text [overflow-wrap:anywhere]"
             >

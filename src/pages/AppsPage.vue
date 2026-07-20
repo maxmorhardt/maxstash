@@ -131,7 +131,7 @@ const steps = [
           v-for="(app, i) in apps"
           :key="app.name"
           :delay="((i % 3) + 1) as 1 | 2 | 3"
-          class="flex min-w-0 flex-col rounded-panel border border-border bg-bg-soft p-7 transition-[transform,border-color,box-shadow] duration-300 ease-out [overflow-wrap:anywhere] hover:-translate-y-1 hover:border-accent-border hover:shadow-card"
+          class="app-card flex min-w-0 flex-col rounded-panel border border-border bg-bg-soft p-7 [overflow-wrap:anywhere] hover:border-accent-border hover:shadow-card"
         >
           <div class="mb-4 flex items-center gap-[0.9rem]">
             <span
@@ -183,7 +183,7 @@ const steps = [
           v-for="(s, i) in steps"
           :key="s.title"
           :delay="((i % 3) + 1) as 1 | 2 | 3"
-          class="relative rounded-card border border-border bg-bg-soft p-6 transition-[transform,border-color] duration-300 ease-out hover:-translate-y-[3px] hover:border-accent-border"
+          class="step-card relative rounded-card border border-border bg-bg-soft p-6 hover:border-accent-border"
         >
           <span
             class="absolute top-5 right-5 font-mono text-2xl leading-none text-text opacity-[0.18]"
@@ -247,6 +247,38 @@ const steps = [
 
 .section-heading {
   @apply mt-12 mb-2 text-[1.4rem];
+}
+
+/* reveal and hover transitions must be declared together: a utility transition-*
+   sits in the utilities layer and would override .reveal's, killing the fade-in */
+.app-card {
+  transition:
+    opacity 0.7s var(--ease-reveal),
+    transform 0.7s var(--ease-reveal),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.app-card.is-visible:hover {
+  transform: translateY(-4px);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.step-card {
+  transition:
+    opacity 0.7s var(--ease-reveal),
+    transform 0.7s var(--ease-reveal),
+    border-color 0.3s ease;
+}
+
+.step-card.is-visible:hover {
+  transform: translateY(-3px);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .pill {

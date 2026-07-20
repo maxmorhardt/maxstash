@@ -159,7 +159,7 @@ const projects: Project[] = [
           v-for="(f, i) in platform"
           :key="f.title"
           :delay="((i % 3) + 1) as 1 | 2 | 3"
-          class="rounded-card border border-border bg-bg-soft p-6 transition-[transform,border-color] duration-300 ease-out hover:-translate-y-[3px] hover:border-accent-border"
+          class="feature rounded-card border border-border bg-bg-soft p-6 hover:border-accent-border"
         >
           <span
             class="mb-[0.9rem] inline-flex size-[46px] items-center justify-center rounded-xl border border-accent-border bg-accent-bg text-[1.3rem] text-accent"
@@ -244,6 +244,22 @@ const projects: Project[] = [
 
 .section-heading {
   @apply mt-12 mb-6 text-[1.4rem];
+}
+
+/* reveal and hover transitions must be declared together: a utility transition-*
+   sits in the utilities layer and would override .reveal's, killing the fade-in */
+.feature {
+  transition:
+    opacity 0.7s var(--ease-reveal),
+    transform 0.7s var(--ease-reveal),
+    border-color 0.3s ease;
+}
+
+.feature.is-visible:hover {
+  transform: translateY(-3px);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
 }
 
 /* cards tilt in on reveal, which needs a composed transform the utilities can't
