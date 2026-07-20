@@ -79,8 +79,6 @@ const channels = [
 </template>
 
 <style scoped>
-/* the card swaps between a springy reveal transition and a snappy hover one,
-   so the transition shorthand has to be redeclared per state */
 .card {
   transition:
     transform 0.3s ease,

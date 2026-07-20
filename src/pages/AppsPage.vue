@@ -243,14 +243,11 @@ const steps = [
 </template>
 
 <style scoped>
-@reference '../style.css';
-
 .section-heading {
-  @apply mt-12 mb-2 text-[1.4rem];
+  margin: 3rem 0 0.5rem;
+  font-size: 1.4rem;
 }
 
-/* reveal and hover transitions must be declared together: a utility transition-*
-   sits in the utilities layer and would override .reveal's, killing the fade-in */
 .app-card {
   transition:
     opacity 0.7s var(--ease-reveal),
@@ -282,12 +279,37 @@ const steps = [
 }
 
 .pill {
-  @apply inline-flex items-center gap-[0.45rem] rounded-full border border-border bg-bg px-[0.85rem] py-[0.4rem] text-[0.8125rem] text-text-h;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
 }
 
 .legal-links__item {
-  @apply inline-flex items-center gap-2 rounded-full border border-border bg-bg px-4 py-[0.6rem] text-text-h no-underline;
-  @apply transition-[transform,border-color,background-color] duration-200 ease-out;
-  @apply hover:-translate-y-px hover:border-accent-border hover:bg-accent-bg hover:text-accent;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-h);
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.legal-links__item:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
 }
 </style>

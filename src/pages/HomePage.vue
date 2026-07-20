@@ -258,8 +258,6 @@ const featured = [
 </template>
 
 <style scoped>
-/* hero glows drift on a loop; the scroll chevron bakes its centering into the
-   keyframes, so both stay hand-written */
 .glow {
   position: absolute;
   border-radius: 50%;
@@ -316,8 +314,6 @@ const featured = [
   }
 }
 
-/* cards ease in slowly on reveal but snap on hover, so the transition shorthand
-   has to be redeclared per state */
 .lift-card {
   transition:
     opacity 1.3s var(--ease-reveal),

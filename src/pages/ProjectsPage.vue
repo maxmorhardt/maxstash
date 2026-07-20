@@ -174,8 +174,7 @@ const projects: Project[] = [
       <!-- the repositories -->
       <RevealSection as="h2" class="section-heading">The repositories</RevealSection>
 
-      <!-- project cards: the first row reveals as it enters so it isn't blank; later
-           rows keep the default (slightly delayed) reveal so the animation plays on scroll -->
+      <!-- project cards -->
       <div class="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-5">
         <RevealSection
           v-for="(project, i) in projects"
@@ -240,14 +239,11 @@ const projects: Project[] = [
 </template>
 
 <style scoped>
-@reference '../style.css';
-
 .section-heading {
-  @apply mt-12 mb-6 text-[1.4rem];
+  margin: 3rem 0 1.5rem;
+  font-size: 1.4rem;
 }
 
-/* reveal and hover transitions must be declared together: a utility transition-*
-   sits in the utilities layer and would override .reveal's, killing the fade-in */
 .feature {
   transition:
     opacity 0.7s var(--ease-reveal),
@@ -262,8 +258,6 @@ const projects: Project[] = [
     border-color 0.3s ease;
 }
 
-/* cards tilt in on reveal, which needs a composed transform the utilities can't
-   express alongside the .is-visible state toggle */
 .card {
   opacity: 0;
   transform: translateY(40px) scale(0.92) rotate(-1.5deg);

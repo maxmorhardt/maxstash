@@ -33,7 +33,6 @@ interface NavItem {
 
 const router = useRouter();
 
-// terminal palette is deliberately fixed (GitHub dark) rather than theme-driven
 const KIND_COLOR: Record<Kind, string> = {
   cmd: 'text-[#e6edf3]',
   out: 'text-[#8b949e]',
@@ -437,10 +436,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-@reference '../../style.css';
-
 .term__item.is-active {
-  @apply bg-accent-bg text-accent;
+  background: var(--accent-bg);
+  color: var(--accent);
 }
 
 /* the blinking caret and the menu fade-in are keyframe-driven */

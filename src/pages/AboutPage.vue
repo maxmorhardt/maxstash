@@ -168,20 +168,37 @@ const experience: { company: string; roles: Role[] }[] = [
 </template>
 
 <style scoped>
-@reference '../style.css';
-
-/* the label/content row repeats for every section on this page, so it stays a class
-   rather than six copies of the same utility string */
 .row {
-  @apply grid grid-cols-[180px_1fr] gap-10 border-t border-border py-10;
-  @apply max-[760px]:grid-cols-1 max-[760px]:gap-[0.85rem] max-[760px]:py-7;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2.5rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
 }
 
 .row-label {
-  @apply m-0 text-[0.78rem] font-semibold tracking-[0.1em] text-accent uppercase;
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
 }
 
 .role-head {
-  @apply mb-[0.6rem] flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.6rem;
+}
+
+@media (max-width: 760px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    padding: 1.75rem 0;
+  }
 }
 </style>
