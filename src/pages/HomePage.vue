@@ -31,14 +31,19 @@ const stack = [
   { name: 'React', icon: 'pi pi-prime' },
   { name: 'Angular', icon: 'pi pi-code' },
   { name: 'Vue 3', icon: 'pi pi-code' },
+  { name: 'Vite', icon: 'pi pi-bolt' },
   { name: 'PrimeNG', icon: 'pi pi-prime' },
+  { name: 'PrimeVue', icon: 'pi pi-prime' },
   { name: 'Material UI', icon: 'pi pi-palette' },
+  { name: 'Tailwind CSS', icon: 'pi pi-palette' },
   { name: 'PostgreSQL', icon: 'pi pi-database' },
   { name: 'NATS', icon: 'pi pi-sync' },
   { name: 'WebSockets', icon: 'pi pi-bolt' },
   { name: 'Docker', icon: 'pi pi-box' },
   { name: 'Kubernetes', icon: 'pi pi-server' },
+  { name: 'k3s', icon: 'pi pi-server' },
   { name: 'Helm', icon: 'pi pi-box' },
+  { name: 'Argo CD', icon: 'pi pi-sync' },
   { name: 'AWS', icon: 'pi pi-cloud' },
   { name: 'EKS', icon: 'pi pi-server' },
   { name: 'EC2', icon: 'pi pi-server' },
@@ -50,12 +55,14 @@ const stack = [
   { name: 'CloudFormation', icon: 'pi pi-cloud' },
   { name: 'Jenkins', icon: 'pi pi-cog' },
   { name: 'GitHub Actions', icon: 'pi pi-github' },
+  { name: 'Renovate', icon: 'pi pi-refresh' },
   { name: 'Karate', icon: 'pi pi-check-circle' },
   { name: 'Datadog', icon: 'pi pi-chart-line' },
   { name: 'Prometheus', icon: 'pi pi-chart-line' },
   { name: 'Grafana', icon: 'pi pi-chart-bar' },
   { name: 'Loki', icon: 'pi pi-list' },
   { name: 'Dex', icon: 'pi pi-shield' },
+  { name: 'Sealed Secrets', icon: 'pi pi-lock' },
   { name: 'Envoy Gateway', icon: 'pi pi-arrow-right-arrow-left' },
   { name: 'Cloudflare', icon: 'pi pi-cloud' },
   { name: 'Bash', icon: 'pi pi-code' },
@@ -74,7 +81,7 @@ const highlights = [
   },
   {
     title: 'Real-time and self-hosted systems',
-    body: 'A production k3s cluster fronted by Envoy Gateway, with Dex federated sign-in, highly available PostgreSQL, and NATS pub/sub for horizontally scaled WebSocket broadcasting.',
+    body: 'A production k3s cluster fronted by Envoy Gateway, with Dex federated sign-in, highly available PostgreSQL, and NATS pub/sub for horizontally scaled WebSocket broadcasting, delivered continuously through Argo CD GitOps.',
     icon: 'pi pi-bolt',
   },
 ];
@@ -85,7 +92,7 @@ const featured = [
     blurb:
       'Real-time NFL squares platform with a live grid, automated winner calculation, and OIDC accounts.',
     href: 'https://github.com/maxmorhardt/squares',
-    tags: ['React', 'TypeScript', 'Redux', 'MUI', 'OIDC', 'WebSocket'],
+    tags: ['React', 'TypeScript', 'Redux', 'MUI', 'SSG', 'OIDC', 'WebSocket'],
   },
   {
     name: 'squares-api',
@@ -97,9 +104,18 @@ const featured = [
   {
     name: 'k8s',
     blurb:
-      'Self-hosted k3s cluster running every app on this site, with SSO, HA PostgreSQL, and full observability.',
+      'Self-hosted k3s cluster running every app on this site, with SSO, HA PostgreSQL, GitOps delivery, and full observability.',
     href: 'https://github.com/maxmorhardt/k8s',
-    tags: ['Kubernetes', 'Envoy Gateway', 'Dex', 'PostgreSQL', 'NATS', 'Prometheus', 'Grafana'],
+    tags: [
+      'Kubernetes',
+      'Argo CD',
+      'Envoy Gateway',
+      'Dex',
+      'Sealed Secrets',
+      'PostgreSQL',
+      'NATS',
+      'Prometheus',
+    ],
   },
   {
     name: 'charts',
@@ -111,13 +127,14 @@ const featured = [
     name: 'workflows',
     blurb: 'Reusable GitHub Actions workflows that build, test, and deploy every other repository.',
     href: 'https://github.com/maxmorhardt/workflows',
-    tags: ['GitHub Actions', 'Docker', 'Helm', 'Trivy', 'Renovate', 'Tailscale'],
+    tags: ['GitHub Actions', 'Docker', 'Helm', 'Argo CD', 'Trivy', 'Renovate'],
   },
   {
     name: 'maxstash',
-    blurb: 'This portfolio site, built with Vue 3, Vite, and PrimeVue.',
+    blurb:
+      'This portfolio site: a Vue 3 app prerendered to static HTML, styled with Tailwind CSS over PrimeVue.',
     href: 'https://github.com/maxmorhardt/maxstash',
-    tags: ['Vue 3', 'TypeScript', 'Vite', 'PrimeVue'],
+    tags: ['Vue 3', 'TypeScript', 'Vite', 'SSG', 'Tailwind CSS', 'PrimeVue'],
   },
 ];
 </script>

@@ -93,10 +93,11 @@ const experience: { company: string; roles: Role[] }[] = [
           <p class="m-0 leading-[1.7] text-text">
             A full-stack real-time football squares platform: a <code>Go</code> and
             <code>Gin</code> REST API behind a <code>React</code> and <code>TypeScript</code> front
-            end, deployed to my self-hosted Kubernetes cluster through GitHub Actions. It implements
-            a contest state machine, automated winner calculation, <code>NATS</code> pub/sub for
-            horizontally scaled WebSocket broadcasting, Google and GitHub sign-in through
-            <code>Dex</code>, and <code>PostgreSQL</code> persistence with <code>GORM</code>.
+            end, deployed to my self-hosted Kubernetes cluster through GitHub Actions and
+            <code>Argo CD</code>. It implements a contest state machine, automated winner
+            calculation, <code>NATS</code> pub/sub for horizontally scaled WebSocket broadcasting,
+            Google and GitHub sign-in through <code>Dex</code>, and
+            <code>PostgreSQL</code> persistence with <code>GORM</code>.
           </p>
           <div class="mt-[0.9rem] flex flex-wrap gap-5">
             <a
@@ -131,9 +132,12 @@ const experience: { company: string; roles: Role[] }[] = [
             <code>Dex</code> federating Google and GitHub sign-in, highly available
             <code>PostgreSQL</code>, <code>NATS</code> messaging, and a full
             <code>Prometheus</code>, <code>Grafana</code>, and <code>Loki</code> observability
-            stack. <code>Cloudflare</code> handles DNS and edge security,
-            <code>kured</code> coordinates rolling node reboots, and reusable Helm charts and GitHub
-            Actions workflows deploy it all over <code>Tailscale</code>.
+            stack. <code>Argo CD</code> keeps the cluster in sync with Git, so reusable Helm charts
+            and GitHub Actions workflows release every app the same way.
+            <code>Sealed Secrets</code> lets secrets live safely in the repo,
+            <code>Renovate</code> keeps dependencies current, and
+            <code>system-upgrade-controller</code> and <code>kured</code> handle k3s upgrades and
+            coordinated rolling node reboots. <code>Cloudflare</code> handles DNS and edge security.
           </p>
         </div>
       </RevealSection>
@@ -143,11 +147,13 @@ const experience: { company: string; roles: Role[] }[] = [
         <p class="row-label">This site</p>
         <div class="min-w-0">
           <p class="m-0 leading-[1.7] text-text">
-            A Vue 3 single-page app built with <code>Vite</code> and <code>PrimeVue</code> on a
-            custom design system. Containerized with <code>Docker</code> behind <code>NGINX</code>,
-            packaged into a <code>Helm</code> chart, and deployed to my Kubernetes cluster through
-            the same reusable <code>GitHub Actions</code> pipeline that ships every other project
-            here.
+            A Vue 3 app prerendered to static HTML with <code>vite-ssg</code>, so every route ships
+            real markup and then hydrates. Styled with <code>Tailwind CSS</code> over
+            <code>PrimeVue</code> on a custom design system. Containerized with
+            <code>Docker</code> behind <code>NGINX</code>, packaged into a <code>Helm</code> chart,
+            and deployed to my Kubernetes cluster through the same reusable
+            <code>GitHub Actions</code> and <code>Argo CD</code> pipeline that ships every other
+            project here.
           </p>
         </div>
       </RevealSection>
