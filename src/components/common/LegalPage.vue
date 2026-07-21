@@ -12,57 +12,29 @@ defineProps<{
 </script>
 
 <template>
-  <section class="legal section">
-    <div class="container">
+  <section class="layout-section pt-12">
+    <div class="mx-auto box-border w-full max-w-[760px] px-6">
       <h1 class="page-title">{{ title }}</h1>
-      <p class="updated">Last updated: {{ lastUpdated }}</p>
+      <p class="mb-10 text-text opacity-70">Last updated: {{ lastUpdated }}</p>
 
-      <div v-for="section in sections" :key="section.title" class="block">
-        <h2>{{ section.title }}</h2>
+      <div v-for="section in sections" :key="section.title" class="mb-8">
+        <h2 class="mb-2 text-[1.15rem]">{{ section.title }}</h2>
         <template v-if="Array.isArray(section.content)">
-          <p v-if="section.content.length > 0">{{ section.content[0] }}</p>
-          <ul v-if="section.content.length > 1">
-            <li v-for="item in section.content.slice(1)" :key="item">{{ item }}</li>
+          <p v-if="section.content.length > 0" class="leading-[1.7] text-text">
+            {{ section.content[0] }}
+          </p>
+          <ul v-if="section.content.length > 1" class="mt-2 mb-0 list-disc pl-5">
+            <li
+              v-for="item in section.content.slice(1)"
+              :key="item"
+              class="leading-[1.7] text-text"
+            >
+              {{ item }}
+            </li>
           </ul>
         </template>
-        <p v-else>{{ section.content }}</p>
+        <p v-else class="leading-[1.7] text-text">{{ section.content }}</p>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-.legal {
-  padding-top: 3rem;
-}
-
-.container {
-  max-width: 760px;
-}
-
-.updated {
-  color: var(--text);
-  opacity: 0.7;
-  margin-bottom: 2.5rem;
-}
-
-.block {
-  margin-bottom: 2rem;
-}
-
-.block h2 {
-  font-size: 1.15rem;
-  margin-bottom: 0.5rem;
-}
-
-.block p,
-.block li {
-  color: var(--text);
-  line-height: 1.7;
-}
-
-.block ul {
-  margin: 0.5rem 0 0;
-  padding-left: 1.25rem;
-}
-</style>

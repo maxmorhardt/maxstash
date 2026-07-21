@@ -42,30 +42,38 @@ const experience: { company: string; roles: Role[] }[] = [
 </script>
 
 <template>
-  <section class="about section">
-    <div class="container about__inner">
+  <section class="layout-section w-full pt-12 pb-6">
+    <div class="layout-container max-w-[920px]">
       <!-- page heading -->
       <RevealSection as="h1" class="page-title">About</RevealSection>
 
       <!-- lede -->
-      <RevealSection :delay="1" as="p" class="lede">
+      <RevealSection :delay="1" as="p" class="mb-4 max-w-[60ch] text-[1.15rem] text-text">
         Full Stack Engineer at Fidelity Investments, building production systems across the full
         stack, from API design and cloud infrastructure to front-end interfaces.
       </RevealSection>
 
       <!-- experience -->
       <RevealSection :delay="1" class="row">
-        <p class="row__label">Experience</p>
-        <div class="row__content">
-          <div v-for="company in experience" :key="company.company" class="exp">
-            <h2 class="exp__company">{{ company.company }}</h2>
-            <div v-for="role in company.roles" :key="role.title" class="role">
-              <div class="role__head">
-                <span class="role__title">{{ role.title }}</span>
-                <span class="role__period">{{ role.period }}</span>
+        <p class="row-label">Experience</p>
+        <div class="min-w-0">
+          <div
+            v-for="(company, ci) in experience"
+            :key="company.company"
+            :class="{ 'mt-6': ci > 0 }"
+          >
+            <h2 class="mt-0 mb-4 text-[1.15rem] text-text-h">{{ company.company }}</h2>
+            <div v-for="(role, ri) in company.roles" :key="role.title" :class="{ 'mt-6': ri > 0 }">
+              <div class="role-head">
+                <span class="font-semibold text-text-h">{{ role.title }}</span>
+                <span class="whitespace-nowrap font-mono text-[0.85rem] text-text">
+                  {{ role.period }}
+                </span>
               </div>
-              <ul class="role__points">
-                <li v-for="point in role.points" :key="point">{{ point }}</li>
+              <ul class="m-0 flex list-disc flex-col gap-2 pl-[1.1rem] text-text">
+                <li v-for="point in role.points" :key="point" class="leading-[1.6]">
+                  {{ point }}
+                </li>
               </ul>
             </div>
           </div>
@@ -74,13 +82,15 @@ const experience: { company: string; roles: Role[] }[] = [
 
       <!-- flagship project -->
       <RevealSection :delay="1" class="row">
-        <p class="row__label">Project</p>
-        <div class="row__content">
-          <div class="role__head">
-            <span class="role__title">Squares</span>
-            <span class="role__period">Go &middot; React &middot; Kubernetes</span>
+        <p class="row-label">Project</p>
+        <div class="min-w-0">
+          <div class="role-head">
+            <span class="font-semibold text-text-h">Squares</span>
+            <span class="whitespace-nowrap font-mono text-[0.85rem] text-text">
+              Go &middot; React &middot; Kubernetes
+            </span>
           </div>
-          <p>
+          <p class="m-0 leading-[1.7] text-text">
             A full-stack real-time football squares platform: a <code>Go</code> and
             <code>Gin</code> REST API behind a <code>React</code> and <code>TypeScript</code> front
             end, deployed to my self-hosted Kubernetes cluster through GitHub Actions. It implements
@@ -88,12 +98,22 @@ const experience: { company: string; roles: Role[] }[] = [
             horizontally scaled WebSocket broadcasting, Google and GitHub sign-in through
             <code>Dex</code>, and <code>PostgreSQL</code> persistence with <code>GORM</code>.
           </p>
-          <div class="links">
-            <a href="https://squares.maxstash.io" target="_blank" rel="noreferrer">
+          <div class="mt-[0.9rem] flex flex-wrap gap-5">
+            <a
+              href="https://squares.maxstash.io"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-1.5 text-[0.9rem] font-medium text-accent no-underline hover:underline"
+            >
               <span class="pi pi-external-link" />
               <span>Live site</span>
             </a>
-            <a href="https://github.com/maxmorhardt/squares" target="_blank" rel="noreferrer">
+            <a
+              href="https://github.com/maxmorhardt/squares"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-1.5 text-[0.9rem] font-medium text-accent no-underline hover:underline"
+            >
               <span class="pi pi-github" />
               <span>GitHub</span>
             </a>
@@ -103,9 +123,9 @@ const experience: { company: string; roles: Role[] }[] = [
 
       <!-- homelab -->
       <RevealSection :delay="1" class="row">
-        <p class="row__label">Homelab platform</p>
-        <div class="row__content">
-          <p>
+        <p class="row-label">Homelab platform</p>
+        <div class="min-w-0">
+          <p class="m-0 leading-[1.7] text-text">
             Everything I build runs on a self-hosted <code>k3s</code> cluster:
             <code>Envoy Gateway</code> routing every app through one front door,
             <code>Dex</code> federating Google and GitHub sign-in, highly available
@@ -120,9 +140,9 @@ const experience: { company: string; roles: Role[] }[] = [
 
       <!-- this site -->
       <RevealSection :delay="1" class="row">
-        <p class="row__label">This site</p>
-        <div class="row__content">
-          <p>
+        <p class="row-label">This site</p>
+        <div class="min-w-0">
+          <p class="m-0 leading-[1.7] text-text">
             A Vue 3 single-page app built with <code>Vite</code> and <code>PrimeVue</code> on a
             custom design system. Containerized with <code>Docker</code> behind <code>NGINX</code>,
             packaged into a <code>Helm</code> chart, and deployed to my Kubernetes cluster through
@@ -134,13 +154,13 @@ const experience: { company: string; roles: Role[] }[] = [
 
       <!-- education -->
       <RevealSection :delay="1" class="row">
-        <p class="row__label">Education</p>
-        <div class="row__content">
-          <div class="role__head">
-            <span class="role__title">Elon University</span>
-            <span class="role__period">2018 - 2022</span>
+        <p class="row-label">Education</p>
+        <div class="min-w-0">
+          <div class="role-head">
+            <span class="font-semibold text-text-h">Elon University</span>
+            <span class="whitespace-nowrap font-mono text-[0.85rem] text-text">2018 - 2022</span>
           </div>
-          <p class="edu__detail">B.S. Computer Science, Data Science Minor &middot; Elon, NC</p>
+          <p class="m-0 text-text">B.S. Computer Science, Data Science Minor &middot; Elon, NC</p>
         </div>
       </RevealSection>
     </div>
@@ -148,23 +168,6 @@ const experience: { company: string; roles: Role[] }[] = [
 </template>
 
 <style scoped>
-.about {
-  width: 100%;
-  padding-top: 3rem;
-  padding-bottom: 1.5rem;
-}
-
-.about__inner {
-  max-width: 920px;
-}
-
-.lede {
-  max-width: 60ch;
-  font-size: 1.15rem;
-  color: var(--text);
-  margin-bottom: 1rem;
-}
-
 .row {
   display: grid;
   grid-template-columns: 180px 1fr;
@@ -173,7 +176,7 @@ const experience: { company: string; roles: Role[] }[] = [
   border-top: 1px solid var(--border);
 }
 
-.row__label {
+.row-label {
   margin: 0;
   font-size: 0.78rem;
   font-weight: 600;
@@ -182,88 +185,13 @@ const experience: { company: string; roles: Role[] }[] = [
   color: var(--accent);
 }
 
-.row__content {
-  min-width: 0;
-}
-
-.row__content p {
-  margin: 0;
-  line-height: 1.7;
-  color: var(--text);
-}
-
-.exp + .exp {
-  margin-top: 1.5rem;
-}
-
-.exp__company {
-  margin: 0 0 1rem;
-  font-size: 1.15rem;
-  color: var(--text-h);
-}
-
-.role + .role {
-  margin-top: 1.5rem;
-}
-
-.role__head {
+.role-head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem 1rem;
   margin-bottom: 0.6rem;
-}
-
-.role__title {
-  font-weight: 600;
-  color: var(--text-h);
-}
-
-.role__period {
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  color: var(--text);
-  white-space: nowrap;
-}
-
-.role__points {
-  margin: 0;
-  padding-left: 1.1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  color: var(--text);
-}
-
-.role__points li {
-  line-height: 1.6;
-}
-
-.edu__detail {
-  margin: 0;
-  color: var(--text);
-}
-
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
-  margin-top: 0.9rem;
-}
-
-.links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.links a:hover {
-  text-decoration: underline;
 }
 
 @media (max-width: 760px) {

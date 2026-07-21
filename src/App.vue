@@ -5,12 +5,12 @@ import AppFooter from './components/footer/AppFooter.vue';
 </script>
 
 <template>
-  <div class="app">
+  <div class="flex min-h-dvh flex-col">
     <!-- site header / navigation -->
     <AppHeader />
 
     <!-- routed page content -->
-    <main class="app-main">
+    <main class="flex-1">
       <RouterView />
     </main>
 
@@ -18,15 +18,3 @@ import AppFooter from './components/footer/AppFooter.vue';
     <AppFooter />
   </div>
 </template>
-
-<style scoped>
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
-}
-
-.app-main {
-  flex: 1;
-}
-</style>

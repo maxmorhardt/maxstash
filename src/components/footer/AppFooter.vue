@@ -21,15 +21,21 @@ const links = [
 </script>
 
 <template>
-  <footer class="app-footer">
-    <div class="app-footer__inner">
+  <footer class="w-full border-t border-border bg-footer-bg px-6 py-4 text-text">
+    <div class="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-4">
       <!-- copyright -->
-      <span class="app-footer__copy">&copy; {{ year }} Max Morhardt</span>
+      <span class="text-[0.8125rem] opacity-80">&copy; {{ year }} Max Morhardt</span>
 
       <!-- social links -->
-      <ul class="socials">
+      <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
         <li v-for="link in links" :key="link.href">
-          <a :href="link.href" target="_blank" rel="noreferrer" :aria-label="link.label">
+          <a
+            :href="link.href"
+            target="_blank"
+            rel="noreferrer"
+            :aria-label="link.label"
+            class="inline-flex items-center gap-1.5 rounded-full border border-border bg-social-bg px-3 py-1.5 text-[0.8125rem] text-text-h no-underline transition-[transform,border-color,background-color] duration-200 ease-out hover:-translate-y-px hover:border-accent-border hover:bg-accent-bg hover:text-accent"
+          >
             <span :class="link.icon" />
             <span>{{ link.label }}</span>
           </a>
@@ -38,61 +44,3 @@ const links = [
     </div>
   </footer>
 </template>
-
-<style scoped>
-.app-footer {
-  width: 100%;
-  border-top: 1px solid var(--border);
-  background: var(--footer-bg);
-  color: var(--text);
-  padding: 1rem 1.5rem;
-}
-
-.app-footer__inner {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.socials {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.socials a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  color: var(--text-h);
-  background: var(--social-bg);
-  border: 1px solid var(--border);
-  text-decoration: none;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease;
-}
-
-.socials a:hover {
-  transform: translateY(-1px);
-  border-color: var(--accent-border);
-  background: var(--accent-bg);
-  color: var(--accent);
-}
-
-.app-footer__copy {
-  font-size: 0.8125rem;
-  opacity: 0.8;
-}
-</style>

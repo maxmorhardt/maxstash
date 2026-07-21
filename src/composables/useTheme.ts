@@ -1,6 +1,5 @@
 import { reactive, ref } from 'vue';
 
-// localStorage key the chosen theme is persisted under
 const STORAGE_KEY = 'maxstash:theme';
 
 type ThemeMode = 'light' | 'dark';
