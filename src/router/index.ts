@@ -1,6 +1,6 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
+import type { Router, RouteRecordRaw, RouterScrollBehavior } from 'vue-router';
 
-const routes: RouteRecordRaw[] = [
+export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
@@ -43,30 +43,24 @@ const routes: RouteRecordRaw[] = [
   },
 ];
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  scrollBehavior() {
-    return { top: 0 };
-  },
-});
+export const scrollBehavior: RouterScrollBehavior = () => ({ top: 0 });
 
-// preload all route chunks after the first navigation
 type AsyncComponentLoader = () => Promise<unknown>;
 
-router.isReady().then(() => {
-  const preload = () =>
-    routes.forEach((r) => {
-      if (typeof r.component === 'function') {
-        (r.component as AsyncComponentLoader)().catch(() => undefined);
-      }
-    });
+// preload all route chunks after the first navigation
+export function preloadRouteChunks(router: Router): void {
+  router.isReady().then(() => {
+    const preload = () =>
+      routes.forEach((r) => {
+        if (typeof r.component === 'function') {
+          (r.component as AsyncComponentLoader)().catch(() => undefined);
+        }
+      });
 
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(preload);
-  } else {
-    setTimeout(preload, 100);
-  }
-});
-
-export default router;
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(preload);
+    } else {
+      setTimeout(preload, 100);
+    }
+  });
+}

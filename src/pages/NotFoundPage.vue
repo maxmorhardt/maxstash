@@ -2,6 +2,13 @@
 import { RouterLink } from 'vue-router';
 import Button from 'primevue/button';
 import { useRouter } from 'vue-router';
+import { usePageMeta } from '../composables/usePageMeta';
+
+usePageMeta({
+  title: 'Page not found – Max Morhardt',
+  description: 'The page you were looking for does not exist.',
+  robots: 'noindex, follow',
+});
 
 const router = useRouter();
 </script>

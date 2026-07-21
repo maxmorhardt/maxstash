@@ -1,35 +1,25 @@
-import { onMounted } from 'vue';
+import { useHead } from '@unhead/vue';
 
 export function usePageMeta(options: {
   title: string;
   description: string;
-  canonical: string;
+  canonical?: string;
+  robots?: string;
 }): void {
-  onMounted(() => {
-    // set the document title shown in the browser tab and search results
-    document.title = options.title;
+  const canonical = options.canonical;
 
-    // update the standard meta description
-    document
-      .querySelector('meta[name="description"]')
-      ?.setAttribute('content', options.description);
-
-    // mirror the title and description into the open graph tags for link previews
-    document.querySelector('meta[property="og:title"]')?.setAttribute('content', options.title);
-    document
-      .querySelector('meta[property="og:description"]')
-      ?.setAttribute('content', options.description);
-    document.querySelector('meta[property="og:url"]')?.setAttribute('content', options.canonical);
-
-    // find the canonical link, creating it if this page hasn't set one yet
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      document.head.appendChild(canonical);
-    }
-
-    // point the canonical url at this page
-    canonical.href = options.canonical;
+  useHead({
+    title: options.title,
+    // a page that shouldn't be indexed (the 404) also shouldn't claim a canonical url
+    link: canonical ? [{ rel: 'canonical', href: canonical }] : [],
+    meta: [
+      { name: 'robots', content: options.robots ?? 'index, follow' },
+      { name: 'description', content: options.description },
+      { property: 'og:title', content: options.title },
+      { property: 'og:description', content: options.description },
+      { name: 'twitter:title', content: options.title },
+      { name: 'twitter:description', content: options.description },
+      ...(canonical ? [{ property: 'og:url', content: canonical }] : []),
+    ],
   });
 }

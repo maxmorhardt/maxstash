@@ -8,7 +8,7 @@
 
 ## Overview
 
-Personal portfolio website built with Vue 3 and TypeScript. Features a full-width landing page with scroll-driven animations, light/dark theming, and a router-based multi-page layout for showcasing projects, background, and contact information.
+Personal portfolio website built with Vue 3 and TypeScript. Features a full-width landing page with scroll-driven animations, light/dark theming, and a router-based multi-page layout for showcasing projects, apps, background, and contact information.
 
 ## Features
 
@@ -22,11 +22,11 @@ Personal portfolio website built with Vue 3 and TypeScript. Features a full-widt
 
 ## Architecture
 
-The application is a static SPA. Pages are lazy-loaded route chunks served behind a sticky header and full-width hero sections. The theme store toggles a `.dark` class on the root element which both PrimeVue and the custom CSS variables react to, keeping the look consistent across components and pages.
+The application is prerendered to static HTML with vite-ssg — every route ships a real HTML file with its own title, description, and canonical, then hydrates into a client-routed app. Pages are lazy-loaded route chunks served behind a sticky header and full-width hero sections. The theme store toggles a `.dark` class on the root element which both PrimeVue and the custom CSS variables react to, keeping the look consistent across components and pages.
 
 ## Development
 
-This project uses [pnpm](https://pnpm.io) (enforced — `npm`/`yarn` installs are blocked). Enable it with `corepack enable`.
+This project uses [pnpm](https://pnpm.io) (`npm`/`yarn` installs are blocked). Enable it with `corepack enable`.
 
 1. Install dependencies: `pnpm install`
 2. Start the development server: `pnpm dev`

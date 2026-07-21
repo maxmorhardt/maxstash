@@ -1,6 +1,6 @@
 # Maxstash Contribution Guide
 
-This guide provides context for coding agents working in this repository. Maxstash is a personal portfolio site: a Vue 3 + TypeScript SPA built with Vite, styled with Tailwind CSS v4 over PrimeVue (v4) + `@primeuix/themes` and custom CSS variables, and shipped as a Docker image.
+This guide provides context for coding agents working in this repository. Maxstash is a personal portfolio site: a Vue 3 + TypeScript app built with Vite and prerendered to static HTML with vite-ssg, styled with Tailwind CSS v4 over PrimeVue (v4) + `@primeuix/themes` and custom CSS variables, and shipped as a Docker image.
 
 ## Directory overview
 
@@ -12,7 +12,7 @@ This guide provides context for coding agents working in this repository. Maxsta
   - `App.vue`, `main.ts`, `style.css` – app shell, bootstrap, and global styles.
   - `setupTests.ts`, `testUtils.ts` – Vitest setup and shared test helpers (in-memory router, PrimeVue stubs).
 - `public/` – static assets served as-is (e.g. `logo.svg`).
-- `Dockerfile`, `nginx.conf` – production container that serves the built SPA via NGINX.
+- `Dockerfile`, `nginx.conf` – production container that serves the prerendered site via NGINX.
 - `vite.config.ts`, `vitest.config.ts`, `eslint.config.js`, `tsconfig*.json` – tooling config.
 
 ## Tooling
@@ -40,8 +40,20 @@ Coverage thresholds are enforced at **80%** for statements / branches / function
 
 ## Routing & pages
 
-- Routes are registered in [src/router/index.ts](src/router/index.ts) and lazy-load page components from `src/pages/`.
+- Routes are registered in [src/router/index.ts](src/router/index.ts) and lazy-load page components from `src/pages/`. The file exports `routes` / `scrollBehavior` rather than a router instance — **vite-ssg constructs the router**, both at prerender time and in the browser.
 - New top-level views: add a `XxxPage.vue` in `src/pages/` and a route in the router. Use `RouterLink` for in-app navigation; use `useRouter().push(...)` from event handlers.
+- **Every page must call `usePageMeta({ title, description, canonical })`** ([src/composables/usePageMeta.ts](src/composables/usePageMeta.ts)). It wraps `useHead`, so the title, description, canonical, robots, and og/twitter tags are baked into that route's prerendered HTML. A page without it inherits no title and no self-referencing canonical, which is what previously kept `/about`, `/contact`, and `/projects` out of Google's index.
+- `robots` defaults to `index, follow`; `NotFoundPage.vue` passes `noindex, follow` and omits `canonical`. Those tags live only in `usePageMeta` — don't reintroduce static copies in `index.html`, or every page gets duplicates that unhead can't dedupe.
+- Add each new static route to [public/sitemap.xml](public/sitemap.xml).
+
+## Static site generation
+
+- `pnpm build` runs **vite-ssg**, which prerenders every static route to its own HTML file, plus the catch-all once as `/404` (see `includedRoutes` below).
+- `ssgOptions.dirStyle` is `nested`, so the output is `dist/about/index.html`, matched by the `$uri/index.html` term of the `try_files` chain in `nginx.conf`. Changing one without the other silently breaks every route: with `flat` output the term never matches, and requests fall through to the 404 handler.
+- `beastiesOptions` is disabled deliberately: critical-CSS inlining rewrites the PrimeVue/Tailwind `@layer` order documented under Styling.
+- `includedRoutes` filters out dynamic paths (mirroring vite-ssg's default, which a custom `includedRoutes` replaces rather than extends) and renders the catch-all once as `/404`. NGINX serves that file via `error_page 404`, so unknown urls return a real 404 status instead of a soft 404. It hydrates against the requested url, so the router still resolves the catch-all normally.
+- Code that touches `window`/`document`/`localStorage` at module scope or in `setup()` runs under Node during prerender. Guard it, or put it behind the `!import.meta.env.SSR` branch in [src/main.ts](src/main.ts) (as `useTheme().init()` and route-chunk preloading are). Use that over the context's deprecated `isClient` flag — it's statically analyzable, so the block is tree-shaken out of the SSR bundle.
+- Theme preference stays in `localStorage`; the blocking inline script in `index.html` applies it before first paint. A cookie would buy nothing — prerendered HTML is built ahead of any request.
 
 ## Styling
 
@@ -77,8 +89,9 @@ Coverage thresholds are enforced at **80%** for statements / branches / function
 
 ## Deployment
 
-- Production builds are static assets emitted to `dist/` and served by NGINX via the provided `Dockerfile` + `nginx.conf`.
-- `nginx.conf` should keep SPA fallback (`try_files ... /index.html`) intact — don't break client-side routing.
+- Production builds are prerendered static assets emitted to `dist/` and served by NGINX via the provided `Dockerfile` + `nginx.conf`.
+- `nginx.conf` serves prerendered files and returns real 404s: `try_files $uri $uri/index.html =404` with `error_page 404 /404/index.html`. There is deliberately **no `/index.html` SPA fallback** — every real route is prerendered, so an unmatched path is genuinely missing and should say so rather than return the homepage shell with a 200 (a soft 404 Google penalises).
+- Adding a route therefore means adding it to the router _and_ rebuilding, or it will 404 in production. Client-side routing is unaffected: it never touches NGINX after the initial load.
 
 ## Commit conventions
 
