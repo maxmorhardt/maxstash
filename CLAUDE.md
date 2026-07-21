@@ -48,8 +48,8 @@ Coverage thresholds are enforced at **80%** for statements / branches / function
 
 ## Static site generation
 
-- `pnpm build` runs **vite-ssg**, which prerenders every static route to its own HTML file. Dynamic routes (the `:pathMatch` catch-all) are skipped.
-- `ssgOptions.dirStyle` is `nested`, so the output is `dist/about/index.html`, matched by the `try_files $uri $uri/index.html /index.html` chain in `nginx.conf`. Changing one without the other silently reverts the site to serving the SPA shell on every route.
+- `pnpm build` runs **vite-ssg**, which prerenders every static route to its own HTML file, plus the catch-all once as `/404` (see `includedRoutes` below).
+- `ssgOptions.dirStyle` is `nested`, so the output is `dist/about/index.html`, matched by the `$uri/index.html` term of the `try_files` chain in `nginx.conf`. Changing one without the other silently breaks every route: with `flat` output the term never matches, and requests fall through to the 404 handler.
 - `beastiesOptions` is disabled deliberately: critical-CSS inlining rewrites the PrimeVue/Tailwind `@layer` order documented under Styling.
 - `includedRoutes` filters out dynamic paths (mirroring vite-ssg's default, which a custom `includedRoutes` replaces rather than extends) and renders the catch-all once as `/404`. NGINX serves that file via `error_page 404`, so unknown urls return a real 404 status instead of a soft 404. It hydrates against the requested url, so the router still resolves the catch-all normally.
 - Code that touches `window`/`document`/`localStorage` at module scope or in `setup()` runs under Node during prerender. Guard it, or put it behind the `!import.meta.env.SSR` branch in [src/main.ts](src/main.ts) (as `useTheme().init()` and route-chunk preloading are). Use that over the context's deprecated `isClient` flag — it's statically analyzable, so the block is tree-shaken out of the SSR bundle.
@@ -90,7 +90,8 @@ Coverage thresholds are enforced at **80%** for statements / branches / function
 ## Deployment
 
 - Production builds are prerendered static assets emitted to `dist/` and served by NGINX via the provided `Dockerfile` + `nginx.conf`.
-- `nginx.conf` must keep the full `try_files $uri $uri/index.html /index.html` chain: `$uri/index.html` serves the prerendered page, and the final `/index.html` is the SPA fallback for anything unmatched. Dropping the middle term breaks SEO; dropping the last breaks client-side routing.
+- `nginx.conf` serves prerendered files and returns real 404s: `try_files $uri $uri/index.html =404` with `error_page 404 /404/index.html`. There is deliberately **no `/index.html` SPA fallback** — every real route is prerendered, so an unmatched path is genuinely missing and should say so rather than return the homepage shell with a 200 (a soft 404 Google penalises).
+- Adding a route therefore means adding it to the router _and_ rebuilding, or it will 404 in production. Client-side routing is unaffected: it never touches NGINX after the initial load.
 
 ## Commit conventions
 
