@@ -1,11 +1,11 @@
-import { createApp } from 'vue';
+import { ViteSSG } from 'vite-ssg';
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
 import 'primeicons/primeicons.css';
 import './style.css';
 import App from './App.vue';
-import router from './router';
+import { routes, scrollBehavior, preloadRouteChunks } from './router';
 import { useTheme } from './composables/useTheme';
 
 const MaxstashPreset = definePreset(Aura, {
@@ -56,22 +56,23 @@ const MaxstashPreset = definePreset(Aura, {
   },
 });
 
-const app = createApp(App);
-
-app.use(router);
-app.use(PrimeVue, {
-  theme: {
-    preset: MaxstashPreset,
-    options: {
-      darkModeSelector: '.dark',
-      cssLayer: {
-        name: 'primevue',
-        order: 'theme, base, primevue, components, utilities',
+export const createApp = ViteSSG(App, { routes, scrollBehavior }, ({ app, router }) => {
+  app.use(PrimeVue, {
+    theme: {
+      preset: MaxstashPreset,
+      options: {
+        darkModeSelector: '.dark',
+        cssLayer: {
+          name: 'primevue',
+          order: 'theme, base, primevue, components, utilities',
+        },
       },
     },
-  },
+  });
+
+  // theme and chunk preloading both need a real dom, so tree-shake them out of the ssr bundle
+  if (!import.meta.env.SSR) {
+    useTheme().init();
+    preloadRouteChunks(router);
+  }
 });
-
-useTheme().init();
-
-app.mount('#app');

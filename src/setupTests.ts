@@ -1,4 +1,10 @@
-import { vi } from 'vitest';
+import { vi, beforeEach } from 'vitest';
+import { config } from '@vue/test-utils';
+import { createHead } from '@unhead/vue/client';
+
+beforeEach(() => {
+  config.global.plugins = [createHead()];
+});
 
 // default tests to reduced motion so animations render statically
 Object.defineProperty(window, 'matchMedia', {
