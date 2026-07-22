@@ -23,12 +23,12 @@ const platform = [
   {
     icon: 'pi pi-server',
     title: 'Self-hosted on Kubernetes',
-    body: 'Every app runs on a self-managed k3s cluster behind a single Envoy gateway, with highly available Postgres and full observability.',
+    body: 'Every app runs on a self-managed k3s cluster behind a single Envoy gateway, with highly available Postgres, sealed secrets, and full observability.',
   },
   {
     icon: 'pi pi-sync',
     title: 'Continuous delivery',
-    body: 'Shared CI/CD pipelines and reusable Helm charts build, test, and deploy every service the same way.',
+    body: 'Shared CI/CD pipelines and reusable Helm charts build and test every service the same way, then Argo CD syncs the cluster to match Git.',
   },
 ];
 
@@ -55,7 +55,7 @@ const projects: Project[] = [
         icon: 'pi pi-external-link',
       },
     ],
-    tags: ['React', 'TypeScript', 'Redux', 'MUI', 'OIDC', 'WebSocket'],
+    tags: ['React', 'TypeScript', 'Redux', 'MUI', 'SSG', 'OIDC', 'WebSocket'],
   },
   {
     name: 'squares-api',
@@ -76,9 +76,18 @@ const projects: Project[] = [
     name: 'k8s',
     category: 'Infrastructure',
     description:
-      'Self-hosted k3s cluster that runs every app on this site: Envoy Gateway routes all traffic through one front door, Dex federates Google and GitHub sign-in, and a highly available Postgres, NATS messaging, and a full metrics and logs stack back it all. Automated node maintenance runs through kured with coordinated rolling reboots and alerting.',
+      'Self-hosted k3s cluster that runs every app on this site: Argo CD keeps it in sync with this repo, Envoy Gateway fronts all traffic, and Dex federates Google and GitHub sign-in. Highly available Postgres, NATS messaging, Sealed Secrets, and a full metrics and logs stack back it all.',
     href: 'https://github.com/maxmorhardt/k8s',
-    tags: ['Kubernetes', 'Envoy Gateway', 'Dex', 'PostgreSQL', 'NATS', 'Prometheus', 'Grafana'],
+    tags: [
+      'Kubernetes',
+      'Argo CD',
+      'Envoy Gateway',
+      'Dex',
+      'Sealed Secrets',
+      'PostgreSQL',
+      'NATS',
+      'Prometheus',
+    ],
   },
   {
     name: 'charts',
@@ -92,15 +101,15 @@ const projects: Project[] = [
     name: 'workflows',
     category: 'CI/CD',
     description:
-      'Reusable GitHub Actions workflows that build, test, and deploy every other repo. Covers Node, Go, Docker image publishing, and Helm releases, plus security scanning with Trivy and automated dependency updates with Renovate. Deploys land in the cluster over a private Tailscale network.',
+      'Reusable GitHub Actions workflows that build, test, and release every other repo. Covers Node, Go, Docker image publishing, and Helm releases, plus security scanning with Trivy and automated dependency updates with Renovate. Deploys are GitOps: a workflow bumps the Argo CD Application manifest and the cluster reconciles itself.',
     href: 'https://github.com/maxmorhardt/workflows',
-    tags: ['GitHub Actions', 'Docker', 'Helm', 'Trivy', 'Renovate', 'Tailscale'],
+    tags: ['GitHub Actions', 'Docker', 'Helm', 'Argo CD', 'Trivy', 'Renovate'],
   },
   {
     name: 'maxstash',
     category: 'Frontend',
     description:
-      'This portfolio site. Vue 3 + Vite + PrimeVue with persistent light/dark theming and scroll-driven animations. Shipped as a Docker image through the same workflows that deploy everything else.',
+      'This portfolio site. Vue 3 + Vite prerendered to static HTML with vite-ssg, styled with Tailwind CSS over PrimeVue, with persistent light/dark theming and scroll-driven animations. Shipped as a Docker image through the same workflows that deploy everything else.',
     href: 'https://github.com/maxmorhardt/maxstash',
     links: [
       {
@@ -109,7 +118,7 @@ const projects: Project[] = [
         icon: 'pi pi-external-link',
       },
     ],
-    tags: ['Vue 3', 'TypeScript', 'Vite', 'PrimeVue'],
+    tags: ['Vue 3', 'TypeScript', 'Vite', 'SSG', 'Tailwind CSS', 'PrimeVue'],
   },
   {
     name: 'olympics',

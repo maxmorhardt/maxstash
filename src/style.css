@@ -149,6 +149,51 @@
     background: var(--code-bg);
     color: var(--text-h);
   }
+
+  /* load placeholder menubar css while primevue styles load after render */
+  .p-menubar {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    padding: 9px 27px;
+  }
+
+  .p-menubar-root-list {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .p-menubar-start {
+    display: flex;
+    align-items: center;
+  }
+
+  .p-menubar-end {
+    margin-left: auto;
+  }
+
+  .p-menubar-item {
+    list-style: none;
+  }
+
+  .p-menubar-button {
+    display: none;
+  }
+
+  @media (max-width: 960px) {
+    .p-menubar-root-list {
+      display: none;
+    }
+
+    .p-menubar-button {
+      display: inline-flex;
+    }
+  }
 }
 
 /* scroll-reveal state machine: RevealSection toggles .is-visible and sets data-delay */
