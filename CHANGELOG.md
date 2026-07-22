@@ -1,19 +1,28 @@
 # Changelog
 
-## [1.0.2](https://github.com/maxmorhardt/maxstash/compare/1.0.1...1.0.2) (2026-07-19)
+## [2.0.0](https://github.com/maxmorhardt/maxstash/compare/1.0.2...2.0.0) (2026-07-21)
 
+### ⚠ BREAKING CHANGES
+
+- migrate site to vite-ssg with SEO metadata ([#41](https://github.com/maxmorhardt/maxstash/issues/41))
+
+### Features
+
+- migrate site to vite-ssg with SEO metadata ([#41](https://github.com/maxmorhardt/maxstash/issues/41)) ([55a0380](https://github.com/maxmorhardt/maxstash/commit/55a038061f84eead6173acbffb70c7e3e999f171))
+- tailwind migration ([#39](https://github.com/maxmorhardt/maxstash/issues/39)) ([9e4c456](https://github.com/maxmorhardt/maxstash/commit/9e4c456605de9a7852d8f9cded4151331e91bf98))
+
+## [1.0.2](https://github.com/maxmorhardt/maxstash/compare/1.0.1...1.0.2) (2026-07-19)
 
 ### Bug Fixes
 
-* **deps:** update dependency @primeuix/themes to v3 ([#34](https://github.com/maxmorhardt/maxstash/issues/34)) ([7d452e0](https://github.com/maxmorhardt/maxstash/commit/7d452e0063caa3881a6e77b8f8954d7729728b75))
-* **deps:** update pnpm to v11.8.0 [security] ([#29](https://github.com/maxmorhardt/maxstash/issues/29)) ([83110a2](https://github.com/maxmorhardt/maxstash/commit/83110a250aeef30a13ab6415e7673f173852ed15))
+- **deps:** update dependency @primeuix/themes to v3 ([#34](https://github.com/maxmorhardt/maxstash/issues/34)) ([7d452e0](https://github.com/maxmorhardt/maxstash/commit/7d452e0063caa3881a6e77b8f8954d7729728b75))
+- **deps:** update pnpm to v11.8.0 [security] ([#29](https://github.com/maxmorhardt/maxstash/issues/29)) ([83110a2](https://github.com/maxmorhardt/maxstash/commit/83110a250aeef30a13ab6415e7673f173852ed15))
 
 ## [1.0.1](https://github.com/maxmorhardt/maxstash/compare/1.0.0...1.0.1) (2026-07-15)
 
-
 ### Bug Fixes
 
-* adjust tablet grid columns on app/project pages ([#26](https://github.com/maxmorhardt/maxstash/issues/26)) ([cf2465f](https://github.com/maxmorhardt/maxstash/commit/cf2465fa79c105be06982f6330c3bcbc49d51a0d))
+- adjust tablet grid columns on app/project pages ([#26](https://github.com/maxmorhardt/maxstash/issues/26)) ([cf2465f](https://github.com/maxmorhardt/maxstash/commit/cf2465fa79c105be06982f6330c3bcbc49d51a0d))
 
 ## 1.0.0 (2026-07-14)
 
