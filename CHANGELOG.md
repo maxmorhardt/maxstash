@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.1](https://github.com/maxmorhardt/maxstash/compare/2.0.0...2.0.1) (2026-07-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency primeicons to v8 ([#37](https://github.com/maxmorhardt/maxstash/issues/37)) ([65f6b09](https://github.com/maxmorhardt/maxstash/commit/65f6b096850e8b7a1309f78b0c66d22c58d0d72b))
+* fix content and ssg fousc ([#43](https://github.com/maxmorhardt/maxstash/issues/43)) ([6a1e1c4](https://github.com/maxmorhardt/maxstash/commit/6a1e1c4e1b06c79f9bf031c079c258e1d8b818d4))
+
 ## [2.0.0](https://github.com/maxmorhardt/maxstash/compare/1.0.2...2.0.0) (2026-07-21)
 
 ### ⚠ BREAKING CHANGES
