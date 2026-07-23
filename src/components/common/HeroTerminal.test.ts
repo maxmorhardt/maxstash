@@ -87,7 +87,7 @@ describe('HeroTerminal', () => {
 
       await vi.runAllTimersAsync();
 
-      expect(wrapper.text()).toContain('olympics.maxstash.io');
+      expect(wrapper.text()).toContain('squares.maxstash.io');
       expect(wrapper.find('.term__menu').exists()).toBe(true);
       expect(wrapper.find('.term__input').exists()).toBe(true);
     } finally {

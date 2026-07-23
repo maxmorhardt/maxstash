@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import RevealSection from '../components/common/RevealSection.vue';
+import ContactCard, { type ContactChannel } from '../components/contact/ContactCard.vue';
 import { usePageMeta } from '../composables/usePageMeta';
 
 usePageMeta({
@@ -8,7 +9,7 @@ usePageMeta({
   canonical: 'https://maxstash.io/contact',
 });
 
-const channels = [
+const channels: ContactChannel[] = [
   {
     label: 'GitHub',
     href: 'https://github.com/maxmorhardt',
@@ -43,68 +44,13 @@ const channels = [
 
       <!-- contact channel cards -->
       <div class="flex flex-wrap justify-center gap-4">
-        <RevealSection
+        <ContactCard
           v-for="(c, i) in channels"
           :key="c.label"
+          :channel="c"
           :delay="(i + 1) as 1 | 2 | 3"
-          class="card reveal--scale min-w-0 max-w-[400px] flex-[1_1_280px] rounded-card border border-border bg-bg-soft hover:border-accent-border hover:shadow-card"
-        >
-          <a
-            :href="c.href"
-            target="_blank"
-            rel="noreferrer"
-            class="card__link flex min-w-0 items-center gap-4 p-6 text-text-h no-underline max-[600px]:p-4"
-          >
-            <!-- the pi class goes on a child: primeicons is unlayered, so its
-                 `display: inline-block` would beat any utility on the same element -->
-            <span
-              class="inline-flex size-11 shrink-0 items-center justify-center rounded-[10px] border border-border bg-bg text-text-h"
-            >
-              <span class="text-xl" :class="c.icon" />
-            </span>
-            <span
-              class="flex min-w-0 flex-1 flex-col break-words text-[0.9rem] text-text [overflow-wrap:anywhere]"
-            >
-              <strong class="text-base text-text-h">{{ c.label }}</strong>
-              <span>{{ c.handle }}</span>
-            </span>
-            <span
-              class="pi pi-arrow-up-right card__arrow text-text opacity-50 transition-[opacity,transform,color] duration-200 ease-out"
-            />
-          </a>
-        </RevealSection>
+        />
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-.card {
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.card.reveal {
-  transition:
-    opacity 0.8s var(--ease-spring),
-    transform 0.8s var(--ease-spring),
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.card:hover .card__arrow {
-  opacity: 1;
-  transform: translate(2px, -2px);
-  color: var(--accent);
-}
-</style>

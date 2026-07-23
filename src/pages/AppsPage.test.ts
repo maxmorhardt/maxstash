@@ -11,25 +11,29 @@ async function mountApps() {
 }
 
 describe('AppsPage', () => {
-  it('names maxstash and frames the apps around playing games', async () => {
+  it('showcases Squares as the live app and frames it around game day', async () => {
     const wrapper = await mountApps();
-    expect(wrapper.find('h1').text()).toBe('maxstash');
-    expect(wrapper.text()).toContain('game day and get-togethers');
-    expect(wrapper.text()).toContain('How it works');
+    expect(wrapper.find('h1').text()).toBe('Squares');
+    expect(wrapper.text()).toContain('Live app');
+    expect(wrapper.text()).toContain('Super Bowl squares pool');
   });
 
-  it('lists the hosted apps with play links', async () => {
+  it('links out to the live app', async () => {
     const wrapper = await mountApps();
-    expect(wrapper.text()).toContain('Squares');
-    expect(wrapper.text()).toContain('Olympics');
-    const hrefs = wrapper.findAll('.card__link').map((a) => a.attributes('href'));
+    const hrefs = wrapper.findAll('a').map((a) => a.attributes('href'));
     expect(hrefs).toContain('https://squares.maxstash.io');
-    expect(hrefs).toContain('https://olympics.maxstash.io');
+  });
+
+  it('walks through how a game plays out', async () => {
+    const wrapper = await mountApps();
+    expect(wrapper.text()).toContain('How a game plays out');
+    expect(wrapper.text()).toContain('Set up the board');
+    expect(wrapper.text()).toContain('Winners light up');
   });
 
   it('explains sign-in and what data is used', async () => {
     const wrapper = await mountApps();
-    expect(wrapper.text()).toContain('Sign in once');
+    expect(wrapper.text()).toContain('Signing in');
     expect(wrapper.text()).toContain('Google or GitHub');
     expect(wrapper.text()).toContain('basic profile and email');
   });

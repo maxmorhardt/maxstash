@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Button from 'primevue/button';
 import { useRouter } from 'vue-router';
 import { RouterLink } from 'vue-router';
 import RevealSection from '../components/common/RevealSection.vue';
@@ -85,58 +84,6 @@ const highlights = [
     icon: 'pi pi-bolt',
   },
 ];
-
-const featured = [
-  {
-    name: 'squares',
-    blurb:
-      'Real-time NFL squares platform with a live grid, automated winner calculation, and OIDC accounts.',
-    href: 'https://github.com/maxmorhardt/squares',
-    tags: ['React', 'TypeScript', 'Redux', 'MUI', 'SSG', 'OIDC', 'WebSocket'],
-  },
-  {
-    name: 'squares-api',
-    blurb:
-      'Go and Gin API powering the squares platform, with a contest state machine and NATS-backed real-time updates.',
-    href: 'https://github.com/maxmorhardt/squares-api',
-    tags: ['Go', 'Gin', 'GORM', 'PostgreSQL', 'NATS', 'OIDC', 'Swagger'],
-  },
-  {
-    name: 'k8s',
-    blurb:
-      'Self-hosted k3s cluster running every app on this site, with SSO, HA PostgreSQL, GitOps delivery, and full observability.',
-    href: 'https://github.com/maxmorhardt/k8s',
-    tags: [
-      'Kubernetes',
-      'Argo CD',
-      'Envoy Gateway',
-      'Dex',
-      'Sealed Secrets',
-      'PostgreSQL',
-      'NATS',
-      'Prometheus',
-    ],
-  },
-  {
-    name: 'charts',
-    blurb: 'Reusable Helm charts shared across all my application deployments.',
-    href: 'https://github.com/maxmorhardt/charts',
-    tags: ['Helm', 'Kubernetes', 'HPA', 'Gateway API', 'Prometheus'],
-  },
-  {
-    name: 'workflows',
-    blurb: 'Reusable GitHub Actions workflows that build, test, and deploy every other repository.',
-    href: 'https://github.com/maxmorhardt/workflows',
-    tags: ['GitHub Actions', 'Docker', 'Helm', 'Argo CD', 'Trivy', 'Renovate'],
-  },
-  {
-    name: 'maxstash',
-    blurb:
-      'This portfolio site: a Vue 3 app prerendered to static HTML, styled with Tailwind CSS over PrimeVue.',
-    href: 'https://github.com/maxmorhardt/maxstash',
-    tags: ['Vue 3', 'TypeScript', 'Vite', 'SSG', 'Tailwind CSS', 'PrimeVue'],
-  },
-];
 </script>
 
 <template>
@@ -211,63 +158,43 @@ const featured = [
       </div>
     </section>
 
-    <!-- featured projects -->
+    <!-- editorial statement: a heading/body spread, deliberately not a card grid -->
     <section class="layout-section w-full border-y border-border bg-bg-soft">
       <div class="layout-container">
-        <RevealSection as="h2" class="text-center">Featured work</RevealSection>
-        <RevealSection :delay="1" as="p" class="mx-auto mb-12 max-w-[56ch] text-center text-text">
-          A small slice of recent projects. More on the
-          <RouterLink to="/projects">projects page</RouterLink>.
-        </RevealSection>
-        <div class="flex flex-wrap justify-center gap-5">
-          <RevealSection
-            v-for="(project, i) in featured.slice(0, 3)"
-            :key="project.name"
-            :delay="(i + 1) as 1 | 2 | 3"
-            class="lift-card min-w-0 max-w-[400px] flex-[1_1_300px] rounded-card border border-border bg-bg p-7 hover:border-accent-border hover:shadow-card"
-            :class="i % 2 === 0 ? 'reveal--left' : 'reveal--right'"
-          >
-            <div class="mb-2 flex items-center justify-between">
-              <h3>{{ project.name }}</h3>
-              <a
-                :href="project.href"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="View on GitHub"
-                class="text-xl text-text no-underline transition-colors duration-200 ease-out hover:text-accent"
-              >
-                <span class="pi pi-github" />
-              </a>
-            </div>
-            <p>{{ project.blurb }}</p>
-            <ul class="mt-4 mb-0 flex list-none flex-wrap gap-[0.4rem] p-0">
-              <li
-                v-for="tag in project.tags"
-                :key="tag"
-                class="rounded-full border border-accent-border bg-accent-bg px-[0.6rem] py-1 text-xs text-accent"
-              >
-                {{ tag }}
-              </li>
-            </ul>
+        <div class="statement-grid">
+          <RevealSection as="h2" class="statement-label">How I work</RevealSection>
+          <RevealSection :delay="1" as="div" class="statement-body">
+            <p class="statement-lead">
+              At Fidelity, I build multi-tenant developer platforms end to end:
+              <em>Spring Boot services and Angular interfaces</em>, built and deployed to EKS
+              through Jenkins pipelines for thousands of engineers.
+            </p>
+            <p class="statement-sub">
+              Beyond that, I self-host every app on this site on a Kubernetes cluster I run and
+              maintain myself.
+            </p>
           </RevealSection>
         </div>
       </div>
     </section>
 
     <!-- cta -->
-    <section class="layout-section w-full text-center">
-      <div class="layout-container flex flex-col items-center gap-4">
-        <RevealSection as="h2" class="reveal--scale">Let's build something.</RevealSection>
-        <RevealSection :delay="1" as="p">
-          Have a project in mind, or just want to say hi? My inbox is open.
-        </RevealSection>
-        <RevealSection :delay="2" class="reveal--rise">
-          <Button
-            label="Get in touch"
-            icon="pi pi-arrow-right"
-            icon-pos="right"
-            @click="router.push('/contact')"
-          />
+    <section class="layout-section w-full">
+      <div class="layout-container">
+        <RevealSection class="cta-panel reveal--rise flex flex-col items-center gap-4 text-center">
+          <h2 class="m-0">Let's build something.</h2>
+          <p class="max-w-[46ch] text-text">
+            Have a project in mind, or just want to say hi? My inbox is open.
+          </p>
+          <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+            <button class="cta-primary" @click="router.push('/contact')">
+              <span>Get in touch</span>
+              <span class="pi pi-arrow-right text-[0.85rem]" />
+            </button>
+            <RouterLink to="/projects" class="cta-ghost">
+              <span>See the projects</span>
+            </RouterLink>
+          </div>
         </RevealSection>
       </div>
     </section>
@@ -345,6 +272,122 @@ const featured = [
     transform 0.3s ease,
     border-color 0.3s ease,
     box-shadow 0.3s ease;
+}
+
+/* editorial statement: a heading/body spread that fills the container width */
+.statement-grid {
+  display: grid;
+  gap: 1.5rem 3rem;
+}
+
+@media (min-width: 860px) {
+  .statement-grid {
+    grid-template-columns: 13rem 1fr;
+    align-items: start;
+  }
+}
+
+.statement-label {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.statement-body {
+  border-left: 2px solid var(--accent-border);
+  padding-left: 2rem;
+}
+
+@media (max-width: 859px) {
+  .statement-body {
+    border-left: none;
+    padding-left: 0;
+  }
+}
+
+.statement-lead {
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--text-h);
+}
+
+.statement-lead em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.statement-sub {
+  margin-top: 1.25rem;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .statement {
+    padding-left: 1.1rem;
+  }
+}
+
+/* closing cta panel: clean surface, no gradient or glow */
+.cta-panel {
+  padding: 3.5rem 2rem;
+  border-radius: var(--radius-panel);
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+
+.cta-primary,
+.cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    filter 0.2s ease;
+}
+
+.cta-primary {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.cta-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.cta-ghost {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.cta-ghost:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-primary:hover,
+  .cta-ghost:hover {
+    transform: none;
+  }
 }
 
 /* chips stagger in via inline animation-delay once the row scrolls into view */

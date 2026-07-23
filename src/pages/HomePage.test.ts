@@ -10,8 +10,7 @@ function mountHome(router: Router) {
 
 function findButtonByLabel(wrapper: VueWrapper, label: string): DOMWrapper<HTMLButtonElement> {
   const button = wrapper.findAll('button').find((b) => b.text().trim() === label) as
-    | DOMWrapper<HTMLButtonElement>
-    | undefined;
+    DOMWrapper<HTMLButtonElement> | undefined;
   if (!button) {
     throw new Error(`Button with label "${label}" not found`);
   }
@@ -30,7 +29,7 @@ describe('HomePage', () => {
     expect(wrapper.text()).toContain('Software Engineer');
     expect(wrapper.text()).toContain('What I do');
     expect(wrapper.text()).toContain('Tools of the trade');
-    expect(wrapper.text()).toContain('Featured work');
+    expect(wrapper.text()).toContain('How I work');
   });
 
   it.each([

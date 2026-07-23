@@ -1,209 +1,201 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import RevealSection from '../components/common/RevealSection.vue';
+import SquaresBoard from '../components/apps/SquaresBoard.vue';
 import { usePageMeta } from '../composables/usePageMeta';
 
 usePageMeta({
   title: 'maxstash – Apps by Max Morhardt',
   description:
-    'maxstash is home to the apps Max Morhardt builds and runs for game day and get-togethers, including Squares and Olympics. Start a game, share the link, and everyone plays along live.',
+    'maxstash is home to the apps Max Morhardt builds and runs for game day and get-togethers, including Squares. Start a game, share the link, and everyone plays along live.',
   canonical: 'https://maxstash.io/apps',
 });
 
-interface App {
-  name: string;
-  icon: string;
-  tagline: string;
-  description: string;
-  howToPlay: string[];
-  href: string;
+interface Step {
+  title: string;
+  body: string;
 }
 
-const apps: App[] = [
+interface AppShowcase {
+  name: string;
+  icon: string;
+  eyebrow: string;
+  tagline: string;
+  description: string;
+  cta: string;
+  href: string;
+  visual: 'squares-board' | 'icon';
+  stepsTitle: string;
+  steps: Step[];
+}
+
+const apps: AppShowcase[] = [
   {
     name: 'Squares',
     icon: 'pi pi-th-large',
+    eyebrow: 'Live app',
     tagline: 'Football squares for the whole party',
     description:
-      'The classic Super Bowl squares pool, online. One person sets up the board for a game, everyone else claims squares, and the app draws the numbers and figures out who wins each quarter.',
-    howToPlay: [
-      'Create a pool for an upcoming football game',
-      'Friends join and claim the squares they want',
-      'Numbers are drawn at random once the board fills up',
-      'Winners light up automatically as each quarter ends',
-    ],
+      "The classic Super Bowl squares pool, online. One person sets up the board, everyone claims their squares, and the app draws the numbers and calls the winner every quarter, live on everyone's phone.",
+    cta: 'Play Squares',
     href: 'https://squares.maxstash.io',
-  },
-  {
-    name: 'Olympics',
-    icon: 'pi pi-sitemap',
-    tagline: 'Backyard tournament, bracket and all',
-    description:
-      'Run a backyard olympics without the spreadsheet. Add everyone playing, let the app build fair teams and group stages, then record results as you go and watch the bracket play out to a champion.',
-    howToPlay: [
-      'Add the people playing and the events',
-      'Random teams and group stages are generated for you',
-      'Punch in match results as each game finishes',
-      'Standings and the playoff bracket update in real time',
+    visual: 'squares-board',
+    stepsTitle: 'How a game plays out',
+    steps: [
+      {
+        title: 'Set up the board',
+        body: 'Create a pool for an upcoming football game and share the link with everyone playing.',
+      },
+      {
+        title: 'Friends claim squares',
+        body: 'Everyone joins from their own phone and grabs the squares they want on the shared board.',
+      },
+      {
+        title: 'Numbers are drawn',
+        body: 'Once the board fills up, the app randomly assigns the digits 0–9 to every row and column.',
+      },
+      {
+        title: 'Winners light up',
+        body: 'As each quarter ends, the app matches the score and the winning square lights up for everyone.',
+      },
     ],
-    href: 'https://olympics.maxstash.io',
   },
 ];
 
-const steps = [
+interface Perk {
+  icon: string;
+  title: string;
+  body: string;
+}
+
+const perks: Perk[] = [
   {
-    icon: 'pi pi-plus-circle',
-    title: 'Start a game',
-    body: 'Pick an app and set up a squares pool or an olympics bracket in a couple of taps.',
-  },
-  {
-    icon: 'pi pi-share-alt',
-    title: 'Invite everyone',
-    body: 'Share a link and friends join from their own phones, with nothing to install.',
+    icon: 'pi pi-mobile',
+    title: 'Nothing to install',
+    body: 'Everyone joins from their own phone with just a link.',
   },
   {
     icon: 'pi pi-shield',
-    title: 'Sign in once',
-    body: 'Players sign in with Google or GitHub, and the same account works across every maxstash app.',
+    title: 'One sign-in',
+    body: 'Sign in once with Google or GitHub; the same account works across every maxstash app.',
   },
   {
     icon: 'pi pi-bolt',
-    title: 'Play along live',
-    body: 'Squares, numbers, scores, and standings update instantly for everyone as the game unfolds.',
+    title: 'Live updates',
+    body: 'Squares, numbers, and winners update instantly for everyone as the game unfolds.',
   },
 ];
 </script>
 
 <template>
   <section class="w-full">
-    <!-- hero: what maxstash is -->
-    <div class="relative w-full overflow-hidden border-b border-border bg-bg-soft pt-16 pb-14">
-      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <!-- one showcase per app: a split hero followed by its play-by-play timeline -->
+    <div v-for="(app, ai) in apps" :key="app.name">
+      <!-- hero: the app copy on one side, a visual on the other, sides alternate -->
+      <div class="border-b border-border" :class="{ 'border-t': ai > 0 }">
         <div
-          class="absolute top-[-160px] left-[-100px] size-[420px] rounded-full bg-[var(--hero-glow-1)] opacity-55 blur-[100px]"
-        />
-        <div
-          class="absolute right-[-80px] bottom-[-180px] size-[360px] rounded-full bg-[var(--hero-glow-2)] opacity-55 blur-[100px]"
-        />
+          class="layout-container grid items-center gap-12 py-16"
+          :class="
+            ai % 2 === 1
+              ? 'min-[900px]:grid-cols-[auto_1.1fr]'
+              : 'min-[900px]:grid-cols-[1.1fr_auto]'
+          "
+        >
+          <div :class="{ 'min-[900px]:order-2': ai % 2 === 1 }">
+            <RevealSection
+              as="span"
+              class="inline-flex items-center gap-2 rounded-full border border-accent-border bg-accent-bg px-[0.7rem] py-[0.3rem] font-mono text-xs tracking-[0.12em] text-accent uppercase"
+            >
+              <span class="size-[7px] rounded-full bg-accent" />
+              {{ app.eyebrow }}
+            </RevealSection>
+            <RevealSection
+              :delay="1"
+              :as="ai === 0 ? 'h1' : 'h2'"
+              class="mt-5 mb-3 text-[clamp(2.75rem,7vw,4.25rem)] leading-[1.02] tracking-[-0.03em]"
+            >
+              {{ app.name }}
+            </RevealSection>
+            <RevealSection :delay="1" as="p" class="mb-4 font-mono text-[0.95rem] text-accent">
+              {{ app.tagline }}
+            </RevealSection>
+            <RevealSection
+              :delay="2"
+              as="p"
+              class="max-w-[46ch] text-[1.05rem] leading-[1.7] text-text"
+            >
+              {{ app.description }}
+            </RevealSection>
+            <RevealSection :delay="2" as="div" class="mt-8">
+              <a
+                :href="app.href"
+                target="_blank"
+                rel="noreferrer"
+                class="app-cta inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-medium text-white no-underline"
+              >
+                <span>{{ app.cta }}</span>
+                <span class="pi pi-arrow-right text-[0.85rem]" />
+              </a>
+            </RevealSection>
+          </div>
+
+          <RevealSection
+            :delay="1"
+            class="hidden justify-self-center min-[900px]:block"
+            :class="
+              ai % 2 === 1 ? 'min-[900px]:justify-self-start' : 'min-[900px]:justify-self-end'
+            "
+          >
+            <SquaresBoard v-if="app.visual === 'squares-board'" />
+            <div v-else class="app-tile" aria-hidden="true">
+              <span class="app-tile__icon"><span :class="app.icon" /></span>
+              <span class="app-tile__label font-mono">{{ app.tagline }}</span>
+            </div>
+          </RevealSection>
+        </div>
       </div>
-      <div class="layout-container relative">
-        <RevealSection
-          as="span"
-          class="inline-flex items-center gap-1.5 rounded-full border border-accent-border bg-accent-bg px-[0.7rem] py-[0.3rem] font-mono text-xs tracking-[0.12em] text-accent uppercase"
-        >
-          <span class="pi pi-box" />
-          Live apps
-        </RevealSection>
-        <RevealSection
-          :delay="1"
-          as="h1"
-          class="mt-5 mb-0 font-mono text-[clamp(2.75rem,8vw,4.5rem)] leading-[1.05] tracking-[-0.02em]"
-        >
-          maxstash
-        </RevealSection>
-        <RevealSection
-          :delay="2"
-          as="p"
-          class="mt-4 max-w-[62ch] text-[1.05rem] leading-[1.7] text-text"
-        >
-          maxstash is home to a couple of apps built for game day and get-togethers. Start a game,
-          share the link, and everyone plays along on their own phone while it updates live.
-        </RevealSection>
-        <RevealSection :delay="3" as="div" class="mt-7 flex flex-wrap gap-[0.6rem]">
-          <span class="pill">
-            <span class="pi pi-th-large text-[0.9rem] text-accent" /> {{ apps.length }} live apps
-          </span>
-          <span class="pill">
-            <span class="pi pi-users text-[0.9rem] text-accent" /> Play with friends
-          </span>
-          <span class="pill">
-            <span class="pi pi-bolt text-[0.9rem] text-accent" /> Live updates
-          </span>
-        </RevealSection>
+
+      <!-- how it plays: a connected timeline rather than a card grid -->
+      <div class="layout-container py-4">
+        <RevealSection as="h2" class="section-heading">{{ app.stepsTitle }}</RevealSection>
+        <ol class="timeline mt-8 mb-4">
+          <RevealSection
+            v-for="(step, i) in app.steps"
+            :key="step.title"
+            :delay="Math.min(i + 1, 4) as 1 | 2 | 3 | 4"
+            as="li"
+            class="step"
+            root-margin="0px 0px 15% 0px"
+          >
+            <span class="step-node font-mono">{{ i + 1 }}</span>
+            <div class="min-w-0">
+              <h3 class="mt-0 mb-1 text-[1.1rem]">{{ step.title }}</h3>
+              <p class="m-0 max-w-[52ch] leading-[1.65] text-text">{{ step.body }}</p>
+            </div>
+          </RevealSection>
+        </ol>
       </div>
     </div>
 
     <div class="layout-container py-4">
-      <!-- apps: what each game is and how it plays -->
-      <RevealSection as="h2" class="section-heading">The apps</RevealSection>
-      <div class="mt-6 grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-5">
-        <RevealSection
-          v-for="(app, i) in apps"
-          :key="app.name"
-          :delay="((i % 3) + 1) as 1 | 2 | 3"
-          class="app-card flex min-w-0 flex-col rounded-panel border border-border bg-bg-soft p-7 [overflow-wrap:anywhere] hover:border-accent-border hover:shadow-card"
-        >
-          <div class="mb-4 flex items-center gap-[0.9rem]">
-            <span
-              class="inline-flex size-[46px] shrink-0 items-center justify-center rounded-xl border border-accent-border bg-accent-bg text-[1.3rem] text-accent"
-            >
-              <span :class="app.icon" />
-            </span>
-            <div>
-              <h3 class="m-0 font-mono text-xl">{{ app.name }}</h3>
-              <span class="text-[0.85rem] text-text opacity-80">{{ app.tagline }}</span>
-            </div>
-          </div>
-          <p class="mt-0 mb-4 leading-[1.65] text-text">{{ app.description }}</p>
-          <ol class="m-0 mb-6 flex list-none flex-col gap-[0.6rem] p-0">
-            <li
-              v-for="(play, pi) in app.howToPlay"
-              :key="play"
-              class="flex gap-[0.6rem] text-[0.9rem] leading-[1.5] text-text"
-            >
-              <span
-                class="inline-flex size-[1.4rem] shrink-0 items-center justify-center rounded-full border border-accent-border bg-accent-bg font-mono text-[0.72rem] text-accent"
-              >
-                {{ pi + 1 }}
-              </span>
-              <span>{{ play }}</span>
-            </li>
-          </ol>
-          <a
-            :href="app.href"
-            target="_blank"
-            rel="noreferrer"
-            class="card__link mt-auto inline-flex items-center gap-[0.45rem] self-start rounded-full border border-accent-border bg-accent-bg px-4 py-[0.55rem] text-sm font-medium text-accent no-underline transition-[transform,background-color] duration-200 ease-out hover:-translate-y-px"
-          >
-            <span>Play {{ app.name }}</span>
-            <span class="pi pi-external-link" />
-          </a>
-        </RevealSection>
-      </div>
-
-      <!-- how a game comes together, sign-in included -->
-      <RevealSection as="h2" class="section-heading">How it works</RevealSection>
-      <RevealSection :delay="1" as="p" class="mt-0 mb-7 max-w-[62ch] text-text">
-        Getting a game going takes about a minute, and everyone follows along together.
-      </RevealSection>
-      <div
-        class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 min-[760px]:max-[1000px]:grid-cols-2"
+      <!-- made for playing together: a compact divided strip, not lift cards -->
+      <RevealSection as="h2" class="section-heading">Made for playing together</RevealSection>
+      <RevealSection
+        :delay="1"
+        as="div"
+        class="perks mt-6 grid rounded-panel border border-border bg-bg-soft min-[720px]:grid-cols-3"
       >
-        <RevealSection
-          v-for="(s, i) in steps"
-          :key="s.title"
-          :delay="((i % 3) + 1) as 1 | 2 | 3"
-          class="step-card relative rounded-card border border-border bg-bg-soft p-6 hover:border-accent-border"
-        >
-          <span
-            class="absolute top-5 right-5 font-mono text-2xl leading-none text-text opacity-[0.18]"
-          >
-            {{ i + 1 }}
-          </span>
-          <span
-            class="mb-[0.9rem] inline-flex size-[46px] items-center justify-center rounded-xl border border-accent-border bg-accent-bg text-[1.3rem] text-accent"
-          >
-            <span :class="s.icon" />
-          </span>
-          <h3 class="mt-0 mb-[0.4rem] text-[1.05rem]">{{ s.title }}</h3>
-          <p class="m-0 text-[0.9rem] leading-[1.6] text-text">{{ s.body }}</p>
-        </RevealSection>
-      </div>
+        <div v-for="perk in perks" :key="perk.title" class="perk">
+          <span class="perk-icon text-accent"><span :class="perk.icon" /></span>
+          <h3 class="mt-3 mb-1 text-[1rem]">{{ perk.title }}</h3>
+          <p class="m-0 text-[0.9rem] leading-[1.6] text-text">{{ perk.body }}</p>
+        </div>
+      </RevealSection>
 
-      <!-- sign-in: what data is used, for OAuth transparency -->
+      <!-- signing in: OAuth transparency about what data is used -->
       <RevealSection as="h2" class="section-heading">Signing in</RevealSection>
       <RevealSection :delay="1" as="div" class="max-w-[68ch]">
-        <p class="mt-0 mb-4 leading-[1.7] text-text">
+        <p class="mt-2 mb-4 leading-[1.7] text-text">
           When an app needs an account, you can sign in with Google or GitHub. One sign-in works
           across every maxstash app, so you never make a separate account per game. Signing in is
           used only to create your account and identify you while you play. maxstash requests your
@@ -219,7 +211,7 @@ const steps = [
       <!-- legal -->
       <RevealSection
         as="div"
-        class="mt-12 mb-8 flex flex-wrap items-center justify-between gap-6 rounded-panel border border-border bg-bg-soft p-7"
+        class="mt-10 mb-8 flex flex-wrap items-center justify-between gap-6 rounded-panel border border-border bg-bg-soft p-7"
       >
         <div>
           <h2 class="mt-0 mb-[0.35rem] text-[1.2rem]">Terms &amp; policies</h2>
@@ -248,46 +240,124 @@ const steps = [
   font-size: 1.4rem;
 }
 
-.app-card {
+.app-cta {
+  box-shadow: 0 8px 20px -10px var(--accent);
   transition:
-    opacity 0.7s var(--ease-reveal),
-    transform 0.7s var(--ease-reveal),
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.app-card.is-visible:hover {
-  transform: translateY(-4px);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+.app-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -10px var(--accent);
 }
 
-.step-card {
-  transition:
-    opacity 0.7s var(--ease-reveal),
-    transform 0.7s var(--ease-reveal),
-    border-color 0.3s ease;
+.app-tile {
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+  width: min(340px, 100%);
+  aspect-ratio: 1;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-panel);
+  background: var(--accent-bg);
 }
 
-.step-card.is-visible:hover {
-  transform: translateY(-3px);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
+.app-tile__icon {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 18px;
+  border: 1px solid var(--accent-border);
+  background: var(--bg);
+  color: var(--accent);
+  font-size: 2rem;
 }
 
-.pill {
+.app-tile__label {
+  max-width: 22ch;
+  padding: 0 1.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+.timeline {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.1rem;
+  padding-bottom: 2rem;
+}
+
+.step:last-child {
+  padding-bottom: 0;
+}
+
+/* connector line linking the numbered nodes */
+.step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 2.4rem;
+  bottom: -0.2rem;
+  left: 1.2rem;
+  width: 2px;
+  background: linear-gradient(var(--accent-border), var(--border));
+}
+
+.step-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.perk {
+  padding: 1.6rem;
+  border-top: 1px solid var(--border);
+}
+
+.perk:first-child {
+  border-top: none;
+}
+
+@media (min-width: 720px) {
+  .perk {
+    border-top: none;
+    border-left: 1px solid var(--border);
+  }
+
+  .perk:first-child {
+    border-left: none;
+  }
+}
+
+.perk-icon {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.4rem 0.85rem;
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  color: var(--text-h);
-  background: var(--bg);
-  border: 1px solid var(--border);
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  font-size: 1.15rem;
 }
 
 .legal-links__item {
@@ -311,5 +381,11 @@ const steps = [
   border-color: var(--accent-border);
   background: var(--accent-bg);
   color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-cta:hover {
+    transform: none;
+  }
 }
 </style>
