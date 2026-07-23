@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/maxmorhardt/maxstash/compare/2.0.1...2.1.0) (2026-07-23)
+
+
+### Features
+
+* remove olympics, extract cards, redesign pages ([#45](https://github.com/maxmorhardt/maxstash/issues/45)) ([7e8049b](https://github.com/maxmorhardt/maxstash/commit/7e8049b789868697e5d129b55880d155ca6b6edf))
+
 ## [2.0.1](https://github.com/maxmorhardt/maxstash/compare/2.0.0...2.0.1) (2026-07-22)
 
 
