@@ -326,13 +326,6 @@ const highlights = [
   color: var(--text);
 }
 
-@media (max-width: 640px) {
-  .statement {
-    padding-left: 1.1rem;
-  }
-}
-
-/* closing cta panel: clean surface, no gradient or glow */
 .cta-panel {
   padding: 3.5rem 2rem;
   border-radius: var(--radius-panel);
