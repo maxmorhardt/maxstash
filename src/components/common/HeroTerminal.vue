@@ -89,12 +89,6 @@ const boot: ScriptLine[] = [
     label: 'squares',
     link: { text: 'squares.maxstash.io ↗', href: 'https://squares.maxstash.io' },
   },
-  {
-    text: '',
-    kind: 'out',
-    label: 'olympics',
-    link: { text: 'olympics.maxstash.io ↗', href: 'https://olympics.maxstash.io' },
-  },
   { text: 'ls ~', kind: 'cmd' },
 ];
 
@@ -119,8 +113,11 @@ const bodyRef = ref<HTMLElement | null>(null);
 // only the most recently printed `ls` menu is keyboard-interactive
 const lastMenuIndex = computed(() => {
   for (let i = lines.value.length - 1; i >= 0; i--) {
-    if (lines.value[i].menu) return i;
+    if (lines.value[i].menu) {
+      return i;
+    }
   }
+
   return -1;
 });
 
@@ -155,7 +152,10 @@ async function type(line: ScriptLine) {
   const i = lines.value.push({ text: '', kind: 'cmd', typing: true }) - 1;
   scrollToBottom();
   for (const ch of line.text) {
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
+
     lines.value[i].text += ch;
     await sleep(38 + Math.random() * 45);
   }
@@ -164,10 +164,14 @@ async function type(line: ScriptLine) {
 
 async function run() {
   for (const line of boot) {
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
+
     await type(line);
     await sleep(line.kind === 'cmd' ? 240 : 120);
   }
+
   if (alive) {
     printMenu();
     enable();
@@ -177,15 +181,20 @@ async function run() {
 
 function enable() {
   ready.value = true;
-  // only grab focus when the terminal is on screen so the page never jumps back to it
+  // only grab focus when the terminal is on screen
   nextTick(() => {
-    if (isTerminalInView()) focusInput();
+    if (isTerminalInView()) {
+      focusInput();
+    }
   });
 }
 
 function isTerminalInView() {
   const rect = bodyRef.value?.getBoundingClientRect();
-  if (!rect) return false;
+  if (!rect) {
+    return false;
+  }
+
   return rect.top < window.innerHeight && rect.bottom > 0;
 }
 
@@ -195,14 +204,21 @@ function focusInput() {
 
 function scrollToBottom() {
   nextTick(() => {
-    if (bodyRef.value) bodyRef.value.scrollTop = bodyRef.value.scrollHeight;
+    if (bodyRef.value) {
+      bodyRef.value.scrollTop = bodyRef.value.scrollHeight;
+    }
   });
 }
 
 function activate(item: NavItem) {
   out(`> ${item.external ? 'opening' : 'cd'} ${item.to}`, 'ok');
-  if (item.external) window.open(item.to, '_blank', 'noopener');
-  else router.push(item.to);
+
+  if (item.external) {
+    window.open(item.to, '_blank', 'noopener');
+  } else {
+    router.push(item.to);
+  }
+
   scrollToBottom();
 }
 
@@ -266,7 +282,10 @@ function runCommand(raw: string) {
     case 'github':
     case 'linkedin': {
       const item = nav.find((n) => n.label === cmd.toLowerCase());
-      if (item) activate(item);
+      if (item) {
+        activate(item);
+      }
+
       return;
     }
     case 'clear':
@@ -318,6 +337,7 @@ onMounted(() => {
     scrollToBottom();
     return;
   }
+
   run();
 });
 
@@ -331,6 +351,7 @@ onBeforeUnmount(() => {
     class="term flex max-h-[calc(100svh-var(--header-h)-6.5rem)] w-full max-w-[720px] flex-col overflow-hidden rounded-card border border-accent-border bg-[#0d1117] font-mono shadow-[var(--shadow),0_0_100px_-18px_var(--hero-glow-1)] max-[880px]:max-h-[calc(100svh-var(--header-h)-3rem)]"
     @click="focusInput"
   >
+    <!-- title bar: traffic lights + prompt -->
     <div
       class="flex items-center gap-[0.45rem] border-b border-[#21262d] bg-[#161b22] px-[0.85rem] py-[0.6rem]"
     >
@@ -339,10 +360,13 @@ onBeforeUnmount(() => {
       <span class="size-[11px] rounded-full bg-[#27c93f]" />
       <span class="ml-2 text-[0.78rem] text-[#8b949e]">max@maxstash: ~</span>
     </div>
+
+    <!-- terminal body -->
     <div
       ref="bodyRef"
       class="min-h-0 flex-1 overflow-y-auto px-[1.3rem] pt-[1.15rem] pb-[1.25rem] text-[0.88rem] leading-[1.6] max-[880px]:px-[0.9rem] max-[880px]:pt-[0.9rem] max-[880px]:pb-4 max-[880px]:text-[0.72rem]"
     >
+      <!-- printed lines: ls menu, labelled output, or plain text -->
       <div v-for="(l, i) in lines" :key="i" class="break-words whitespace-pre-wrap">
         <nav
           v-if="l.menu"
@@ -406,6 +430,7 @@ onBeforeUnmount(() => {
         </template>
       </div>
 
+      <!-- command input -->
       <div v-if="ready" class="mt-[0.35rem] flex items-center">
         <span class="mr-2 text-[#a855f7]">~ $</span>
         <input
@@ -422,6 +447,7 @@ onBeforeUnmount(() => {
         />
       </div>
 
+      <!-- usage hint -->
       <div
         v-if="ready"
         class="mt-[0.6rem] text-[0.78rem] text-[#56607a] italic max-[880px]:text-[0.68rem]"

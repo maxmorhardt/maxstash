@@ -12,7 +12,7 @@ const sections: LegalSection[] = [
   {
     title: '1. Acceptance of Terms',
     content:
-      'By accessing and using maxstash and its hosted applications, including squares.maxstash.io and olympics.maxstash.io (collectively, "the Services"), you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Services.',
+      'By accessing and using maxstash and its hosted applications, including squares.maxstash.io and any other application hosted on maxstash.io (collectively, "the Services"), you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Services.',
   },
   {
     title: '2. Description of Services',

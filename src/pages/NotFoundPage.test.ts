@@ -4,7 +4,7 @@ import NotFoundPage from './NotFoundPage.vue';
 import { createTestRouter, stubGlobals } from '../testUtils';
 
 describe('NotFoundPage', () => {
-  it('renders 404 and navigates home on click', async () => {
+  it('renders 404 and links home', async () => {
     const router = createTestRouter();
     router.push('/missing');
     await router.isReady();
@@ -14,7 +14,10 @@ describe('NotFoundPage', () => {
     expect(wrapper.text()).toContain('404');
     expect(wrapper.text()).toContain("doesn't exist");
 
-    await wrapper.find('button').trigger('click');
+    const home = wrapper.findAll('a').find((a) => a.text().includes('Home'));
+    expect(home?.attributes('href')).toBe('/');
+
+    await home?.trigger('click');
     await flushPromises();
     expect(router.currentRoute.value.path).toBe('/');
   });

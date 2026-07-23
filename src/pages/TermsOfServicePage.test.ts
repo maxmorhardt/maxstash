@@ -9,7 +9,6 @@ describe('TermsOfServicePage', () => {
     expect(wrapper.text()).toContain('Last updated');
     expect(wrapper.text()).toContain('Acceptance of Terms');
     expect(wrapper.text()).toContain('squares.maxstash.io');
-    expect(wrapper.text()).toContain('olympics.maxstash.io');
     expect(wrapper.text()).toContain('support@maxstash.io');
   });
 });

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import RevealSection from '../components/common/RevealSection.vue';
+import ProjectCard, { type Project } from '../components/projects/ProjectCard.vue';
 import { usePageMeta } from '../composables/usePageMeta';
 
 usePageMeta({
   title: 'Projects – Max Morhardt',
   description:
-    "Explore Max Morhardt's projects: a real-time NFL squares app, Go APIs, a self-hosted Kubernetes platform, reusable Helm charts, and GitHub Actions workflows.",
+    "Explore Max Morhardt's projects: a real-time NFL squares app, a Go API, a self-hosted Kubernetes platform, reusable Helm charts, and GitHub Actions workflows.",
   canonical: 'https://maxstash.io/projects',
 });
 
@@ -31,15 +32,6 @@ const platform = [
     body: 'Shared CI/CD pipelines and reusable Helm charts build and test every service the same way, then Argo CD syncs the cluster to match Git.',
   },
 ];
-
-interface Project {
-  name: string;
-  category: string;
-  description: string;
-  href: string;
-  links?: { label: string; href: string; icon?: string }[];
-  tags: string[];
-}
 
 const projects: Project[] = [
   {
@@ -120,29 +112,6 @@ const projects: Project[] = [
     ],
     tags: ['Vue 3', 'TypeScript', 'Vite', 'SSG', 'Tailwind CSS', 'PrimeVue'],
   },
-  {
-    name: 'olympics',
-    category: 'Frontend',
-    description:
-      'Tournament platform for backyard olympics: add participants, generate random teams and group stages, record match results, and follow live standings through to the playoff bracket.',
-    href: 'https://github.com/maxmorhardt/olympics',
-    links: [
-      {
-        label: 'Live site',
-        href: 'https://olympics.maxstash.io',
-        icon: 'pi pi-external-link',
-      },
-    ],
-    tags: ['React', 'TypeScript', 'Redux', 'MUI', 'OIDC', 'WebSocket'],
-  },
-  {
-    name: 'olympics-api',
-    category: 'Backend',
-    description:
-      'Backend API for the olympics platform. Owns the tournament lifecycle from participants and team generation through group stages, playoffs, and standings, with real-time updates pushed over WebSockets.',
-    href: 'https://github.com/maxmorhardt/olympics-api',
-    tags: ['Go', 'Gin', 'GORM', 'PostgreSQL', 'WebSocket', 'OIDC'],
-  },
 ];
 </script>
 
@@ -159,24 +128,20 @@ const projects: Project[] = [
         that runs this site, sharing sign-on, real-time messaging, and delivery pipelines.
       </RevealSection>
 
-      <!-- under the hood: the shared platform every repo builds on -->
+      <!-- under the hood: the shared platform, as an open media list (not cards) -->
       <RevealSection as="h2" class="section-heading">Under the hood</RevealSection>
-      <div
-        class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-4 min-[800px]:max-[1140px]:grid-cols-2"
-      >
+      <div class="platform-grid">
         <RevealSection
           v-for="(f, i) in platform"
           :key="f.title"
-          :delay="((i % 3) + 1) as 1 | 2 | 3"
-          class="feature rounded-card border border-border bg-bg-soft p-6 hover:border-accent-border"
+          class="platform-item"
+          :style="{ animationDelay: `${i * 60}ms` }"
         >
-          <span
-            class="mb-[0.9rem] inline-flex size-[46px] items-center justify-center rounded-xl border border-accent-border bg-accent-bg text-[1.3rem] text-accent"
-          >
-            <span :class="f.icon" />
-          </span>
-          <h3 class="mt-0 mb-[0.4rem] text-[1.05rem]">{{ f.title }}</h3>
-          <p class="m-0 text-[0.9rem] leading-[1.6] text-text">{{ f.body }}</p>
+          <span class="platform-icon"><span :class="f.icon" /></span>
+          <div class="min-w-0">
+            <h3 class="platform-title">{{ f.title }}</h3>
+            <p class="platform-body">{{ f.body }}</p>
+          </div>
         </RevealSection>
       </div>
 
@@ -185,63 +150,13 @@ const projects: Project[] = [
 
       <!-- project cards -->
       <div class="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-5">
-        <RevealSection
+        <ProjectCard
           v-for="(project, i) in projects"
           :key="project.name"
-          :delay="((i % 3) + 1) as 1 | 2 | 3"
+          :project="project"
           :root-margin="i < 3 ? '0px 0px 15% 0px' : undefined"
-          class="card flex min-w-0 flex-col rounded-card border border-border bg-bg-soft p-7 [overflow-wrap:anywhere] hover:border-accent-border hover:shadow-card"
-        >
-          <div class="mb-2 flex items-start justify-between gap-4">
-            <div class="flex flex-wrap items-center gap-2">
-              <h3 class="m-0 font-mono">{{ project.name }}</h3>
-              <span
-                class="rounded-full border border-accent-border bg-accent-bg px-[0.55rem] py-[0.2rem] text-[0.7rem] tracking-[0.04em] text-accent uppercase"
-              >
-                {{ project.category }}
-              </span>
-            </div>
-
-            <a
-              :href="project.href"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="View on GitHub"
-              class="text-xl text-text no-underline hover:text-accent"
-            >
-              <span class="pi pi-github" />
-            </a>
-          </div>
-
-          <p>{{ project.description }}</p>
-
-          <ul class="mt-4 mb-4 flex list-none flex-wrap gap-[0.4rem] p-0">
-            <li
-              v-for="tag in project.tags"
-              :key="tag"
-              class="rounded-full border border-border bg-bg px-[0.6rem] py-1 text-xs text-text-h"
-            >
-              {{ tag }}
-            </li>
-          </ul>
-
-          <div
-            v-if="project.links"
-            class="mt-auto flex flex-wrap gap-2 border-t border-dashed border-border pt-4"
-          >
-            <a
-              v-for="link in project.links"
-              :key="link.href"
-              :href="link.href"
-              target="_blank"
-              rel="noreferrer"
-              class="inline-flex items-center gap-1.5 rounded-full border border-accent-border bg-accent-bg px-[0.7rem] py-1.5 text-sm text-accent no-underline hover:-translate-y-px"
-            >
-              <span :class="link.icon || 'pi pi-external-link'" />
-              <span>{{ link.label }}</span>
-            </a>
-          </div>
-        </RevealSection>
+          :animation-delay="`${(i % 3) * 60}ms`"
+        />
       </div>
     </div>
   </section>
@@ -253,50 +168,79 @@ const projects: Project[] = [
   font-size: 1.4rem;
 }
 
-.feature {
-  transition:
-    opacity 0.7s var(--ease-reveal),
-    transform 0.7s var(--ease-reveal),
-    border-color 0.3s ease;
+/* under the hood: an airy media list with hairline rows, slides in from the left */
+.platform-grid {
+  display: grid;
+  border-bottom: 1px solid var(--border);
 }
 
-.feature.is-visible:hover {
-  transform: translateY(-3px);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
+@media (min-width: 720px) {
+  .platform-grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3rem;
+  }
 }
 
-.card {
+.platform-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
   opacity: 0;
-  transform: translateY(40px) scale(0.92) rotate(-1.5deg);
-  transform-origin: center bottom;
-  transition:
-    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+  transform: none;
+  transition: none;
 }
 
-.card.is-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1) rotate(0);
+.platform-item.is-visible {
+  animation: fade-rise 0.5s var(--ease-reveal) both;
 }
 
-.card.is-visible:hover {
-  transform: translateY(-4px);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+.platform-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 1.25rem;
+}
+
+.platform-title {
+  margin: 0.1rem 0 0.35rem;
+  font-size: 1.05rem;
+}
+
+.platform-body {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* one calm, shared entrance for both sections: a gentle fade and rise */
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card,
-  .card.is-visible {
-    transition: none;
-    transform: none;
+  .platform-item,
+  .platform-item.is-visible {
+    animation: none;
     opacity: 1;
+    translate: none;
+    scale: none;
+    transform: none;
   }
 }
 </style>
