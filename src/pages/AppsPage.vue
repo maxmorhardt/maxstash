@@ -241,15 +241,11 @@ const perks: Perk[] = [
 }
 
 .app-cta {
-  box-shadow: 0 8px 20px -10px var(--accent);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .app-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px -10px var(--accent);
 }
 
 .app-tile {
