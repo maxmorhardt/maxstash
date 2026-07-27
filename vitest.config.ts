@@ -1,8 +1,8 @@
 import { defineConfig, configDefaults } from 'vitest/config';
-import vue from '@vitejs/plugin-vue';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [vue({ template: { transformAssetUrls: false } })],
+  plugins: [react()],
   test: {
     environment: 'jsdom',
     globals: true,
@@ -10,7 +10,7 @@ export default defineConfig({
     exclude: [...configDefaults.exclude],
     coverage: {
       provider: 'v8',
-      include: ['src/**/*.{ts,vue}'],
+      include: ['src/**/*.{ts,tsx}'],
       thresholds: {
         lines: 80,
         functions: 80,
@@ -21,13 +21,14 @@ export default defineConfig({
       exclude: [
         'node_modules/',
         'src/setupTests.ts',
+        'src/testUtils.tsx',
         'src/types/',
         'src/vite-env.d.ts',
-        'src/main.ts',
-        'src/testUtils.ts',
+        'src/root.tsx',
+        'src/routes.ts',
+        'src/providers.tsx',
         'src/**/*.test.{ts,tsx}',
         'coverage/',
-        'test/',
         'public/',
         '*.config.*',
       ],

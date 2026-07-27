@@ -1,10 +1,5 @@
-import { vi, beforeEach } from 'vitest';
-import { config } from '@vue/test-utils';
-import { createHead } from '@unhead/vue/client';
-
-beforeEach(() => {
-  config.global.plugins = [createHead()];
-});
+import '@testing-library/jest-dom/vitest';
+import { afterEach, vi } from 'vitest';
 
 // default tests to reduced motion so animations render statically
 Object.defineProperty(window, 'matchMedia', {
@@ -20,4 +15,12 @@ Object.defineProperty(window, 'matchMedia', {
     removeListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
+});
+
+// jsdom has no IntersectionObserver; useScrollReveal falls back to revealing
+// immediately when it's absent, which is what these tests want
+
+// ensure fake timers never leak across test files
+afterEach(() => {
+  vi.useRealTimers();
 });
