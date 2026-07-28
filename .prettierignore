@@ -6,3 +6,5 @@ pnpm-lock.yaml
 *.min.js
 public/
 helm
+# release-please owns this file
+CHANGELOG.md

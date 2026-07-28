@@ -1,34 +1,38 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import pluginVue from 'eslint-plugin-vue';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
-import eslintConfigPrettier from 'eslint-config-prettier';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['dist', 'coverage', 'node_modules', 'public', '.vscode', '.idea', '*.min.js']),
+  globalIgnores([
+    'dist',
+    'build',
+    '.react-router',
+    'coverage',
+    'node_modules',
+    'public',
+    '.vscode',
+    '.idea',
+    '*.min.js',
+  ]),
   {
-    files: ['**/*.{ts,tsx,vue}'],
+    files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
-      pluginVue.configs['flat/recommended'],
-      eslintConfigPrettier,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
     ],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
-      parserOptions: {
-        parser: tseslint.parser,
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        extraFileExtensions: ['.vue'],
-      },
     },
     rules: {
-      'vue/multi-word-component-names': 'off',
-      'no-undef': 'off',
-      'vue/no-deprecated-filter': 'off',
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/refs': 'off',
+      curly: ['error', 'all'],
     },
   },
 ]);

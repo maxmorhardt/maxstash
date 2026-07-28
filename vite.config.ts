@@ -1,33 +1,27 @@
+import { reactRouter } from '@react-router/dev/vite';
 import { defineConfig } from 'vite';
-import type {} from 'vite-ssg';
-import vue from '@vitejs/plugin-vue';
-import tailwindcss from '@tailwindcss/vite';
 
-export default defineConfig({
-  plugins: [vue(), tailwindcss()],
-  ssgOptions: {
-    dirStyle: 'nested',
-    formatting: 'minify',
-    beastiesOptions: false,
-    includedRoutes: (paths) => [
-      ...paths.filter((p) => !p.includes(':') && !p.includes('*')),
-      '/404',
-    ],
+export default defineConfig(({ command }) => ({
+  plugins: [reactRouter()],
+  server: {
+    port: 3000,
   },
+  ...(command === 'build' ? { ssr: { noExternal: true } } : {}),
   build: {
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('primevue') || id.includes('@primeuix') || id.includes('primeicons')) {
-              return 'primevue';
-            }
-            if (id.includes('vue-router') || /[\\/]vue[\\/]/.test(id)) {
-              return 'vue-vendor';
-            }
-          }
+        codeSplitting: {
+          groups: [
+            { name: 'react-vendor', test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/ },
+            {
+              name: 'mui-core',
+              test: /[\\/]node_modules[\\/](@mui[\\/]material|@emotion[\\/](react|styled))[\\/]/,
+            },
+            { name: 'mui-icons', test: /[\\/]node_modules[\\/]@mui[\\/]icons-material[\\/]/ },
+            { name: 'router', test: /[\\/]node_modules[\\/]react-router[\\/]/ },
+          ],
         },
       },
     },
   },
-});
+}));
