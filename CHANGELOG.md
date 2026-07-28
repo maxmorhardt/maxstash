@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.0.0](https://github.com/maxmorhardt/maxstash/compare/2.1.0...3.0.0) (2026-07-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate app from vue to react ([#48](https://github.com/maxmorhardt/maxstash/issues/48))
+
+### Features
+
+* migrate app from vue to react ([#48](https://github.com/maxmorhardt/maxstash/issues/48)) ([9359fe4](https://github.com/maxmorhardt/maxstash/commit/9359fe4443ac7a61cbe9655116977aad7b27f4bd))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @unhead/vue to v3 ([#42](https://github.com/maxmorhardt/maxstash/issues/42)) ([65343ef](https://github.com/maxmorhardt/maxstash/commit/65343efd5b7e8f7ac48f2a0f25bd1f061930f407))
+* **deps:** update dependency primevue to v5 ([#38](https://github.com/maxmorhardt/maxstash/issues/38)) ([88ff4db](https://github.com/maxmorhardt/maxstash/commit/88ff4db11ea4734b5aa19434530c7c6c78700b98))
+
 ## [2.1.0](https://github.com/maxmorhardt/maxstash/compare/2.0.1...2.1.0) (2026-07-23)
 
 
