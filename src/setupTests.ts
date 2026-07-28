@@ -17,7 +17,8 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// ensure fake timers never leak across test files
+// ensure fake timers and a stored color scheme never leak between tests
 afterEach(() => {
   vi.useRealTimers();
+  localStorage.clear();
 });

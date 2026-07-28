@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import AppHeader from './AppHeader';
 import { renderWithProviders } from '../../testUtils';
+import { COLOR_SCHEME_STORAGE_KEY } from '../../theme';
 
 describe('AppHeader', () => {
   it('renders the brand link home', () => {
@@ -36,6 +37,16 @@ describe('AppHeader', () => {
     await user.click(toLight);
 
     expect(await screen.findByRole('button', { name: 'Switch to dark mode' })).toBeInTheDocument();
+  });
+
+  // the key must match the one InitColorSchemeScript reads in root.tsx
+  it('persists the choice under the app storage key', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<AppHeader />);
+
+    await user.click(await screen.findByRole('button', { name: 'Switch to light mode' }));
+
+    expect(localStorage.getItem(COLOR_SCHEME_STORAGE_KEY)).toBe('light');
   });
 
   it('opens the mobile navigation menu', async () => {
