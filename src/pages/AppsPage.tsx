@@ -5,13 +5,13 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import ShieldIcon from '@mui/icons-material/Shield';
 import { Avatar, Box, Button, Chip, Container, Divider, Paper, Typography } from '@mui/material';
-import { alpha } from '@mui/material/styles';
+
 import type { ReactElement } from 'react';
 import { Link } from 'react-router';
 import SquaresBoard from '../components/apps/SquaresBoard';
 import PageMeta from '../components/common/PageMeta';
 import RevealSection from '../components/common/RevealSection';
-import { fonts, pageSection } from '../theme';
+import { fonts, pageSection, primaryTint } from '../theme';
 
 interface Step {
   title: string;
@@ -185,7 +185,7 @@ export default function AppsPage() {
                       width: 'min(340px, 100%)',
                       aspectRatio: '1',
                       borderColor: 'primary.main',
-                      bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
+                      bgcolor: (theme) => primaryTint(theme, 0.08),
                     }}
                   >
                     <Avatar
@@ -261,7 +261,7 @@ export default function AppsPage() {
                           zIndex: 1,
                           width: 40,
                           height: 40,
-                          bgcolor: (theme) => alpha(theme.palette.primary.main, 0.12),
+                          bgcolor: (theme) => primaryTint(theme, 0.12),
                           color: 'primary.main',
                           fontFamily: fonts.mono,
                           fontSize: '0.95rem',
@@ -306,19 +306,14 @@ export default function AppsPage() {
               mt: 3,
               display: 'grid',
               gridTemplateColumns: { sm: 'repeat(3, 1fr)' },
-              bgcolor: 'background.paper',
+              overflow: 'hidden',
+              // the 1px gap is the divider; responsive border shorthands lose their color
+              gap: '1px',
+              bgcolor: 'divider',
             }}
           >
-            {perks.map((perk, i) => (
-              <Box
-                key={perk.title}
-                sx={{
-                  p: 3,
-                  borderColor: 'divider',
-                  borderTop: { xs: i === 0 ? 0 : 1, sm: 0 },
-                  borderLeft: { sm: i === 0 ? 0 : 1 },
-                }}
-              >
+            {perks.map((perk) => (
+              <Box key={perk.title} sx={{ p: 3, bgcolor: 'background.paper' }}>
                 <Avatar variant="rounded" sx={{ bgcolor: 'action.hover', color: 'primary.main' }}>
                   {perk.icon}
                 </Avatar>

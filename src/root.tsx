@@ -1,6 +1,8 @@
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
-import { Links, Meta, Scripts } from 'react-router';
+import { isRouteErrorResponse, Links, Meta, Scripts, useRouteError } from 'react-router';
 import App from './App';
+import ErrorPage from './pages/ErrorPage';
+import NotFoundPage from './pages/NotFoundPage';
 import Providers from './providers';
 import { COLOR_SCHEME_STORAGE_KEY } from './theme';
 
@@ -66,4 +68,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function Root() {
   return <App />;
+}
+
+// react-router renders this inside <Layout> whenever a route throws
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <NotFoundPage />;
+  }
+
+  return <ErrorPage />;
 }

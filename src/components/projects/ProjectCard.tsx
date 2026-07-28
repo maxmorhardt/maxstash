@@ -77,7 +77,9 @@ export default function ProjectCard({ project, rootMargin }: ProjectCardProps) {
             </IconButton>
           </Box>
 
-          <Typography color="text.secondary">{project.description}</Typography>
+          <Typography variant="body2" color="text.secondary">
+            {project.description}
+          </Typography>
 
           {/* tags */}
           <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>

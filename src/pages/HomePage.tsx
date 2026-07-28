@@ -74,10 +74,8 @@ const stack: { name: string; icon: ReactElement }[] = [
   { name: 'JPA', icon: icons.database },
   { name: 'React', icon: icons.component },
   { name: 'Angular', icon: icons.code },
-  { name: 'Vue 3', icon: icons.code },
   { name: 'Vite', icon: icons.bolt },
   { name: 'PrimeNG', icon: icons.component },
-  { name: 'PrimeVue', icon: icons.component },
   { name: 'Material UI', icon: icons.palette },
   { name: 'Tailwind CSS', icon: icons.palette },
   { name: 'PostgreSQL', icon: icons.database },
@@ -276,7 +274,9 @@ export default function HomePage() {
                     <Typography variant="h3" component="h3" gutterBottom>
                       {h.title}
                     </Typography>
-                    <Typography color="text.secondary">{h.body}</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {h.body}
+                    </Typography>
                   </CardContent>
                 </Card>
               </RevealSection>
@@ -402,10 +402,11 @@ export default function HomePage() {
                 bgcolor: 'background.paper',
               }}
             >
-              <Typography variant="h2">Let&apos;s build something.</Typography>
+              <Typography variant="h2">Get in touch</Typography>
 
-              <Typography color="text.secondary" sx={{ maxWidth: '46ch' }}>
-                Have a project in mind, or just want to say hi? My inbox is open.
+              <Typography color="text.secondary" sx={{ maxWidth: '50ch' }}>
+                Questions about anything here, or something you&apos;re building? I read every
+                message and usually reply within a day or two.
               </Typography>
 
               <Box
@@ -424,11 +425,11 @@ export default function HomePage() {
                   size="large"
                   endIcon={<ArrowForwardIcon />}
                 >
-                  Get in touch
+                  Send a message
                 </Button>
 
                 <Button component={Link} to="/projects" variant="outlined" size="large">
-                  See the projects
+                  Browse the projects
                 </Button>
               </Box>
             </Paper>

@@ -1,11 +1,12 @@
 import { reactRouter } from '@react-router/dev/vite';
 import { defineConfig } from 'vite';
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [reactRouter()],
   server: {
     port: 3000,
   },
+  ...(command === 'build' ? { ssr: { noExternal: true } } : {}),
   build: {
     rollupOptions: {
       output: {
@@ -23,4 +24,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

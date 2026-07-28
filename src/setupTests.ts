@@ -17,9 +17,6 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// jsdom has no IntersectionObserver; useScrollReveal falls back to revealing
-// immediately when it's absent, which is what these tests want
-
 // ensure fake timers never leak across test files
 afterEach(() => {
   vi.useRealTimers();

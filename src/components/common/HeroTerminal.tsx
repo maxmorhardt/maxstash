@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { alpha } from '@mui/material/styles';
-import { fonts, layout } from '../../theme';
+
+import { fonts, layout, primaryTint } from '../../theme';
 
 type Kind = 'cmd' | 'out' | 'ok';
 
@@ -59,7 +59,7 @@ const LINKEDIN = 'https://www.linkedin.com/in/max-morhardt-60b9121b8/';
 const STACK = [
   { label: 'languages', value: 'java · typescript · go · python · sql' },
   { label: 'backend', value: 'spring boot · gin · gorm · jpa' },
-  { label: 'frontend', value: 'react · angular · vue · primeng · material ui' },
+  { label: 'frontend', value: 'react · angular · primeng · material ui' },
   { label: 'cloud', value: 'aws · eks · ec2 · s3 · lambda · cloudflare' },
   { label: 'platform', value: 'kubernetes · docker · helm · envoy gateway · dex · nats' },
   { label: 'ops', value: 'gha · jenkins · prometheus · grafana · loki · datadog' },
@@ -68,7 +68,7 @@ const STACK = [
 const MOBILE_STACK = [
   { label: 'languages', value: 'java · ts · go · py · sql' },
   { label: 'backend', value: 'spring · gin · gorm · jpa' },
-  { label: 'frontend', value: 'react · ng · vue · mui' },
+  { label: 'frontend', value: 'react · ng · mui' },
   { label: 'cloud', value: 'aws · eks · cloudflare' },
   { label: 'platform', value: 'k8s · docker · helm · envoy' },
   { label: 'ops', value: 'gha · prometheus · datadog' },
@@ -164,6 +164,11 @@ export default function HeroTerminal() {
     let alive = true;
     const stackSource = matches('(max-width: 880px)') ? MOBILE_STACK : STACK;
     const boot = buildBoot(stackSource);
+
+    // clear any half-typed lines a previous run left behind
+    setLines([]);
+    setReady(false);
+    setSelected(0);
 
     const enable = () => {
       setReady(true);
@@ -387,8 +392,7 @@ export default function HeroTerminal() {
         borderColor: 'primary.main',
         backgroundColor: term.bg,
         fontFamily: fonts.mono,
-        boxShadow: (theme) =>
-          `${theme.shadows[8]}, 0 0 100px -18px ${alpha(theme.palette.primary.main, 0.4)}`,
+        boxShadow: (theme) => `${theme.shadows[8]}, 0 0 100px -18px ${primaryTint(theme, 0.4)}`,
         '@media (max-width: 880px)': {
           maxHeight: `calc(100svh - ${layout.headerHeight.xs} - 3rem)`,
         },
@@ -480,7 +484,7 @@ export default function HeroTerminal() {
                         fontSize: '0.86rem',
                         color: active ? 'primary.main' : term.link,
                         backgroundColor: (theme) =>
-                          active ? alpha(theme.palette.primary.main, 0.15) : 'transparent',
+                          active ? primaryTint(theme, 0.15) : 'transparent',
                         textDecoration: 'none',
                         transition: 'background-color 0.15s ease-out, color 0.15s ease-out',
                         '@media (max-width: 880px)': {

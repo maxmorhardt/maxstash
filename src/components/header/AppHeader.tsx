@@ -42,8 +42,7 @@ export default function AppHeader() {
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  // the color scheme isn't known until the client reads storage, so hold the
-  // toggle's icon back until mount to keep hydration in step
+  // hold the icon back until mount; the scheme isn't known until storage is read
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 

@@ -42,8 +42,11 @@ describe('HomePage', () => {
   it('links the calls to action to contact and projects', () => {
     renderWithProviders(<HomePage />);
 
-    expect(screen.getByRole('link', { name: /Get in touch/ })).toHaveAttribute('href', '/contact');
-    expect(screen.getByRole('link', { name: /See the projects/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Send a message/ })).toHaveAttribute(
+      'href',
+      '/contact'
+    );
+    expect(screen.getByRole('link', { name: /Browse the projects/ })).toHaveAttribute(
       'href',
       '/projects'
     );

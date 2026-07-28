@@ -1,4 +1,13 @@
-import { alpha, createTheme } from '@mui/material/styles';
+import { alpha, createTheme, type Theme } from '@mui/material/styles';
+
+// build tints from channel vars; theme.palette in a callback is the default scheme only
+export const tint = (channel: string, opacity: number) => `rgba(${channel} / ${opacity})`;
+
+export const primaryTint = (theme: Theme, opacity: number) => {
+  const primary = (theme.vars ?? theme).palette.primary as { mainChannel: string };
+
+  return tint(primary.mainChannel, opacity);
+};
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -79,6 +88,8 @@ export const theme = createTheme({
   shape: { borderRadius: 12 },
   typography: {
     fontFamily: sans,
+    // the root font is 18px, so mui sizes its components against that
+    htmlFontSize: 18,
     h1: {
       fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
       lineHeight: 1.05,
@@ -170,6 +181,11 @@ export const theme = createTheme({
       defaultProps: { variant: 'outlined' },
       styleOverrides: { root: { backgroundImage: 'none' } },
     },
+    MuiCardContent: {
+      styleOverrides: {
+        root: { padding: 24, '&:last-child': { paddingBottom: 24 } },
+      },
+    },
 
     MuiButton: {
       defaultProps: { disableElevation: true },
@@ -182,6 +198,9 @@ export const theme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: { fontWeight: 500 },
+        // a little more breathing room than mui's default label padding
+        label: { paddingInline: 12 },
+        icon: { marginLeft: 10 },
       },
     },
 
@@ -193,11 +212,16 @@ export const theme = createTheme({
     MuiAppBar: {
       defaultProps: { position: 'sticky', color: 'transparent', elevation: 0 },
       styleOverrides: {
-        root: ({ theme }) => ({
-          backgroundColor: alpha(theme.palette.background.default, 0.72),
-          backdropFilter: 'blur(10px) saturate(180%)',
-          borderBottom: `1px solid ${theme.palette.divider}`,
-        }),
+        root: ({ theme }) => {
+          const { palette } = theme.vars ?? theme;
+
+          return {
+            backgroundColor: tint(palette.background.defaultChannel, 0.72),
+            backdropFilter: 'blur(10px) saturate(180%)',
+            borderBottom: `1px solid ${palette.divider}`,
+            color: palette.text.primary,
+          };
+        },
       },
     },
     MuiToolbar: {

@@ -27,8 +27,7 @@ afterEach(() => {
   setMedia(reducedMotion);
 });
 
-// setupTests forces prefers-reduced-motion, so the boot script prints at once
-// rather than typing character by character
+// setupTests forces reduced motion, so the boot script prints at once
 
 const type = async (user: ReturnType<typeof userEvent.setup>, command: string) => {
   const input = screen.getByRole('textbox', { name: 'Terminal command input' });

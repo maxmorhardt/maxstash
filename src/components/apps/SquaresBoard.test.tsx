@@ -21,10 +21,11 @@ describe('SquaresBoard', () => {
     }
   });
 
-  it('renders the caption', () => {
+  it('captions the winning square with the score digits it sits on', () => {
     renderWithProviders(<SquaresBoard />);
 
-    expect(screen.getByText(/winner: Q3/)).toBeInTheDocument();
+    // the winner cell is row 2 / col 2, so home 0 and away 1
+    expect(screen.getByText(/Q3 winner · home 0, away 1/)).toBeInTheDocument();
   });
 
   it('is hidden from assistive tech as decoration', () => {

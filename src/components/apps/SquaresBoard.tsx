@@ -1,8 +1,8 @@
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import GridViewIcon from '@mui/icons-material/GridView';
 import { Box, Typography } from '@mui/material';
-import { alpha } from '@mui/material/styles';
-import { easing, fonts } from '../../theme';
+
+import { easing, fonts, primaryTint } from '../../theme';
 
 const awayNumbers = [3, 7, 1, 9, 4];
 const homeNumbers = [2, 8, 0, 5, 6];
@@ -18,6 +18,10 @@ const claimed: Record<string, string> = {
   '4,0': 'CG',
   '4,3': 'RP',
 };
+
+// the score digits the winning square sits on, so the caption can't drift from the grid
+const [winnerRow, winnerCol] = winnerCell.split(',').map(Number);
+const winnerDigits = { home: homeNumbers[winnerRow], away: awayNumbers[winnerCol] };
 
 type CellState = 'winner' | 'claimed' | 'open';
 
@@ -82,7 +86,8 @@ export default function SquaresBoard({ animate = true }: SquaresBoardProps) {
                     display: 'grid',
                     placeItems: 'center',
                     border: 1,
-                    borderRadius: 2,
+                    // fixed radius; the theme's 12px base would make these circles
+                    borderRadius: '8px',
                     fontFamily: fonts.mono,
                     fontSize: '0.62rem',
                     letterSpacing: '0.03em',
@@ -91,10 +96,10 @@ export default function SquaresBoard({ animate = true }: SquaresBoardProps) {
                       borderColor: 'primary.main',
                       color: 'primary.contrastText',
                       fontSize: '0.85rem',
-                      boxShadow: (theme) => `0 0 0 3px ${alpha(theme.palette.primary.main, 0.25)}`,
+                      boxShadow: (theme) => `0 0 0 3px ${primaryTint(theme, 0.25)}`,
                     }),
                     ...(state === 'claimed' && {
-                      bgcolor: (theme) => alpha(theme.palette.primary.main, 0.12),
+                      bgcolor: (theme) => primaryTint(theme, 0.12),
                       borderColor: 'primary.main',
                       color: 'primary.main',
                       fontWeight: 600,
@@ -139,7 +144,7 @@ export default function SquaresBoard({ animate = true }: SquaresBoardProps) {
         color="text.secondary"
         sx={{ mt: 1, fontFamily: fonts.mono, fontSize: '0.72rem', opacity: 0.7 }}
       >
-        home × away · winner: Q3
+        Q3 winner · home {winnerDigits.home}, away {winnerDigits.away}
       </Typography>
     </Box>
   );
