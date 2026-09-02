@@ -22,7 +22,7 @@ describe('AboutPage', () => {
     renderWithProviders(<AboutPage />);
 
     expect(screen.getByRole('heading', { name: 'Fidelity Investments' })).toBeInTheDocument();
-    expect(screen.getByText('Full Stack Engineer')).toBeInTheDocument();
+    expect(screen.getByText('Software Engineer')).toBeInTheDocument();
     expect(screen.getByText('Associate Software Engineer')).toBeInTheDocument();
   });
 

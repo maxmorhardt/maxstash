@@ -59,17 +59,17 @@ const projects: Project[] = [
     name: 'k8s',
     category: 'Infrastructure',
     description:
-      'Self-hosted k3s cluster that runs every app on this site: Argo CD keeps it in sync with this repo, Envoy Gateway fronts all traffic, and Dex federates Google and GitHub sign-in. Highly available Postgres, NATS messaging, Sealed Secrets, and a full metrics and logs stack back it all.',
+      'Self-hosted k3s cluster that runs every app on this site: Argo CD keeps it in sync with this repo, Envoy Gateway fronts all traffic, and Dex federates Google and GitHub sign-in. Highly available Postgres, NATS messaging, Sealed Secrets, and a full metrics and logs stack back it all, with Terraform managing S3 remote state, Cloudflare DNS, and GitHub repo settings.',
     href: 'https://github.com/maxmorhardt/k8s',
     tags: [
       'Kubernetes',
       'Argo CD',
+      'Terraform',
       'Envoy Gateway',
       'Dex',
       'Sealed Secrets',
       'PostgreSQL',
       'NATS',
-      'Prometheus',
     ],
   },
   {

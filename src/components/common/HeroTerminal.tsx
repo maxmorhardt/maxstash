@@ -60,18 +60,18 @@ const STACK = [
   { label: 'languages', value: 'java · typescript · go · python · sql' },
   { label: 'backend', value: 'spring boot · gin · gorm · jpa' },
   { label: 'frontend', value: 'react · angular · primeng · material ui' },
-  { label: 'cloud', value: 'aws · eks · ec2 · s3 · lambda · cloudflare' },
-  { label: 'platform', value: 'kubernetes · docker · helm · envoy gateway · dex · nats' },
-  { label: 'ops', value: 'gha · jenkins · prometheus · grafana · loki · datadog' },
+  { label: 'cloud', value: 'aws · eks · ec2 · s3 · efs · lambda · dynamodb' },
+  { label: 'platform', value: 'kubernetes · docker · helm · terraform · envoy · dex · nats' },
+  { label: 'ops', value: 'gha · jenkins · argo cd · prometheus · grafana · datadog' },
 ];
 
 const MOBILE_STACK = [
   { label: 'languages', value: 'java · ts · go · py · sql' },
   { label: 'backend', value: 'spring · gin · gorm · jpa' },
   { label: 'frontend', value: 'react · ng · mui' },
-  { label: 'cloud', value: 'aws · eks · cloudflare' },
-  { label: 'platform', value: 'k8s · docker · helm · envoy' },
-  { label: 'ops', value: 'gha · prometheus · datadog' },
+  { label: 'cloud', value: 'aws · eks · s3 · lambda' },
+  { label: 'platform', value: 'k8s · docker · helm · terraform' },
+  { label: 'ops', value: 'gha · argo cd · prometheus · datadog' },
 ];
 
 const WHOAMI = 'Max Morhardt, software engineer @ Fidelity';

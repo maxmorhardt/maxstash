@@ -2,7 +2,6 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import BoltIcon from '@mui/icons-material/Bolt';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloudIcon from '@mui/icons-material/Cloud';
 import CodeIcon from '@mui/icons-material/Code';
 import DnsIcon from '@mui/icons-material/Dns';
@@ -59,7 +58,6 @@ const icons = {
   cog: <SettingsIcon fontSize="small" />,
   github: <GitHubIcon fontSize="small" />,
   refresh: <RefreshIcon fontSize="small" />,
-  check: <CheckCircleIcon fontSize="small" />,
 };
 
 const stack: { name: string; icon: ReactElement }[] = [
@@ -77,7 +75,6 @@ const stack: { name: string; icon: ReactElement }[] = [
   { name: 'Vite', icon: icons.bolt },
   { name: 'PrimeNG', icon: icons.component },
   { name: 'Material UI', icon: icons.palette },
-  { name: 'Tailwind CSS', icon: icons.palette },
   { name: 'PostgreSQL', icon: icons.database },
   { name: 'NATS', icon: icons.sync },
   { name: 'WebSockets', icon: icons.bolt },
@@ -86,6 +83,7 @@ const stack: { name: string; icon: ReactElement }[] = [
   { name: 'k3s', icon: icons.server },
   { name: 'Helm', icon: icons.box },
   { name: 'Argo CD', icon: icons.sync },
+  { name: 'Terraform', icon: icons.cog },
   { name: 'AWS', icon: icons.cloud },
   { name: 'EKS', icon: icons.server },
   { name: 'EC2', icon: icons.server },
@@ -98,7 +96,6 @@ const stack: { name: string; icon: ReactElement }[] = [
   { name: 'Jenkins', icon: icons.cog },
   { name: 'GitHub Actions', icon: icons.github },
   { name: 'Renovate', icon: icons.refresh },
-  { name: 'Karate', icon: icons.check },
   { name: 'Datadog', icon: icons.chartLine },
   { name: 'Prometheus', icon: icons.chartLine },
   { name: 'Grafana', icon: icons.chartBar },
@@ -118,7 +115,7 @@ const highlights = [
   },
   {
     title: 'Cloud and Kubernetes platforms',
-    body: 'Multi-tenant developer platforms on AWS and EKS, with Spring Boot APIs orchestrating Kubernetes workloads for thousands of users.',
+    body: 'Multi-tenant developer platforms on AWS and EKS, with Spring Boot APIs orchestrating Kubernetes workloads for thousands of users, plus AI gateway work on Go and Envoy AI Gateway for multi-provider LLM routing.',
     icon: <DnsIcon />,
   },
   {
@@ -145,7 +142,7 @@ export default function HomePage() {
     <Box>
       <PageMeta
         title="Max Morhardt – Software Engineer"
-        description="Max Morhardt is a Full Stack Engineer at Fidelity Investments specializing in Java, Spring Boot, Go, TypeScript, React, Angular, Kubernetes, and AWS."
+        description="Max Morhardt is a Software Engineer at Fidelity Investments specializing in Java, Spring Boot, Go, TypeScript, React, Angular, Kubernetes, Terraform, and AWS."
         canonical="https://maxstash.io/"
       />
 
