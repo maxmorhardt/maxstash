@@ -218,6 +218,7 @@ export const theme = createTheme({
           return {
             backgroundColor: tint(palette.background.defaultChannel, 0.72),
             backdropFilter: 'blur(10px) saturate(180%)',
+            border: 'none',
             borderBottom: `1px solid ${palette.divider}`,
             color: palette.text.primary,
           };

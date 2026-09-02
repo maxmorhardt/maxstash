@@ -17,20 +17,23 @@ const experience: { company: string; roles: Role[] }[] = [
     company: 'Fidelity Investments',
     roles: [
       {
-        title: 'Full Stack Engineer',
+        title: 'Software Engineer',
         period: 'Apr 2024 - Present',
         points: [
-          'Provision multi-tenant cloud IDEs (VSCode, JupyterLab, RStudio, Airflow) on AWS for roughly 3,000 users across quantitative development, machine learning, and rapid prototyping.',
-          'Led the platform migration from EC2 to EKS with async Spring Boot APIs and the Kubernetes Java Client, cutting environment spin-up from 15 minutes to 2 and projected to lower infrastructure cost by 20%.',
-          'Drove a full front-end redesign from Bootstrap to PrimeNG across 750+ files, and built a Karate end-to-end test suite on Jenkins covering 15 IDE images.',
-          'Building Datadog and Micrometer observability to surface real-time spin-up, image distribution, and lifecycle metrics across the fleet.',
+          'Engineer on a platform team provisioning cloud-based IDEs on AWS (VSCode, JupyterLab, RStudio, Airflow) for over 3,000 users spanning quantitative development, machine learning, and prototyping.',
+          'Drove the migration from EC2 to EKS with async Spring Boot endpoints and Kubernetes Java Client integrations orchestrating pod lifecycle, cutting IDE spin-up time from 15 minutes to 2 and infrastructure costs by 20%.',
+          'Integrating a new firm-wide AI gateway built on Go and Envoy AI Gateway with an existing org-specific gateway, covering multi-provider LLM routing, token-based rate limiting, and per-tenant quota enforcement.',
+          'One of the primary escalation points for platform reliability, on-call in and out of rotation, debugging incidents across EKS, EC2, shared filesystems (S3, EFS, NetApp), Jenkins pipelines, and the frontend.',
+          'Owned self-service EC2 and EKS configuration profiles and bring-your-own IAM role, adopted by over 60% of users.',
+          'Rewrote the Angular frontend from Bootstrap to PrimeNG across 750+ files, split oversized modules into standalone components, consolidated duplicate components and SASS into shared libraries, fixed XSS vulnerabilities, and cut the main bundle size 46%.',
         ],
       },
       {
         title: 'Associate Software Engineer',
         period: 'Jan 2023 - Apr 2024',
         points: [
-          'Built a full-stack deployment tool that ingests OpenAPI specs, generates Spring Boot scaffolding, and ships to Kubernetes through programmatically created Jenkins pipelines, reducing deployment time from days to under 45 minutes (Patent Pending).',
+          'Led development of a patent-pending full stack automated deployment tool that ingests OpenAPI specs from SwaggerHub, generates Spring Boot scaffolding, and deploys to Azure Kubernetes Service through a programmatically created Jenkins pipeline, reducing deployment time from 3 days to under 45 minutes.',
+          'Mentored two engineering interns through their projects, both of whom received return offers.',
         ],
       },
     ],
@@ -92,7 +95,7 @@ export default function AboutPage() {
     <Box component="section" sx={pageSection}>
       <PageMeta
         title="About – Max Morhardt"
-        description="About Max Morhardt, Full Stack Engineer at Fidelity Investments building multi-tenant cloud platforms on AWS and EKS, alongside a self-hosted Kubernetes homelab."
+        description="About Max Morhardt, Software Engineer at Fidelity Investments building multi-tenant cloud platforms on AWS and EKS, alongside a self-hosted Kubernetes homelab."
         canonical="https://maxstash.io/about"
       />
 
@@ -105,8 +108,9 @@ export default function AboutPage() {
 
         <RevealSection delay={1}>
           <Typography color="text.secondary" sx={{ mb: 4, maxWidth: '60ch', fontSize: '1.15rem' }}>
-            Full Stack Engineer at Fidelity Investments, building production systems across the full
-            stack, from API design and cloud infrastructure to front-end interfaces.
+            Software Engineer at Fidelity Investments, working across platform and cloud
+            infrastructure, from API design and Kubernetes orchestration to the front-end interfaces
+            on top.
           </Typography>
         </RevealSection>
 
@@ -151,7 +155,8 @@ export default function AboutPage() {
             Kubernetes cluster through GitHub Actions and <C>Argo CD</C>. It implements a contest
             state machine, automated winner calculation, <C>NATS</C> pub/sub for horizontally scaled
             WebSocket broadcasting, Google and GitHub sign-in through <C>Dex</C>, and{' '}
-            <C>PostgreSQL</C> persistence with <C>GORM</C>.
+            <C>PostgreSQL</C> persistence with <C>GORM</C>, instrumented end to end with{' '}
+            <C>Prometheus</C>, <C>Grafana</C>, and <C>Loki</C>.
           </Typography>
 
           <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 3 }}>
@@ -186,8 +191,10 @@ export default function AboutPage() {
             keeps the cluster in sync with Git, so reusable Helm charts and GitHub Actions workflows
             release every app the same way. <C>Sealed Secrets</C> lets secrets live safely in the
             repo, <C>Renovate</C> keeps dependencies current, and <C>system-upgrade-controller</C>{' '}
-            and <C>kured</C> handle k3s upgrades and coordinated rolling node reboots.{' '}
-            <C>Cloudflare</C> handles DNS and edge security.
+            and <C>kured</C> handle k3s upgrades and coordinated rolling node reboots. The
+            infrastructure around it is code too: <C>Terraform</C> runs through GitHub Actions to
+            manage S3 remote state, <C>Cloudflare</C> DNS and edge security, and GitHub repo
+            settings.
           </Typography>
         </Row>
 
