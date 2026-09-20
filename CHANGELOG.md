@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.2](https://github.com/maxmorhardt/maxstash/compare/3.0.1...3.0.2) (2026-09-20)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#58](https://github.com/maxmorhardt/maxstash/issues/58)) ([bd1e54a](https://github.com/maxmorhardt/maxstash/commit/bd1e54a7cd212f778176c6e44e76f641a6b029a8))
+
 ## [3.0.1](https://github.com/maxmorhardt/maxstash/compare/3.0.0...3.0.1) (2026-09-02)
 
 
